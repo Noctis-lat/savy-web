@@ -44,12 +44,14 @@ export default defineConfig({
 				],
 			},
 			workbox: {
+				navigateFallback: "/index.html",
 				runtimeCaching: [
 					{
-						urlPattern: /^https:\/\/.*\/api\/.*/i,
+						urlPattern: /^https:\/\/.*\/api\/(?!auth\/).*/i,
 						handler: "NetworkFirst",
 						options: {
 							cacheName: "api-cache",
+							networkTimeoutSeconds: 10,
 							expiration: {
 								maxEntries: 100,
 								maxAgeSeconds: 60 * 60 * 24,
