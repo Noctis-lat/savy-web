@@ -4,7 +4,8 @@ import { InfoItem } from "@/components/design-system/primitives/info-item";
 import { Button } from "@/components/ui/button";
 import { useOnboardingController } from "@/storage/onboarding/onboardingController";
 import { formatCurrency } from "@/utils/formatters/formatCurrency";
-import { formatPaydays, getFrequencyLabel } from "../../utils";
+import { formatPaydays } from "@/utils/onboarding/formatPaydays";
+import { getFrequencyLabel } from "@/utils/onboarding/getFrequencyLabel";
 
 type DraftListProps = {
 	emptyHint?: string;

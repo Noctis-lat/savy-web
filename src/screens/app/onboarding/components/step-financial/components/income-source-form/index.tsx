@@ -15,8 +15,8 @@ import {
 	type IncomeSourceFormValues,
 	incomeSourceSchema,
 } from "@/schemas/onboarding/incomeSourceSchema";
+import { formatPaydays } from "@/utils/onboarding/formatPaydays";
 import { merge } from "@/utils/ui/mergeStyles";
-import { formatPaydays } from "../../utils";
 
 const DEFAULT_VALUES: IncomeSourceFormValues = {
 	name: "",

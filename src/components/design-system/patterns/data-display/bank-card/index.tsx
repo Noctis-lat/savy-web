@@ -8,7 +8,7 @@ type BankCardProps = {
 	account: Account;
 	bankName: string;
 	bankColor: string | null;
-	creditCard?: import("@/services/credit-cards/credit-cards").CreditCard;
+	creditCard?: { creditLimit: number };
 	onClick?: () => void;
 	className?: string;
 };
