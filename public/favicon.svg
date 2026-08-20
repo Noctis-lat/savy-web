@@ -1,4 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Savy logo">
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
   <rect width="512" height="512" rx="96" fill="#0d9488"/>
-  <text x="256" y="360" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-weight="700" font-size="320" fill="#ffffff">S</text>
+  <g transform="translate(89.6, 89.6) scale(11.8857)">
+  <path d="M14 0L3 9h11V0z" fill="#3d9e95"/>
+  <path d="M14 0l11 9H14V0z" fill="#1a6e68"/>
+  <path d="M3 9l11 19V9H3z"  fill="#2d8a82"/>
+  <path d="M25 9L14 28V9h11z" fill="#145a54"/>
+</g>
 </svg>
