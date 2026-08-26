@@ -24,6 +24,8 @@ type CategoryService = {
 	create: (payload: CreateCategoryPayload) => Promise<Category>;
 	update: (id: string, payload: UpdateCategoryPayload) => Promise<Category>;
 	remove: (id: string) => Promise<void>;
+	getTopByBank: (bankId: string, limit?: number) => Promise<TopCategory[]>;
+	getTopByAccount: (accountId: string, limit?: number) => Promise<TopCategory[]>;
 };
 
 export const categoryService: CategoryService = {
@@ -51,5 +53,25 @@ export const categoryService: CategoryService = {
 
 	remove: async (id: string): Promise<void> => {
 		await httpClient.delete(`/categories/${id}`);
+	},
+
+	getTopByBank: async (bankId: string, limit = 5): Promise<TopCategory[]> => {
+		const response = await httpClient.get<APIResponse<TopCategory[]>>(
+			`/categories/top/banks/${bankId}`,
+			{
+				params: { limit },
+			},
+		);
+		return unwrap<TopCategory[]>(response);
+	},
+
+	getTopByAccount: async (accountId: string, limit = 5): Promise<TopCategory[]> => {
+		const response = await httpClient.get<APIResponse<TopCategory[]>>(
+			`/categories/top/accounts/${accountId}`,
+			{
+				params: { limit },
+			},
+		);
+		return unwrap<TopCategory[]>(response);
 	},
 };

@@ -9,10 +9,18 @@ type Bank = {
 	updatedAt: string;
 };
 
-type BankDetail = Bank & {
-	accounts: import("../accounts/accounts").Account[];
-	creditCards: import("../credit-cards/credit-cards").CreditCard[];
-	loans: import("../loans/loans").Loan[];
+type BankInfo = {
+	netWorth: number;
+	liquidity: number;
+	debt: number;
+	balanceBreakdown: {
+		assets: number;
+		liabilities: number;
+	};
+};
+
+type BankWithInfo = Bank & {
+	info: BankInfo;
 };
 
 type CreateBankPayload = {
@@ -29,48 +37,39 @@ type UpdateBankPayload = {
 
 type PeriodType = "day" | "week" | "month" | "other_month" | "quarter" | "semester" | "year";
 
-type BankSummary = {
-	bank: {
-		id: string;
-		name: string;
-		color: string | null;
-		logo: string | null;
-		isActive: boolean;
-	};
-	netWorth: number;
-	liquidity: number;
-	debt: number;
-	balanceBreakdown: {
-		assets: number;
-		liabilities: number;
-	};
-	incomeVsExpenses: {
-		income: number;
-		expenses: number;
-		period: string;
-		periodLabel: string;
-	};
-	topCategories: {
-		categoryId: string;
-		categoryName: string;
-		amount: number;
-		percentage: number;
-	}[];
-	accounts: import("../accounts/accounts").Account[];
-	creditCards: import("../credit-cards/credit-cards").CreditCard[];
-	loans: {
-		id: string;
-		accountId: string;
-		principal: number;
-		interestRate: number;
-		termMonths: number;
-		startDate: string;
-		monthlyPayment: number;
-		remaining: number;
-		progress: number;
-		createdAt: string;
-		updatedAt: string;
-	}[];
-	currency: string;
+type IncomeVsExpenses = {
+	income: number;
+	expenses: number;
+	period: string;
+	periodLabel: string;
+};
+
+type BankCreditCard = {
+	id: string;
+	accountId: string;
+	accountName: string;
+	balance: number;
+	creditLimit: number;
+	cutDay: number;
+	paymentDay: number;
+	interestRate: number;
+	noInterestMonths: number;
+	createdAt: string;
+	updatedAt: string;
+};
+
+type BankLoan = {
+	id: string;
+	accountId: string;
+	accountName: string;
+	principal: number;
+	interestRate: number;
+	termMonths: number;
+	startDate: string;
+	monthlyPayment: number;
+	remaining: number;
+	progress: number;
+	createdAt: string;
+	updatedAt: string;
 };
 

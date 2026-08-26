@@ -8,7 +8,12 @@ import { Empty } from "@/components/design-system/patterns/feedback/empty";
 import { AppBreadcrumbs } from "@/components/design-system/patterns/navigation/app-breadcrumbs";
 import { Button } from "@/components/ui/button";
 import { PERIOD_OPTIONS } from "@/content/banks/bankContent";
-import { useQueryBankSummary } from "@/hooks/banks/useQueryBankSummary";
+import { useQueryBank } from "@/hooks/banks/useQueryBank";
+import { useQueryBankAccounts } from "@/hooks/banks/useQueryBankAccounts";
+import { useQueryBankCreditCards } from "@/hooks/banks/useQueryBankCreditCards";
+import { useQueryBankIncomeVsExpenses } from "@/hooks/banks/useQueryBankIncomeVsExpenses";
+import { useQueryBankLoans } from "@/hooks/banks/useQueryBankLoans";
+import { useQueryTopCategoriesByBank } from "@/hooks/categories/useQueryTopCategoriesByBank";
 import { useProfileStorage } from "@/storage/profile/profileStorage";
 import { merge } from "@/utils/ui/mergeStyles";
 import { AccountsGrid } from "./components/accounts-grid";
@@ -30,17 +35,38 @@ export const BankDetail = (): React.ReactElement => {
 	const locale = profile?.locale ?? DEFAULT_LOCALE;
 	const [period, setPeriod] = useState<string>("month");
 
-	const query = useQueryBankSummary(id ?? "", period as PeriodType);
+	const bankId = id ?? "";
 
-	const isLoading = query.isLoading;
-	const isError = query.isError;
-	const data = query.data;
+	const bankQuery = useQueryBank(bankId, true);
+	const incomeQuery = useQueryBankIncomeVsExpenses(bankId, period as PeriodType);
+	const accountsQuery = useQueryBankAccounts(bankId);
+	const creditCardsQuery = useQueryBankCreditCards(bankId);
+	const loansQuery = useQueryBankLoans(bankId);
+	const topCategoriesQuery = useQueryTopCategoriesByBank(bankId);
+
+	const isLoading =
+		bankQuery.isLoading ||
+		incomeQuery.isLoading ||
+		accountsQuery.isLoading ||
+		creditCardsQuery.isLoading ||
+		loansQuery.isLoading ||
+		topCategoriesQuery.isLoading;
+
+	const isError =
+		bankQuery.isError || incomeQuery.isError || accountsQuery.isError || creditCardsQuery.isError;
+
+	const bank = bankQuery.data;
+	const income = incomeQuery.data;
+	const accounts = accountsQuery.data ?? [];
+	const creditCards = creditCardsQuery.data ?? [];
+	const loans = loansQuery.data ?? [];
+	const topCategories = topCategoriesQuery.data ?? [];
 
 	if (isLoading) {
 		return <DetailSkeleton />;
 	}
 
-	if (isError || !data) {
+	if (isError || !bank || !income) {
 		return (
 			<div className="flex flex-1 flex-col gap-6 p-6">
 				<AppBreadcrumbs
@@ -55,7 +81,12 @@ export const BankDetail = (): React.ReactElement => {
 						label: "Reintentar",
 						icon: RefreshCw,
 						onClick: () => {
-							void query.refetch();
+							void bankQuery.refetch();
+							void incomeQuery.refetch();
+							void accountsQuery.refetch();
+							void creditCardsQuery.refetch();
+							void loansQuery.refetch();
+							void topCategoriesQuery.refetch();
 						},
 					}}
 				/>
@@ -63,14 +94,16 @@ export const BankDetail = (): React.ReactElement => {
 		);
 	}
 
-	const editRoute = ROUTES.APP.BANKS_EDIT.replace(":id", id ?? "");
+	const bankWithInfo = bank as BankWithInfo;
+	const info = bankWithInfo.info;
+	const editRoute = ROUTES.APP.BANKS_EDIT.replace(":id", bankId);
 
 	return (
 		<div className="flex flex-1 flex-col gap-6 p-6">
 			<div className="flex items-center justify-between">
 				<AppBreadcrumbs
 					backRoute={ROUTES.APP.BANKS}
-					config={[{ label: "Bancos", href: ROUTES.APP.BANKS }, { label: data.bank.name }]}
+					config={[{ label: "Bancos", href: ROUTES.APP.BANKS }, { label: bank.name }]}
 				/>
 				<Button
 					variant="outline"
@@ -83,13 +116,13 @@ export const BankDetail = (): React.ReactElement => {
 
 			<ScaleFadeIn>
 				<BankHero
-					bankName={data.bank.name}
-					bankColor={data.bank.color}
-					isActive={data.bank.isActive}
-					netWorth={data.netWorth}
-					liquidity={data.liquidity}
-					debt={data.debt}
-					currency={data.currency || currency}
+					bankName={bank.name}
+					bankColor={bank.color}
+					isActive={bank.isActive}
+					netWorth={info.netWorth}
+					liquidity={info.liquidity}
+					debt={info.debt}
+					currency={currency}
 					locale={locale}
 				/>
 			</ScaleFadeIn>
@@ -118,19 +151,19 @@ export const BankDetail = (): React.ReactElement => {
 				<div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
 					<ScaleFadeIn>
 						<BalanceChart
-							assets={data.balanceBreakdown.assets}
-							liabilities={data.balanceBreakdown.liabilities}
-							netWorth={data.netWorth}
-							currency={data.currency || currency}
+							assets={info.balanceBreakdown.assets}
+							liabilities={info.balanceBreakdown.liabilities}
+							netWorth={info.netWorth}
+							currency={currency}
 							locale={locale}
 						/>
 					</ScaleFadeIn>
 					<ScaleFadeIn>
 						<IncomeExpensesChart
-							income={data.incomeVsExpenses.income}
-							expenses={data.incomeVsExpenses.expenses}
-							periodLabel={data.incomeVsExpenses.periodLabel}
-							currency={data.currency || currency}
+							income={income.income}
+							expenses={income.expenses}
+							periodLabel={income.periodLabel}
+							currency={currency}
 							locale={locale}
 						/>
 					</ScaleFadeIn>
@@ -139,26 +172,26 @@ export const BankDetail = (): React.ReactElement => {
 
 			<ScaleFadeIn>
 				<TopCategories
-					categories={data.topCategories}
-					totalExpenses={data.incomeVsExpenses.expenses}
-					currency={data.currency || currency}
+					categories={topCategories}
+					totalExpenses={income.expenses}
+					currency={currency}
 					locale={locale}
 				/>
 			</ScaleFadeIn>
 
 			<AccountsGrid
-				accounts={data.accounts}
-				creditCards={data.creditCards}
-				bankName={data.bank.name}
-				bankColor={data.bank.color}
+				accounts={accounts}
+				creditCards={creditCards}
+				bankName={bank.name}
+				bankColor={bank.color}
 			/>
 
-			{data.loans.length > 0 && (
+			{loans.length > 0 && (
 				<ScaleFadeIn>
 					<LoansSection
-						loans={data.loans}
-						accounts={data.accounts}
-						currency={data.currency || currency}
+						loans={loans}
+						accounts={accounts}
+						currency={currency}
 						locale={locale}
 					/>
 				</ScaleFadeIn>

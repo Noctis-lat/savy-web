@@ -6,7 +6,7 @@ import { GlassCard } from "@/components/design-system/patterns/glass-card";
 import { formatCurrency } from "@/utils/formatters/formatCurrency";
 
 type Props = {
-	loans: BankSummary["loans"];
+	loans: BankLoan[];
 	accounts: Account[];
 	currency: string;
 	locale: string;
