@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { TRANSACTIONS_QUERY_KEY, transactionService } from "@/services/transactions";
+import { transactionKeys } from "@/content/services";
+import { transactionService } from "@/services/transactions";
 import { apiErrorToast } from "@/utils/errors/apiErrorToast";
 
 export const useUpdateTransaction = () => {
@@ -9,7 +10,7 @@ export const useUpdateTransaction = () => {
 		mutationFn: ({ id, payload }: { id: string; payload: UpdateTransactionPayload }) =>
 			transactionService.updateTransaction(id, payload),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: TRANSACTIONS_QUERY_KEY });
+			queryClient.invalidateQueries({ queryKey: transactionKeys.transactions() });
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al actualizar la transaccion");

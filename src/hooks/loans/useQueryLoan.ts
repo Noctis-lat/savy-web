@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
+import { loanKeys } from "@/content/services";
 import { loanService } from "@/services/loans";
 
 export const useQueryLoan = (id: string) => {
 	return useQuery({
-		queryKey: ["loans", id] as const,
+		queryKey: loanKeys.loan(id),
 		queryFn: () => loanService.getLoan(id),
 		enabled: !!id,
 		staleTime: 1000 * 60 * 15,

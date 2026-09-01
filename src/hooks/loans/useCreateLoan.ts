@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { LOANS_QUERY_KEY, loanService } from "@/services/loans";
+import { loanKeys } from "@/content/services";
+import { loanService } from "@/services/loans";
 import { apiErrorToast } from "@/utils/errors/apiErrorToast";
 
 export const useCreateLoan = () => {
@@ -8,7 +9,7 @@ export const useCreateLoan = () => {
 	return useMutation({
 		mutationFn: (payload: CreateLoanPayload) => loanService.createLoan(payload),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: LOANS_QUERY_KEY });
+			queryClient.invalidateQueries({ queryKey: loanKeys.loans() });
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al crear el prestamo");

@@ -1,12 +1,11 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
+import { profileKeys } from "@/content/services";
 import { profileService } from "@/services/profile";
 import { useAuthStorage } from "@/storage/authStorage";
 import { useProfileStorage } from "@/storage/profile/profileStorage";
 
 const PROFILE_STALE_TIME = 1000 * 60 * 15;
-
-export const PROFILE_QUERY_KEY = ["profile"] as const;
 
 export const useQueryProfile = () => {
 	const isAuthenticated = useAuthStorage((state) => state.isAuthenticated);
@@ -14,7 +13,7 @@ export const useQueryProfile = () => {
 	const queryClient = useQueryClient();
 
 	const query = useQuery({
-		queryKey: PROFILE_QUERY_KEY,
+		queryKey: profileKeys.profileDetail(),
 		queryFn: () => profileService.getProfile(),
 		enabled: isAuthenticated,
 		retry: false,
@@ -34,7 +33,7 @@ export const useQueryProfile = () => {
 	useEffect(() => {
 		if (query.isError) {
 			setProfile(null);
-			queryClient.setQueryData(PROFILE_QUERY_KEY, null);
+			queryClient.setQueryData(profileKeys.profileDetail(), null);
 		}
 	}, [query.isError, setProfile, queryClient]);
 

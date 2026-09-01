@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
+import { savingsGoalKeys } from "@/content/services";
 import { savingsGoalService } from "@/services/savings-goals";
 
 export const useQuerySavingsGoal = (id: string) => {
 	return useQuery({
-		queryKey: ["savings-goals", id] as const,
+		queryKey: savingsGoalKeys.savingsGoal(id),
 		queryFn: () => savingsGoalService.getSavingsGoal(id),
 		enabled: !!id,
 		staleTime: 1000 * 60 * 15,

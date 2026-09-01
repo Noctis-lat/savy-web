@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { CATEGORIES_QUERY_KEY, categoryService } from "@/services/categories";
+import { categoryKeys } from "@/content/services";
+import { categoryService } from "@/services/categories";
 import { apiErrorToast } from "@/utils/errors/apiErrorToast";
 
 export const useDeleteCategory = () => {
@@ -8,7 +9,7 @@ export const useDeleteCategory = () => {
 	return useMutation({
 		mutationFn: (id: string) => categoryService.deleteCategory(id),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: CATEGORIES_QUERY_KEY });
+			queryClient.invalidateQueries({ queryKey: categoryKeys.categories() });
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al eliminar la categoria");

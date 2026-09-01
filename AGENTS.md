@@ -95,6 +95,30 @@ account-card/
   Use `meta: { suppressToast: true }` to opt out when an error is an expected business state.
 - Mutation hooks must have `onError` with `getApiErrorMessage(error, "fallback")`.
 
+## Query keys conventions
+
+- Query keys live in `src/content/services/{domain}.ts` (one file per domain), re-exported via `src/content/services/index.ts`.
+- Keys are **factory functions** (not static arrays) — this prevents mutation and is the recommended pattern by TanStack Query.
+- Factory naming mirrors the service method that feeds the query — `getAccounts()` → `accountKeys.accounts()`, `getAccount(id)` → `accountKeys.account(id)`.
+- Each domain exports a `{entity}Keys` object (e.g., `accountKeys`, `bankKeys`, `categoryKeys`).
+- **Forbidden**: defining query keys inline in hooks, exporting `*_QUERY_KEY` constants from services, or using generic names (`all`, `list`, `detail`).
+- Use `queryKey: accountKeys.accounts()` for invalidation — React Query's prefix matching invalidates the entire namespace.
+
+### Factory structure per domain
+
+```typescript
+export const accountKeys = {
+	accounts: () => ["accounts"] as const,                                    // base for invalidation
+	accountsByParams: (params?: AccountParams) => ["accounts", params ?? {}] as const,
+	account: (id: string) => ["accounts", id] as const,
+};
+```
+
+- `{entity}s()` — base key for list queries and invalidation (prefix match clears all entries in the namespace).
+- `{entity}sByParams(params?)` — list query with filter parameters.
+- `{entity}(id)` — single entity detail.
+- Custom keys (e.g., `bankAccounts(id)`, `budgetProgress(id)`) mirror the corresponding service method name.
+
 ## Service conventions
 
 - Services in `src/services/{name}/` (one folder per domain).

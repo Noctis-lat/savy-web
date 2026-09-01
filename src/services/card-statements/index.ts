@@ -1,7 +1,5 @@
 import { httpClient, unwrap } from "../http-client";
 
-export const CARD_STATEMENTS_QUERY_KEY = ["card-statements"] as const;
-
 export const cardStatementService: CardStatementService = {
 	getCardStatements: async (params?: CardStatementParams): Promise<CardStatement[]> => {
 		const response = await httpClient.get<APIResponse<CardStatement[]>>("/card-statements", {

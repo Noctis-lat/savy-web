@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { profileKeys } from "@/content/services";
 import { profileService } from "@/services/profile";
 import { useProfileStorage } from "@/storage/profile/profileStorage";
 import { apiErrorToast } from "@/utils/errors/apiErrorToast";
-import { PROFILE_QUERY_KEY } from "./useQueryProfile";
 
 export const useUpdateProfile = () => {
 	const queryClient = useQueryClient();
@@ -12,7 +12,7 @@ export const useUpdateProfile = () => {
 		mutationFn: (payload: UpdateProfilePayload) => profileService.updateProfile(payload),
 		onSuccess: (updatedProfile: Profile) => {
 			setProfile(updatedProfile);
-			queryClient.setQueryData(PROFILE_QUERY_KEY, updatedProfile);
+			queryClient.setQueryData(profileKeys.profileDetail(), updatedProfile);
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al actualizar el perfil");

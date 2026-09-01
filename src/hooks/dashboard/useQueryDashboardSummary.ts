@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { DASHBOARD_QUERY_KEY, dashboardService } from "@/services/dashboard";
+import { dashboardKeys } from "@/content/services";
+import { dashboardService } from "@/services/dashboard";
 
 export const useQueryDashboardSummary = () => {
 	return useQuery({
-		queryKey: [...DASHBOARD_QUERY_KEY, "summary"] as const,
+		queryKey: dashboardKeys.dashboardSummary(),
 		queryFn: () => dashboardService.getSummary(),
 		staleTime: 60_000,
 		gcTime: 1000 * 60 * 5,

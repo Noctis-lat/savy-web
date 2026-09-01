@@ -1,7 +1,5 @@
 import { httpClient, unwrap } from "../http-client";
 
-export const CREDIT_CARDS_QUERY_KEY = ["credit-cards"] as const;
-
 export const creditCardService: CreditCardService = {
 	getCreditCards: async (params?: CreditCardParams): Promise<CreditCard[]> => {
 		const response = await httpClient.get<APIResponse<CreditCard[]>>("/credit-cards", {

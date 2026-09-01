@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { SAVINGS_GOALS_QUERY_KEY, savingsGoalService } from "@/services/savings-goals";
+import { savingsGoalKeys } from "@/content/services";
+import { savingsGoalService } from "@/services/savings-goals";
 import { apiErrorToast } from "@/utils/errors/apiErrorToast";
 
 export const useCreateSavingsGoal = () => {
@@ -9,7 +10,7 @@ export const useCreateSavingsGoal = () => {
 		mutationFn: (payload: CreateSavingsGoalPayload) =>
 			savingsGoalService.createSavingsGoal(payload),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: SAVINGS_GOALS_QUERY_KEY });
+			queryClient.invalidateQueries({ queryKey: savingsGoalKeys.savingsGoals() });
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al crear la meta de ahorro");

@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { CREDIT_CARDS_QUERY_KEY, creditCardService } from "@/services/credit-cards";
+import { creditCardKeys } from "@/content/services";
+import { creditCardService } from "@/services/credit-cards";
 import { apiErrorToast } from "@/utils/errors/apiErrorToast";
 
 export const useUpdateCreditCard = () => {
@@ -9,7 +10,7 @@ export const useUpdateCreditCard = () => {
 		mutationFn: ({ id, payload }: { id: string; payload: UpdateCreditCardPayload }) =>
 			creditCardService.updateCreditCard(id, payload),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: CREDIT_CARDS_QUERY_KEY });
+			queryClient.invalidateQueries({ queryKey: creditCardKeys.creditCards() });
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al actualizar la tarjeta de credito");

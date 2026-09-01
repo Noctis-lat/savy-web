@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { CATEGORIES_QUERY_KEY, categoryService } from "@/services/categories";
+import { categoryKeys } from "@/content/services";
+import { categoryService } from "@/services/categories";
 import { apiErrorToast } from "@/utils/errors/apiErrorToast";
 
 export const useCreateCategory = () => {
@@ -8,7 +9,7 @@ export const useCreateCategory = () => {
 	return useMutation({
 		mutationFn: (payload: CreateCategoryPayload) => categoryService.createCategory(payload),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: CATEGORIES_QUERY_KEY });
+			queryClient.invalidateQueries({ queryKey: categoryKeys.categories() });
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al crear la categoria");

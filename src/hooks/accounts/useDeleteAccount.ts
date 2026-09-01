@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { ACCOUNTS_QUERY_KEY, accountService } from "@/services/accounts";
+import { accountKeys } from "@/content/services";
+import { accountService } from "@/services/accounts";
 import { apiErrorToast } from "@/utils/errors/apiErrorToast";
 
 export const useDeleteAccount = () => {
@@ -8,7 +9,7 @@ export const useDeleteAccount = () => {
 	return useMutation({
 		mutationFn: (id: string) => accountService.deleteAccount(id),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ACCOUNTS_QUERY_KEY });
+			queryClient.invalidateQueries({ queryKey: accountKeys.accounts() });
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al eliminar la cuenta");

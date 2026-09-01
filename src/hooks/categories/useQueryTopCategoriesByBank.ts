@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
+import { categoryKeys } from "@/content/services";
 import { categoryService } from "@/services/categories";
 
 export const useQueryTopCategoriesByBank = (bankId: string, limit = 5) => {
 	return useQuery({
-		queryKey: ["categories", "top", "banks", bankId, { limit }] as const,
+		queryKey: categoryKeys.topCategoriesByBank(bankId, limit),
 		queryFn: () => categoryService.getTopCategoriesByBank(bankId, limit),
 		enabled: !!bankId,
 		staleTime: 60_000,

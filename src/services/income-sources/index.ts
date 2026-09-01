@@ -1,7 +1,5 @@
 import { httpClient, unwrap } from "../http-client";
 
-export const INCOME_SOURCES_QUERY_KEY = ["income-sources"] as const;
-
 export const incomeSourceService: IncomeSourceService = {
 	getIncomeSources: async (params?: IncomeSourceParams): Promise<IncomeSource[]> => {
 		const response = await httpClient.get<APIResponse<IncomeSource[]>>("/income-sources", {

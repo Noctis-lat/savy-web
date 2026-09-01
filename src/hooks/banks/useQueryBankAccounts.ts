@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
+import { bankKeys } from "@/content/services";
 import { bankService } from "@/services/banks";
 
 export const useQueryBankAccounts = (id: string) => {
 	return useQuery({
-		queryKey: ["banks", id, "accounts"] as const,
+		queryKey: bankKeys.bankAccounts(id),
 		queryFn: () => bankService.getBankAccounts(id),
 		enabled: !!id,
 		staleTime: 1000 * 60 * 15,

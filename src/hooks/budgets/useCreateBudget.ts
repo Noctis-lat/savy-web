@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { BUDGETS_QUERY_KEY, budgetService } from "@/services/budgets";
+import { budgetKeys } from "@/content/services";
+import { budgetService } from "@/services/budgets";
 import { apiErrorToast } from "@/utils/errors/apiErrorToast";
 
 export const useCreateBudget = () => {
@@ -8,7 +9,7 @@ export const useCreateBudget = () => {
 	return useMutation({
 		mutationFn: (payload: CreateBudgetPayload) => budgetService.createBudget(payload),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: BUDGETS_QUERY_KEY });
+			queryClient.invalidateQueries({ queryKey: budgetKeys.budgets() });
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al crear el presupuesto");

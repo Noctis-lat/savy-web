@@ -1,7 +1,5 @@
 import { httpClient, unwrap } from "../http-client";
 
-export const CATEGORIES_QUERY_KEY = ["categories"] as const;
-
 export const categoryService: CategoryService = {
 	getCategories: async (params?: CategoryParams): Promise<Category[]> => {
 		const response = await httpClient.get<APIResponse<Category[]>>("/categories", {

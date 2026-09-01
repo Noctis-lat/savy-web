@@ -1,7 +1,5 @@
 import { httpClient, unwrap } from "../http-client";
 
-export const TRANSACTIONS_QUERY_KEY = ["transactions"] as const;
-
 export const transactionService: TransactionService = {
 	getTransactions: async (params?: TransactionParams): Promise<PaginatedResponse<Transaction>> => {
 		const response = await httpClient.get<APIResponse<PaginatedResponse<Transaction>>>(

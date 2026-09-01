@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { CARD_STATEMENTS_QUERY_KEY, cardStatementService } from "@/services/card-statements";
+import { cardStatementKeys } from "@/content/services";
+import { cardStatementService } from "@/services/card-statements";
 import { apiErrorToast } from "@/utils/errors/apiErrorToast";
 
 export const useDeleteCardStatement = () => {
@@ -8,7 +9,7 @@ export const useDeleteCardStatement = () => {
 	return useMutation({
 		mutationFn: (id: string) => cardStatementService.deleteCardStatement(id),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: CARD_STATEMENTS_QUERY_KEY });
+			queryClient.invalidateQueries({ queryKey: cardStatementKeys.cardStatements() });
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al eliminar el estado de cuenta");

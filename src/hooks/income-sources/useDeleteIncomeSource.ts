@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { INCOME_SOURCES_QUERY_KEY, incomeSourceService } from "@/services/income-sources";
+import { incomeSourceKeys } from "@/content/services";
+import { incomeSourceService } from "@/services/income-sources";
 import { apiErrorToast } from "@/utils/errors/apiErrorToast";
 
 export const useDeleteIncomeSource = () => {
@@ -8,7 +9,7 @@ export const useDeleteIncomeSource = () => {
 	return useMutation({
 		mutationFn: (id: string) => incomeSourceService.deleteIncomeSource(id),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: INCOME_SOURCES_QUERY_KEY });
+			queryClient.invalidateQueries({ queryKey: incomeSourceKeys.incomeSources() });
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al eliminar la fuente de ingreso");

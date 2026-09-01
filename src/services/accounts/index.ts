@@ -1,7 +1,5 @@
 import { httpClient, unwrap } from "../http-client";
 
-export const ACCOUNTS_QUERY_KEY = ["accounts"] as const;
-
 export const accountService: AccountService = {
 	getAccounts: async (params?: AccountParams): Promise<Account[]> => {
 		const response = await httpClient.get<APIResponse<Account[]>>("/accounts", {

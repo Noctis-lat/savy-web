@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import { ROUTES } from "@/app/router/routes";
-import { PROFILE_QUERY_KEY } from "@/hooks/profile/useQueryProfile";
+import { profileKeys } from "@/content/services";
 import { profileService } from "@/services/profile";
 import { useOnboardingController } from "@/storage/onboarding/onboardingController";
 import { useProfileStorage } from "@/storage/profile/profileStorage";
@@ -60,7 +60,7 @@ export const useCompleteOnboarding = () => {
 			// Persist immediately so the guarded routes see the fresh profile
 			// before the query refetch resolves.
 			setProfile(completedProfile);
-			queryClient.invalidateQueries({ queryKey: PROFILE_QUERY_KEY });
+			queryClient.invalidateQueries({ queryKey: profileKeys.profile() });
 			// Reset the wizard so a later /app/onboarding entry starts at step 1.
 			useOnboardingController.getState().reset();
 			navigate(ROUTES.APP.ROOT, { replace: true });

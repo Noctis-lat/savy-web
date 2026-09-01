@@ -1,7 +1,5 @@
 import { httpClient, unwrap } from "../http-client";
 
-export const BANKS_QUERY_KEY = ["banks"] as const;
-
 export const bankService: BankService = {
 	getBanks: async (params?: BankParams): Promise<Bank[] | BankWithInfo[]> => {
 		const response = await httpClient.get<APIResponse<Bank[] | BankWithInfo[]>>("/banks", {

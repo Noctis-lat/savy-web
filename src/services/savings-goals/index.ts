@@ -1,7 +1,5 @@
 import { httpClient, unwrap } from "../http-client";
 
-export const SAVINGS_GOALS_QUERY_KEY = ["savings-goals"] as const;
-
 export const savingsGoalService: SavingsGoalService = {
 	getSavingsGoals: async (params?: SavingsGoalParams): Promise<SavingsGoal[]> => {
 		const response = await httpClient.get<APIResponse<SavingsGoal[]>>("/savings-goals", {

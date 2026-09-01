@@ -1,7 +1,5 @@
 import { httpClient, unwrap } from "../http-client";
 
-export const BUDGETS_QUERY_KEY = ["budgets"] as const;
-
 export const budgetService: BudgetService = {
 	getBudgets: async (params?: BudgetParams): Promise<Budget[]> => {
 		const response = await httpClient.get<APIResponse<Budget[]>>("/budgets", {

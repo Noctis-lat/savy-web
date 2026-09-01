@@ -1,7 +1,5 @@
 import { httpClient, unwrap } from "../http-client";
 
-export const LOANS_QUERY_KEY = ["loans"] as const;
-
 export const loanService: LoanService = {
 	getLoans: async (params?: LoanParams): Promise<Loan[]> => {
 		const response = await httpClient.get<APIResponse<Loan[]>>("/loans", {
