@@ -7,7 +7,7 @@ export const useUpdateAccount = () => {
 
 	return useMutation({
 		mutationFn: ({ id, payload }: { id: string; payload: UpdateAccountPayload }) =>
-			accountService.update(id, payload),
+			accountService.updateAccount(id, payload),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ACCOUNTS_QUERY_KEY });
 		},

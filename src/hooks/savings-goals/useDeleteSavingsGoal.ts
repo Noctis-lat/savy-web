@@ -6,7 +6,7 @@ export const useDeleteSavingsGoal = () => {
 	const queryClient = useQueryClient();
 
 	return useMutation({
-		mutationFn: (id: string) => savingsGoalService.remove(id),
+		mutationFn: (id: string) => savingsGoalService.deleteSavingsGoal(id),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: SAVINGS_GOALS_QUERY_KEY });
 		},

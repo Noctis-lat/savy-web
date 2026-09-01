@@ -4,7 +4,7 @@ import { BANKS_QUERY_KEY, bankService } from "@/services/banks";
 export const useQueryBanks = () => {
 	return useQuery({
 		queryKey: BANKS_QUERY_KEY,
-		queryFn: () => bankService.getAll(),
+		queryFn: () => bankService.getBanks(),
 		staleTime: 1000 * 60 * 15,
 		gcTime: 1000 * 60 * 20,
 	});

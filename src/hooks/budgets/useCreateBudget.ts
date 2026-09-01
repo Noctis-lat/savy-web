@@ -6,7 +6,7 @@ export const useCreateBudget = () => {
 	const queryClient = useQueryClient();
 
 	return useMutation({
-		mutationFn: (payload: CreateBudgetPayload) => budgetService.create(payload),
+		mutationFn: (payload: CreateBudgetPayload) => budgetService.createBudget(payload),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: BUDGETS_QUERY_KEY });
 		},

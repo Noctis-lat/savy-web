@@ -6,7 +6,7 @@ export const useDeleteCreditCard = () => {
 	const queryClient = useQueryClient();
 
 	return useMutation({
-		mutationFn: (id: string) => creditCardService.remove(id),
+		mutationFn: (id: string) => creditCardService.deleteCreditCard(id),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: CREDIT_CARDS_QUERY_KEY });
 		},

@@ -7,7 +7,7 @@ export const useUpdateCreditCard = () => {
 
 	return useMutation({
 		mutationFn: ({ id, payload }: { id: string; payload: UpdateCreditCardPayload }) =>
-			creditCardService.update(id, payload),
+			creditCardService.updateCreditCard(id, payload),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: CREDIT_CARDS_QUERY_KEY });
 		},

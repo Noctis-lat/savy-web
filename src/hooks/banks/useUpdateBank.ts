@@ -7,7 +7,7 @@ export const useUpdateBank = () => {
 
 	return useMutation({
 		mutationFn: ({ id, payload }: { id: string; payload: UpdateBankPayload }) =>
-			bankService.update(id, payload),
+			bankService.updateBank(id, payload),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: BANKS_QUERY_KEY });
 		},

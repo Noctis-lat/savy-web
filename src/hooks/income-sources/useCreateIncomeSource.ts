@@ -6,7 +6,8 @@ export const useCreateIncomeSource = () => {
 	const queryClient = useQueryClient();
 
 	return useMutation({
-		mutationFn: (payload: CreateIncomeSourcePayload) => incomeSourceService.create(payload),
+		mutationFn: (payload: CreateIncomeSourcePayload) =>
+			incomeSourceService.createIncomeSource(payload),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: INCOME_SOURCES_QUERY_KEY });
 		},

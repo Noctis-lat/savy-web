@@ -4,7 +4,7 @@ import { transactionService } from "@/services/transactions";
 export const useQueryTransaction = (id: string) => {
 	return useQuery({
 		queryKey: ["transactions", id] as const,
-		queryFn: () => transactionService.getById(id),
+		queryFn: () => transactionService.getTransaction(id),
 		enabled: !!id,
 	});
 };

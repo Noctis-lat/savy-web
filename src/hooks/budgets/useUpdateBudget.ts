@@ -7,7 +7,7 @@ export const useUpdateBudget = () => {
 
 	return useMutation({
 		mutationFn: ({ id, payload }: { id: string; payload: UpdateBudgetPayload }) =>
-			budgetService.update(id, payload),
+			budgetService.updateBudget(id, payload),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: BUDGETS_QUERY_KEY });
 		},

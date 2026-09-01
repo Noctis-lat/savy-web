@@ -6,7 +6,7 @@ export const useDeleteLoan = () => {
 	const queryClient = useQueryClient();
 
 	return useMutation({
-		mutationFn: (id: string) => loanService.remove(id),
+		mutationFn: (id: string) => loanService.deleteLoan(id),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: LOANS_QUERY_KEY });
 		},

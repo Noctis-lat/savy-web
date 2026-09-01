@@ -1,6 +1,13 @@
+// ====================== ENTITY =========================
+
 type AuthUser = {
 	id: string;
 	email: string;
+};
+
+type AuthTokens = {
+	accessToken: string;
+	refreshToken: string;
 };
 
 type AuthResponse = {
@@ -8,6 +15,20 @@ type AuthResponse = {
 	refreshToken: string;
 	user: AuthUser;
 };
+
+// ====================== SERVICE =========================
+
+type AuthService = {
+	login: (payload: LoginPayload) => Promise<AuthResponse>;
+	register: (payload: RegisterPayload) => Promise<AuthResponse>;
+	refresh: (refreshToken: string) => Promise<AuthTokens>;
+	logout: () => Promise<void>;
+	getMe: () => Promise<AuthUser>;
+	forgotPassword: (payload: ForgotPasswordPayload) => Promise<void>;
+	resetPassword: (payload: ResetPasswordPayload) => Promise<void>;
+};
+
+// ====================== METHOD TYPES =========================
 
 type LoginPayload = {
 	email: string;
@@ -30,4 +51,3 @@ type ResetPasswordPayload = {
 	refreshToken: string;
 	newPassword: string;
 };
-

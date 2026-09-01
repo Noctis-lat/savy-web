@@ -6,7 +6,7 @@ export const useDeleteIncomeSource = () => {
 	const queryClient = useQueryClient();
 
 	return useMutation({
-		mutationFn: (id: string) => incomeSourceService.remove(id),
+		mutationFn: (id: string) => incomeSourceService.deleteIncomeSource(id),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: INCOME_SOURCES_QUERY_KEY });
 		},

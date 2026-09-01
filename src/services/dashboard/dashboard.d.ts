@@ -1,3 +1,5 @@
+// ====================== ENTITY =========================
+
 type DashboardNetWorth = {
 	total: number;
 	assets: number;
@@ -82,3 +84,8 @@ type DashboardSummary = {
 	generatedAt: string;
 };
 
+// ====================== SERVICE =========================
+
+type DashboardService = {
+	getSummary: () => Promise<DashboardSummary>;
+};

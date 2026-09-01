@@ -6,7 +6,7 @@ export const useDeleteBudget = () => {
 	const queryClient = useQueryClient();
 
 	return useMutation({
-		mutationFn: (id: string) => budgetService.remove(id),
+		mutationFn: (id: string) => budgetService.deleteBudget(id),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: BUDGETS_QUERY_KEY });
 		},

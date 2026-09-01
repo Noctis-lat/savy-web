@@ -7,7 +7,7 @@ export const useUpdateIncomeSource = () => {
 
 	return useMutation({
 		mutationFn: ({ id, payload }: { id: string; payload: UpdateIncomeSourcePayload }) =>
-			incomeSourceService.update(id, payload),
+			incomeSourceService.updateIncomeSource(id, payload),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: INCOME_SOURCES_QUERY_KEY });
 		},

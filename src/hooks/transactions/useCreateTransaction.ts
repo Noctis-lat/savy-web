@@ -6,7 +6,8 @@ export const useCreateTransaction = () => {
 	const queryClient = useQueryClient();
 
 	return useMutation({
-		mutationFn: (payload: CreateTransactionPayload) => transactionService.create(payload),
+		mutationFn: (payload: CreateTransactionPayload) =>
+			transactionService.createTransaction(payload),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: TRANSACTIONS_QUERY_KEY });
 		},

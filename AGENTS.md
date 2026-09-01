@@ -105,6 +105,72 @@ account-card/
 - The backend wraps ALL responses in `{ success: boolean, data: T, message?: string }`.
   Use `unwrap<T>()` to extract the inner `data` — never access `response.data.data` manually.
 
+### Type file structure (`.d.ts`)
+
+Types MUST live in the `.d.ts` file, never in `index.ts`. The `.d.ts` is an ambient declaration file (no `export` or `import` at top-level). Reference external types with inline `import()`.
+
+Order within the `.d.ts`:
+
+1. **Enums / unions** — string literal unions used by the entity (e.g., `AccountType`, `CategoryType`, `TransactionType`, `BudgetPeriod`, `PeriodType`, `IncomeSourceFrequency`).
+2. **Entity** — the main domain model (e.g., `Account`, `Bank`, `Category`).
+3. **Service type** — the interface that defines the service contract (e.g., `AccountService`, `BankService`).
+4. **Method types** — `*Params` for list/filter parameters, `Create*Payload` for creation, `Update*Payload` for updates, and any response-specific types.
+
+```typescript
+// ====================== ENUMS =========================
+
+type AccountType = "DEBIT" | "CREDIT" | "LOAN" | "CASH";
+
+// ====================== ENTITY =========================
+
+type Account = { /* ... */ };
+
+// ====================== SERVICE =========================
+
+type AccountService = {
+	getAccounts: (params?: AccountParams) => Promise<Account[]>;
+	getAccount: (id: string) => Promise<Account>;
+	createAccount: (payload: CreateAccountPayload) => Promise<Account>;
+	updateAccount: (id: string, payload: UpdateAccountPayload) => Promise<Account>;
+	deleteAccount: (id: string) => Promise<void>;
+};
+
+// ====================== METHOD TYPES =========================
+
+type AccountParams = { /* ... */ };
+type CreateAccountPayload = { /* ... */ };
+type UpdateAccountPayload = { /* ... */ };
+```
+
+### Method naming
+
+Services are the bridge to the API, decoupled from the frontend. Method names MUST be explicit and domain-specific — never generic (`getAll`, `getById`, `create`, `update`, `remove` are forbidden).
+
+| Operation | Pattern | Example |
+|-----------|---------|---------|
+| List | `get{Entity}s` | `getAccounts`, `getBanks`, `getTransactions` |
+| Single | `get{Entity}` | `getAccount`, `getBank`, `getTransaction` |
+| Create | `create{Entity}` | `createAccount`, `createBank` |
+| Update | `update{Entity}` | `updateAccount`, `updateBank` |
+| Delete | `delete{Entity}` | `deleteAccount`, `deleteBank` |
+| Custom | `{verb}{Entity}{Detail}` | `getBankIncomeVsExpenses`, `getBudgetProgress`, `getTopCategoriesByBank` |
+
+### Parameter naming
+
+- List/filter parameters MUST be named `{Entity}Params` (e.g., `AccountParams`, `TransactionParams`), never `{Entity}Filters` or bare `filters`.
+- The service method parameter MUST be named `params`, not `filters`.
+- Creation payloads: `Create{Entity}Payload`.
+- Update payloads: `Update{Entity}Payload`.
+
+### `index.ts` structure
+
+The `index.ts` file contains ONLY:
+- The `import` from `../http-client`.
+- The `QUERY_KEY` constant (e.g., `export const ACCOUNTS_QUERY_KEY = ["accounts"] as const;`).
+- The service object implementation (typed by the service type from the `.d.ts`).
+
+No type definitions, no type aliases, no interfaces in `index.ts`.
+
 ### HTTP client
 
 - `src/services/http-client.ts` — shared axios instance with:

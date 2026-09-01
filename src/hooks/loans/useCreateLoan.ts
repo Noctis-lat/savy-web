@@ -6,7 +6,7 @@ export const useCreateLoan = () => {
 	const queryClient = useQueryClient();
 
 	return useMutation({
-		mutationFn: (payload: CreateLoanPayload) => loanService.create(payload),
+		mutationFn: (payload: CreateLoanPayload) => loanService.createLoan(payload),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: LOANS_QUERY_KEY });
 		},

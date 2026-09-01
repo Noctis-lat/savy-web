@@ -7,7 +7,7 @@ export const useUpdateSavingsGoal = () => {
 
 	return useMutation({
 		mutationFn: ({ id, payload }: { id: string; payload: UpdateSavingsGoalPayload }) =>
-			savingsGoalService.update(id, payload),
+			savingsGoalService.updateSavingsGoal(id, payload),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: SAVINGS_GOALS_QUERY_KEY });
 		},

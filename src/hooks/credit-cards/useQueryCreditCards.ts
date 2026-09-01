@@ -4,7 +4,7 @@ import { CREDIT_CARDS_QUERY_KEY, creditCardService } from "@/services/credit-car
 export const useQueryCreditCards = () => {
 	return useQuery({
 		queryKey: CREDIT_CARDS_QUERY_KEY,
-		queryFn: () => creditCardService.getAll(),
+		queryFn: () => creditCardService.getCreditCards(),
 		staleTime: 1000 * 60 * 15,
 		gcTime: 1000 * 60 * 20,
 	});

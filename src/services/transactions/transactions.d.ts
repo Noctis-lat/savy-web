@@ -1,6 +1,44 @@
+// ====================== ENUMS =========================
+
 type TransactionType = "INCOME" | "EXPENSE" | "TRANSFER" | "PAYMENT";
 
-type TransactionFilters = {
+// ====================== ENTITY =========================
+
+type Transaction = {
+	id: string;
+	accountId: string;
+	destinationAccountId: string | null;
+	categoryId: string | null;
+	type: TransactionType;
+	amount: number;
+	description: string | null;
+	note: string | null;
+	date: string;
+	createdAt: string;
+	updatedAt: string;
+};
+
+type PaginatedResponse<T> = {
+	data: T[];
+	total: number;
+	page: number;
+	limit: number;
+	totalPages: number;
+};
+
+// ====================== SERVICE =========================
+
+type TransactionService = {
+	getTransactions: (params?: TransactionParams) => Promise<PaginatedResponse<Transaction>>;
+	getTransaction: (id: string) => Promise<Transaction>;
+	createTransaction: (payload: CreateTransactionPayload) => Promise<Transaction>;
+	updateTransaction: (id: string, payload: UpdateTransactionPayload) => Promise<Transaction>;
+	deleteTransaction: (id: string) => Promise<void>;
+};
+
+// ====================== METHOD TYPES =========================
+
+type TransactionParams = {
 	accountId?: string;
 	type?: TransactionType;
 	categoryId?: string;
@@ -35,4 +73,3 @@ type UpdateTransactionPayload = {
 	note?: string | null;
 	date?: string;
 };
-

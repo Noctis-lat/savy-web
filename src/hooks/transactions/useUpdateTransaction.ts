@@ -7,7 +7,7 @@ export const useUpdateTransaction = () => {
 
 	return useMutation({
 		mutationFn: ({ id, payload }: { id: string; payload: UpdateTransactionPayload }) =>
-			transactionService.update(id, payload),
+			transactionService.updateTransaction(id, payload),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: TRANSACTIONS_QUERY_KEY });
 		},

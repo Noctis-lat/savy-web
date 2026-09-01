@@ -6,7 +6,7 @@ export const useDeleteCardStatement = () => {
 	const queryClient = useQueryClient();
 
 	return useMutation({
-		mutationFn: (id: string) => cardStatementService.remove(id),
+		mutationFn: (id: string) => cardStatementService.deleteCardStatement(id),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: CARD_STATEMENTS_QUERY_KEY });
 		},

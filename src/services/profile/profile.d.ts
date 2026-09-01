@@ -1,3 +1,5 @@
+// ====================== ENTITY =========================
+
 type Profile = {
 	id: string;
 	authId: string;
@@ -18,6 +20,22 @@ type Profile = {
 	updatedAt: string;
 };
 
+type OnboardingValidation = {
+	valid: boolean;
+	missingFields: string[];
+};
+
+// ====================== SERVICE =========================
+
+type ProfileService = {
+	getProfile: () => Promise<Profile>;
+	updateProfile: (payload: UpdateProfilePayload) => Promise<Profile>;
+	validateOnboarding: () => Promise<OnboardingValidation>;
+	completeOnboarding: () => Promise<Profile>;
+};
+
+// ====================== METHOD TYPES =========================
+
 type UpdateProfilePayload = {
 	firstName?: string;
 	lastName?: string;
@@ -28,4 +46,3 @@ type UpdateProfilePayload = {
 	locale?: string;
 	timezone?: string;
 };
-

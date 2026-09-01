@@ -6,7 +6,7 @@ export const useCreateAccount = () => {
 	const queryClient = useQueryClient();
 
 	return useMutation({
-		mutationFn: (payload: CreateAccountPayload) => accountService.create(payload),
+		mutationFn: (payload: CreateAccountPayload) => accountService.createAccount(payload),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ACCOUNTS_QUERY_KEY });
 		},

@@ -7,7 +7,7 @@ export const useBulkCreateIncomeSources = () => {
 
 	return useMutation({
 		mutationFn: (payload: { sources: CreateIncomeSourcePayload[] }) =>
-			incomeSourceService.bulkCreate(payload),
+			incomeSourceService.bulkCreateIncomeSources(payload),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: INCOME_SOURCES_QUERY_KEY });
 		},

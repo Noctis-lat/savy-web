@@ -6,7 +6,8 @@ export const useCreateSavingsGoal = () => {
 	const queryClient = useQueryClient();
 
 	return useMutation({
-		mutationFn: (payload: CreateSavingsGoalPayload) => savingsGoalService.create(payload),
+		mutationFn: (payload: CreateSavingsGoalPayload) =>
+			savingsGoalService.createSavingsGoal(payload),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: SAVINGS_GOALS_QUERY_KEY });
 		},

@@ -7,7 +7,7 @@ export const useUpdateLoan = () => {
 
 	return useMutation({
 		mutationFn: ({ id, payload }: { id: string; payload: UpdateLoanPayload }) =>
-			loanService.update(id, payload),
+			loanService.updateLoan(id, payload),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: LOANS_QUERY_KEY });
 		},

@@ -6,7 +6,7 @@ export const useCreateCreditCard = () => {
 	const queryClient = useQueryClient();
 
 	return useMutation({
-		mutationFn: (payload: CreateCreditCardPayload) => creditCardService.create(payload),
+		mutationFn: (payload: CreateCreditCardPayload) => creditCardService.createCreditCard(payload),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: CREDIT_CARDS_QUERY_KEY });
 		},

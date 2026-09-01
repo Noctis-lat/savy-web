@@ -6,7 +6,7 @@ export const useCreateCategory = () => {
 	const queryClient = useQueryClient();
 
 	return useMutation({
-		mutationFn: (payload: CreateCategoryPayload) => categoryService.create(payload),
+		mutationFn: (payload: CreateCategoryPayload) => categoryService.createCategory(payload),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: CATEGORIES_QUERY_KEY });
 		},

@@ -6,7 +6,8 @@ export const useCreateCardStatement = () => {
 	const queryClient = useQueryClient();
 
 	return useMutation({
-		mutationFn: (payload: CreateCardStatementPayload) => cardStatementService.create(payload),
+		mutationFn: (payload: CreateCardStatementPayload) =>
+			cardStatementService.createCardStatement(payload),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: CARD_STATEMENTS_QUERY_KEY });
 		},
