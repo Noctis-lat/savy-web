@@ -10,7 +10,7 @@ export const useUpdateIncomeSource = () => {
 		mutationFn: ({ id, payload }: { id: string; payload: UpdateIncomeSourcePayload }) =>
 			incomeSourceService.updateIncomeSource(id, payload),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: incomeSourceKeys.incomeSources() });
+			queryClient.invalidateQueries({ queryKey: [incomeSourceKeys.incomeSources] });
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al actualizar la fuente de ingreso");

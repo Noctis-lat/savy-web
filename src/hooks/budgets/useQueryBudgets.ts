@@ -4,7 +4,7 @@ import { budgetService } from "@/services/budgets";
 
 export const useQueryBudgets = () => {
 	return useQuery({
-		queryKey: budgetKeys.budgets(),
+		queryKey: [budgetKeys.budgets],
 		queryFn: () => budgetService.getBudgets(),
 		staleTime: 1000 * 60 * 15,
 		gcTime: 1000 * 60 * 20,

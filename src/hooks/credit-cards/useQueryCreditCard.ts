@@ -4,7 +4,7 @@ import { creditCardService } from "@/services/credit-cards";
 
 export const useQueryCreditCard = (id: string) => {
 	return useQuery({
-		queryKey: creditCardKeys.creditCard(id),
+		queryKey: [creditCardKeys.creditCard, id],
 		queryFn: () => creditCardService.getCreditCard(id),
 		enabled: !!id,
 		staleTime: 1000 * 60 * 15,

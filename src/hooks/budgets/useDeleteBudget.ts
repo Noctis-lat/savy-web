@@ -9,7 +9,7 @@ export const useDeleteBudget = () => {
 	return useMutation({
 		mutationFn: (id: string) => budgetService.deleteBudget(id),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: budgetKeys.budgets() });
+			queryClient.invalidateQueries({ queryKey: [budgetKeys.budgets] });
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al eliminar el presupuesto");

@@ -4,7 +4,7 @@ import { loanService } from "@/services/loans";
 
 export const useQueryLoan = (id: string) => {
 	return useQuery({
-		queryKey: loanKeys.loan(id),
+		queryKey: [loanKeys.loan, id],
 		queryFn: () => loanService.getLoan(id),
 		enabled: !!id,
 		staleTime: 1000 * 60 * 15,

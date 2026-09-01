@@ -9,7 +9,7 @@ export const useCreateCreditCard = () => {
 	return useMutation({
 		mutationFn: (payload: CreateCreditCardPayload) => creditCardService.createCreditCard(payload),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: creditCardKeys.creditCards() });
+			queryClient.invalidateQueries({ queryKey: [creditCardKeys.creditCards] });
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al crear la tarjeta de credito");

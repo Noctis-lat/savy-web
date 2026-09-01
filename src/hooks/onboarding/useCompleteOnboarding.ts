@@ -60,7 +60,7 @@ export const useCompleteOnboarding = () => {
 			// Persist immediately so the guarded routes see the fresh profile
 			// before the query refetch resolves.
 			setProfile(completedProfile);
-			queryClient.invalidateQueries({ queryKey: profileKeys.profile() });
+			queryClient.invalidateQueries({ queryKey: [profileKeys.profile] });
 			// Reset the wizard so a later /app/onboarding entry starts at step 1.
 			useOnboardingController.getState().reset();
 			navigate(ROUTES.APP.ROOT, { replace: true });

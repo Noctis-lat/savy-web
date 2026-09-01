@@ -9,7 +9,7 @@ export const useCreateBudget = () => {
 	return useMutation({
 		mutationFn: (payload: CreateBudgetPayload) => budgetService.createBudget(payload),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: budgetKeys.budgets() });
+			queryClient.invalidateQueries({ queryKey: [budgetKeys.budgets] });
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al crear el presupuesto");

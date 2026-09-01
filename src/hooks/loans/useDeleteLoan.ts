@@ -9,7 +9,7 @@ export const useDeleteLoan = () => {
 	return useMutation({
 		mutationFn: (id: string) => loanService.deleteLoan(id),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: loanKeys.loans() });
+			queryClient.invalidateQueries({ queryKey: [loanKeys.loans] });
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al eliminar el prestamo");

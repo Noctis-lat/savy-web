@@ -9,7 +9,7 @@ export const useDeleteCardStatement = () => {
 	return useMutation({
 		mutationFn: (id: string) => cardStatementService.deleteCardStatement(id),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: cardStatementKeys.cardStatements() });
+			queryClient.invalidateQueries({ queryKey: [cardStatementKeys.cardStatements] });
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al eliminar el estado de cuenta");

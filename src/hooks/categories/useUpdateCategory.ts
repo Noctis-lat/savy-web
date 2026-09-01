@@ -10,7 +10,7 @@ export const useUpdateCategory = () => {
 		mutationFn: ({ id, payload }: { id: string; payload: UpdateCategoryPayload }) =>
 			categoryService.updateCategory(id, payload),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: categoryKeys.categories() });
+			queryClient.invalidateQueries({ queryKey: [categoryKeys.categories] });
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al actualizar la categoria");

@@ -10,7 +10,7 @@ export const useUpdateSavingsGoal = () => {
 		mutationFn: ({ id, payload }: { id: string; payload: UpdateSavingsGoalPayload }) =>
 			savingsGoalService.updateSavingsGoal(id, payload),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: savingsGoalKeys.savingsGoals() });
+			queryClient.invalidateQueries({ queryKey: [savingsGoalKeys.savingsGoals] });
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al actualizar la meta de ahorro");

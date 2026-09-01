@@ -9,7 +9,7 @@ export const useCreateLoan = () => {
 	return useMutation({
 		mutationFn: (payload: CreateLoanPayload) => loanService.createLoan(payload),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: loanKeys.loans() });
+			queryClient.invalidateQueries({ queryKey: [loanKeys.loans] });
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al crear el prestamo");

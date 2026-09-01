@@ -10,7 +10,7 @@ export const useUpdateAccount = () => {
 		mutationFn: ({ id, payload }: { id: string; payload: UpdateAccountPayload }) =>
 			accountService.updateAccount(id, payload),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: accountKeys.accounts() });
+			queryClient.invalidateQueries({ queryKey: [accountKeys.accounts] });
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al actualizar la cuenta");

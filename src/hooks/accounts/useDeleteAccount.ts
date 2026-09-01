@@ -9,7 +9,7 @@ export const useDeleteAccount = () => {
 	return useMutation({
 		mutationFn: (id: string) => accountService.deleteAccount(id),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: accountKeys.accounts() });
+			queryClient.invalidateQueries({ queryKey: [accountKeys.accounts] });
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al eliminar la cuenta");

@@ -10,7 +10,7 @@ export const useUpdateBudget = () => {
 		mutationFn: ({ id, payload }: { id: string; payload: UpdateBudgetPayload }) =>
 			budgetService.updateBudget(id, payload),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: budgetKeys.budgets() });
+			queryClient.invalidateQueries({ queryKey: [budgetKeys.budgets] });
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al actualizar el presupuesto");

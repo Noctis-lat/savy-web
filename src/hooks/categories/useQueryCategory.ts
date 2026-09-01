@@ -4,7 +4,7 @@ import { categoryService } from "@/services/categories";
 
 export const useQueryCategory = (id: string) => {
 	return useQuery({
-		queryKey: categoryKeys.category(id),
+		queryKey: [categoryKeys.category, id],
 		queryFn: () => categoryService.getCategory(id),
 		enabled: !!id,
 		staleTime: 1000 * 60 * 15,

@@ -4,7 +4,7 @@ import { incomeSourceService } from "@/services/income-sources";
 
 export const useQueryIncomeSources = () => {
 	return useQuery({
-		queryKey: incomeSourceKeys.incomeSources(),
+		queryKey: [incomeSourceKeys.incomeSources],
 		queryFn: () => incomeSourceService.getIncomeSources(),
 		staleTime: 1000 * 60 * 15,
 		gcTime: 1000 * 60 * 20,

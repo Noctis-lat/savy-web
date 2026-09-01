@@ -4,7 +4,7 @@ import { budgetService } from "@/services/budgets";
 
 export const useQueryBudgetProgress = (id: string) => {
 	return useQuery({
-		queryKey: budgetKeys.budgetProgress(id),
+		queryKey: [budgetKeys.budgetProgress, id],
 		queryFn: () => budgetService.getBudgetProgress(id),
 		enabled: !!id,
 		staleTime: 60_000,

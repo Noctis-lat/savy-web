@@ -10,7 +10,7 @@ export const useUpdateCreditCard = () => {
 		mutationFn: ({ id, payload }: { id: string; payload: UpdateCreditCardPayload }) =>
 			creditCardService.updateCreditCard(id, payload),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: creditCardKeys.creditCards() });
+			queryClient.invalidateQueries({ queryKey: [creditCardKeys.creditCards] });
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al actualizar la tarjeta de credito");

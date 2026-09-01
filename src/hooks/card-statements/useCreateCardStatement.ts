@@ -10,7 +10,7 @@ export const useCreateCardStatement = () => {
 		mutationFn: (payload: CreateCardStatementPayload) =>
 			cardStatementService.createCardStatement(payload),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: cardStatementKeys.cardStatements() });
+			queryClient.invalidateQueries({ queryKey: [cardStatementKeys.cardStatements] });
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al crear el estado de cuenta");

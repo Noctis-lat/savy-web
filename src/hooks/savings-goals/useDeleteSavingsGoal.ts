@@ -9,7 +9,7 @@ export const useDeleteSavingsGoal = () => {
 	return useMutation({
 		mutationFn: (id: string) => savingsGoalService.deleteSavingsGoal(id),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: savingsGoalKeys.savingsGoals() });
+			queryClient.invalidateQueries({ queryKey: [savingsGoalKeys.savingsGoals] });
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al eliminar la meta de ahorro");

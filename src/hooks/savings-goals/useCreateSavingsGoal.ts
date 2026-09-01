@@ -10,7 +10,7 @@ export const useCreateSavingsGoal = () => {
 		mutationFn: (payload: CreateSavingsGoalPayload) =>
 			savingsGoalService.createSavingsGoal(payload),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: savingsGoalKeys.savingsGoals() });
+			queryClient.invalidateQueries({ queryKey: [savingsGoalKeys.savingsGoals] });
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al crear la meta de ahorro");

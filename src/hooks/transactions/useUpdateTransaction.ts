@@ -10,7 +10,7 @@ export const useUpdateTransaction = () => {
 		mutationFn: ({ id, payload }: { id: string; payload: UpdateTransactionPayload }) =>
 			transactionService.updateTransaction(id, payload),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: transactionKeys.transactions() });
+			queryClient.invalidateQueries({ queryKey: [transactionKeys.transactions] });
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al actualizar la transaccion");

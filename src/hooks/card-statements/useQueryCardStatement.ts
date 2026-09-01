@@ -4,7 +4,7 @@ import { cardStatementService } from "@/services/card-statements";
 
 export const useQueryCardStatement = (id: string) => {
 	return useQuery({
-		queryKey: cardStatementKeys.cardStatement(id),
+		queryKey: [cardStatementKeys.cardStatement, id],
 		queryFn: () => cardStatementService.getCardStatement(id),
 		enabled: !!id,
 		staleTime: 1000 * 60 * 15,

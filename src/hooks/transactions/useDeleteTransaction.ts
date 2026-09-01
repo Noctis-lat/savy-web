@@ -9,7 +9,7 @@ export const useDeleteTransaction = () => {
 	return useMutation({
 		mutationFn: (id: string) => transactionService.deleteTransaction(id),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: transactionKeys.transactions() });
+			queryClient.invalidateQueries({ queryKey: [transactionKeys.transactions] });
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al eliminar la transaccion");

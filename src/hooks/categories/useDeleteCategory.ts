@@ -9,7 +9,7 @@ export const useDeleteCategory = () => {
 	return useMutation({
 		mutationFn: (id: string) => categoryService.deleteCategory(id),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: categoryKeys.categories() });
+			queryClient.invalidateQueries({ queryKey: [categoryKeys.categories] });
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al eliminar la categoria");

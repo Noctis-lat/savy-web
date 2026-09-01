@@ -9,7 +9,7 @@ export const useDeleteIncomeSource = () => {
 	return useMutation({
 		mutationFn: (id: string) => incomeSourceService.deleteIncomeSource(id),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: incomeSourceKeys.incomeSources() });
+			queryClient.invalidateQueries({ queryKey: [incomeSourceKeys.incomeSources] });
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al eliminar la fuente de ingreso");

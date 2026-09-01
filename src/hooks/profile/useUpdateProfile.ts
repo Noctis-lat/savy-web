@@ -12,7 +12,7 @@ export const useUpdateProfile = () => {
 		mutationFn: (payload: UpdateProfilePayload) => profileService.updateProfile(payload),
 		onSuccess: (updatedProfile: Profile) => {
 			setProfile(updatedProfile);
-			queryClient.setQueryData(profileKeys.profileDetail(), updatedProfile);
+			queryClient.setQueryData([profileKeys.profile], updatedProfile);
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al actualizar el perfil");

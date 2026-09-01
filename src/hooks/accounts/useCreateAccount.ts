@@ -9,7 +9,7 @@ export const useCreateAccount = () => {
 	return useMutation({
 		mutationFn: (payload: CreateAccountPayload) => accountService.createAccount(payload),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: accountKeys.accounts() });
+			queryClient.invalidateQueries({ queryKey: [accountKeys.accounts] });
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al crear la cuenta");

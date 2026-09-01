@@ -9,7 +9,7 @@ export const useDeleteCreditCard = () => {
 	return useMutation({
 		mutationFn: (id: string) => creditCardService.deleteCreditCard(id),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: creditCardKeys.creditCards() });
+			queryClient.invalidateQueries({ queryKey: [creditCardKeys.creditCards] });
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al eliminar la tarjeta de credito");

@@ -13,7 +13,7 @@ export const useQueryProfile = () => {
 	const queryClient = useQueryClient();
 
 	const query = useQuery({
-		queryKey: profileKeys.profileDetail(),
+		queryKey: [profileKeys.profile],
 		queryFn: () => profileService.getProfile(),
 		enabled: isAuthenticated,
 		retry: false,
@@ -33,7 +33,7 @@ export const useQueryProfile = () => {
 	useEffect(() => {
 		if (query.isError) {
 			setProfile(null);
-			queryClient.setQueryData(profileKeys.profileDetail(), null);
+			queryClient.setQueryData([profileKeys.profile], null);
 		}
 	}, [query.isError, setProfile, queryClient]);
 

@@ -10,7 +10,7 @@ export const useCreateTransaction = () => {
 		mutationFn: (payload: CreateTransactionPayload) =>
 			transactionService.createTransaction(payload),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: transactionKeys.transactions() });
+			queryClient.invalidateQueries({ queryKey: [transactionKeys.transactions] });
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al crear la transaccion");

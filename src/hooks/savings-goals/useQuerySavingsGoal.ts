@@ -4,7 +4,7 @@ import { savingsGoalService } from "@/services/savings-goals";
 
 export const useQuerySavingsGoal = (id: string) => {
 	return useQuery({
-		queryKey: savingsGoalKeys.savingsGoal(id),
+		queryKey: [savingsGoalKeys.savingsGoal, id],
 		queryFn: () => savingsGoalService.getSavingsGoal(id),
 		enabled: !!id,
 		staleTime: 1000 * 60 * 15,

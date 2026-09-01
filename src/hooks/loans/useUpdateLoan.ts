@@ -10,7 +10,7 @@ export const useUpdateLoan = () => {
 		mutationFn: ({ id, payload }: { id: string; payload: UpdateLoanPayload }) =>
 			loanService.updateLoan(id, payload),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: loanKeys.loans() });
+			queryClient.invalidateQueries({ queryKey: [loanKeys.loans] });
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al actualizar el prestamo");

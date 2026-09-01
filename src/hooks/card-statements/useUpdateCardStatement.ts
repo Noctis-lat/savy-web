@@ -10,7 +10,7 @@ export const useUpdateCardStatement = () => {
 		mutationFn: ({ id, payload }: { id: string; payload: UpdateCardStatementPayload }) =>
 			cardStatementService.updateCardStatement(id, payload),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: cardStatementKeys.cardStatements() });
+			queryClient.invalidateQueries({ queryKey: [cardStatementKeys.cardStatements] });
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al actualizar el estado de cuenta");

@@ -10,7 +10,7 @@ export const useBulkCreateIncomeSources = () => {
 		mutationFn: (payload: { sources: CreateIncomeSourcePayload[] }) =>
 			incomeSourceService.bulkCreateIncomeSources(payload),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: incomeSourceKeys.incomeSources() });
+			queryClient.invalidateQueries({ queryKey: [incomeSourceKeys.incomeSources] });
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al crear las fuentes de ingreso");

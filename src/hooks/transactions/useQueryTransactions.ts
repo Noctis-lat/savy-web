@@ -4,7 +4,7 @@ import { transactionService } from "@/services/transactions";
 
 export const useQueryTransactions = (params?: TransactionParams) => {
 	return useQuery({
-		queryKey: transactionKeys.transactionsByParams(params),
+		queryKey: [transactionKeys.transactions, params ?? {}],
 		queryFn: () => transactionService.getTransactions(params),
 		staleTime: 60_000,
 		gcTime: 1000 * 60 * 5,
