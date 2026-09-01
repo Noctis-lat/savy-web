@@ -1,21 +1,20 @@
 import { httpClient, unwrap } from "../http-client";
 
 export const bankService: BankService = {
-	getBanks: async (params?: BankParams): Promise<Bank[] | BankWithInfo[]> => {
-		const response = await httpClient.get<APIResponse<Bank[] | BankWithInfo[]>>("/banks", {
+	getBanks: async (params?: BankParams): Promise<Bank[]> => {
+		const response = await httpClient.get<APIResponse<Bank[]>>("/banks", {
 			params: {
 				...params,
-				info: params?.info ? "true" : undefined,
 			},
 		});
-		return unwrap<Bank[] | BankWithInfo[]>(response);
+		return unwrap<Bank[]>(response);
 	},
 
-	getBank: async (id: string, info = false): Promise<Bank | BankWithInfo> => {
-		const response = await httpClient.get<APIResponse<Bank | BankWithInfo>>(`/banks/${id}`, {
+	getBank: async (id: string, info = false): Promise<Bank> => {
+		const response = await httpClient.get<APIResponse<Bank>>(`/banks/${id}`, {
 			params: info ? { info: "true" } : undefined,
 		});
-		return unwrap<Bank | BankWithInfo>(response);
+		return unwrap<Bank>(response);
 	},
 
 	createBank: async (payload: CreateBankPayload): Promise<Bank> => {
@@ -42,12 +41,9 @@ export const bankService: BankService = {
 		return unwrap<IncomeVsExpenses>(response);
 	},
 
-	getBankAccounts: async (id: string): Promise<import("../accounts/accounts").Account[]> => {
-		const response = await httpClient.get<APIResponse<import("../accounts/accounts").Account[]>>(
-			`/banks/${id}/accounts`,
-		);
-		const raw = unwrap<import("../accounts/accounts").Account[]>(response);
-		// Normalize Decimal-as-string balance from Prisma
+	getBankAccounts: async (id: string): Promise<Account[]> => {
+		const response = await httpClient.get<APIResponse<Account[]>>(`/banks/${id}/accounts`);
+		const raw = unwrap<Account[]>(response);
 		return raw.map((account) => ({
 			...account,
 			balance: Number(account.balance),

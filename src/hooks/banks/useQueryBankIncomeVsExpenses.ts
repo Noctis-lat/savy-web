@@ -4,7 +4,7 @@ import { bankService } from "@/services/banks";
 
 export const useQueryBankIncomeVsExpenses = (id: string, period: PeriodType) => {
 	return useQuery({
-		queryKey: bankKeys.bankIncomeVsExpenses(id, period),
+		queryKey: [bankKeys.bankIncomeVsExpenses, id, period],
 		queryFn: () => bankService.getBankIncomeVsExpenses(id, period),
 		enabled: !!id,
 		staleTime: 60_000,

@@ -9,7 +9,7 @@ export const useCreateBank = () => {
 	return useMutation({
 		mutationFn: (payload: CreateBankPayload) => bankService.createBank(payload),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: bankKeys.banks() });
+			queryClient.invalidateQueries({ queryKey: [bankKeys.banks] });
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al crear el banco");

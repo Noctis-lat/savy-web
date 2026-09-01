@@ -13,6 +13,7 @@ type Bank = {
 	isActive: boolean;
 	createdAt: string;
 	updatedAt: string;
+	info?: BankInfo;
 };
 
 type BankInfo = {
@@ -23,10 +24,6 @@ type BankInfo = {
 		assets: number;
 		liabilities: number;
 	};
-};
-
-type BankWithInfo = Bank & {
-	info: BankInfo;
 };
 
 type BankCreditCard = {

@@ -9,7 +9,7 @@ export const useDeleteBank = () => {
 	return useMutation({
 		mutationFn: (id: string) => bankService.deleteBank(id),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: bankKeys.banks() });
+			queryClient.invalidateQueries({ queryKey: [bankKeys.banks] });
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al eliminar el banco");

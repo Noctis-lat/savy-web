@@ -10,7 +10,7 @@ export const useUpdateBank = () => {
 		mutationFn: ({ id, payload }: { id: string; payload: UpdateBankPayload }) =>
 			bankService.updateBank(id, payload),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: bankKeys.banks() });
+			queryClient.invalidateQueries({ queryKey: [bankKeys.banks] });
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al actualizar el banco");

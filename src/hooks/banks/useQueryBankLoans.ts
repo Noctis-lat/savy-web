@@ -4,7 +4,7 @@ import { bankService } from "@/services/banks";
 
 export const useQueryBankLoans = (id: string) => {
 	return useQuery({
-		queryKey: bankKeys.bankLoans(id),
+		queryKey: [bankKeys.bankLoans, id],
 		queryFn: () => bankService.getBankLoans(id),
 		enabled: !!id,
 		staleTime: 1000 * 60 * 15,
