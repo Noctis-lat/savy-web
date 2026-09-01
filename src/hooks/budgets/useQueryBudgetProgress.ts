@@ -6,5 +6,7 @@ export const useQueryBudgetProgress = (id: string) => {
 		queryKey: ["budgets", id, "progress"] as const,
 		queryFn: () => budgetService.getProgress(id),
 		enabled: !!id,
+		staleTime: 60_000,
+		gcTime: 1000 * 60 * 5,
 	});
 };

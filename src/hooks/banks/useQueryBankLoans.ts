@@ -6,5 +6,7 @@ export const useQueryBankLoans = (id: string) => {
 		queryKey: ["banks", id, "loans"] as const,
 		queryFn: () => bankService.getLoans(id),
 		enabled: !!id,
+		staleTime: 1000 * 60 * 15,
+		gcTime: 1000 * 60 * 20,
 	});
 };

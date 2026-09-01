@@ -5,5 +5,7 @@ export const useQueryAccounts = () => {
 	return useQuery({
 		queryKey: ACCOUNTS_QUERY_KEY,
 		queryFn: () => accountService.getAll(),
+		staleTime: 1000 * 60 * 15,
+		gcTime: 1000 * 60 * 20,
 	});
 };

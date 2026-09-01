@@ -6,5 +6,7 @@ export const useQueryBudget = (id: string) => {
 		queryKey: ["budgets", id] as const,
 		queryFn: () => budgetService.getById(id),
 		enabled: !!id,
+		staleTime: 1000 * 60 * 15,
+		gcTime: 1000 * 60 * 20,
 	});
 };

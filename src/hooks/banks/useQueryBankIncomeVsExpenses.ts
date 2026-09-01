@@ -6,5 +6,7 @@ export const useQueryBankIncomeVsExpenses = (id: string, period: PeriodType) => 
 		queryKey: ["banks", id, "income-vs-expenses", period] as const,
 		queryFn: () => bankService.getIncomeVsExpenses(id, period),
 		enabled: !!id,
+		staleTime: 60_000,
+		gcTime: 1000 * 60 * 5,
 	});
 };

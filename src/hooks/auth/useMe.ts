@@ -9,5 +9,7 @@ export const useMe = () => {
 		queryKey: ["auth", "me"],
 		queryFn: () => authService.getMe(),
 		enabled: isAuthenticated,
+		staleTime: 1000 * 60 * 15,
+		gcTime: 1000 * 60 * 20,
 	});
 };

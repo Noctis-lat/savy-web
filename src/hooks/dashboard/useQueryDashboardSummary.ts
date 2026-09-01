@@ -6,5 +6,6 @@ export const useQueryDashboardSummary = () => {
 		queryKey: [...DASHBOARD_QUERY_KEY, "summary"] as const,
 		queryFn: () => dashboardService.getSummary(),
 		staleTime: 60_000,
+		gcTime: 1000 * 60 * 5,
 	});
 };

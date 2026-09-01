@@ -4,7 +4,7 @@ import { profileService } from "@/services/profile";
 import { useAuthStorage } from "@/storage/authStorage";
 import { useProfileStorage } from "@/storage/profile/profileStorage";
 
-const PROFILE_STALE_TIME = 14 * 60 * 1000;
+const PROFILE_STALE_TIME = 1000 * 60 * 15;
 
 export const PROFILE_QUERY_KEY = ["profile"] as const;
 
@@ -19,6 +19,7 @@ export const useQueryProfile = () => {
 		enabled: isAuthenticated,
 		retry: false,
 		staleTime: PROFILE_STALE_TIME,
+		gcTime: 1000 * 60 * 20,
 		meta: { suppressToast: true },
 	});
 

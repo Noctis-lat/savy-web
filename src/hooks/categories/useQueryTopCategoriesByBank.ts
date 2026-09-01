@@ -6,5 +6,7 @@ export const useQueryTopCategoriesByBank = (bankId: string, limit = 5) => {
 		queryKey: ["categories", "top", "banks", bankId, { limit }] as const,
 		queryFn: () => categoryService.getTopByBank(bankId, limit),
 		enabled: !!bankId,
+		staleTime: 60_000,
+		gcTime: 1000 * 60 * 5,
 	});
 };

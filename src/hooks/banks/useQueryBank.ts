@@ -6,5 +6,7 @@ export const useQueryBank = (id: string, info = false) => {
 		queryKey: ["banks", id, { info }] as const,
 		queryFn: () => bankService.getById(id, info),
 		enabled: !!id,
+		staleTime: 1000 * 60 * 15,
+		gcTime: 1000 * 60 * 20,
 	});
 };

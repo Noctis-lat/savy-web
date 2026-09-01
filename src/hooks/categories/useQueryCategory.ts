@@ -6,5 +6,7 @@ export const useQueryCategory = (id: string) => {
 		queryKey: ["categories", id] as const,
 		queryFn: () => categoryService.getById(id),
 		enabled: !!id,
+		staleTime: 1000 * 60 * 15,
+		gcTime: 1000 * 60 * 20,
 	});
 };

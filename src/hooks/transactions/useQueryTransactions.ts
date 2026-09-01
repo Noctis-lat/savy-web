@@ -5,5 +5,7 @@ export const useQueryTransactions = (filters?: TransactionFilters) => {
 	return useQuery({
 		queryKey: [...TRANSACTIONS_QUERY_KEY, filters ?? {}] as const,
 		queryFn: () => transactionService.getAll(filters),
+		staleTime: 60_000,
+		gcTime: 1000 * 60 * 5,
 	});
 };

@@ -6,5 +6,7 @@ export const useQueryCreditCard = (id: string) => {
 		queryKey: ["credit-cards", id] as const,
 		queryFn: () => creditCardService.getById(id),
 		enabled: !!id,
+		staleTime: 1000 * 60 * 15,
+		gcTime: 1000 * 60 * 20,
 	});
 };
