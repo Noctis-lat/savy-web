@@ -11,8 +11,6 @@ import { FilterSelect } from "@/components/design-system/patterns/filters/filter
 import { FiltersWrapper } from "@/components/design-system/patterns/filters/filters-wrapper";
 import { SearchInput } from "@/components/design-system/patterns/filters/search-input";
 import { GlassCard } from "@/components/design-system/patterns/glass-card";
-import { AppBreadcrumbs } from "@/components/design-system/patterns/navigation/app-breadcrumbs";
-import { Button } from "@/components/ui/button";
 import { SORT_OPTIONS, STATUS_OPTIONS } from "@/content/banks/banksOptions";
 import { useQueryAccounts } from "@/hooks/accounts/useQueryAccounts";
 import { useQueryBanks } from "@/hooks/banks/useQueryBanks";
@@ -21,6 +19,7 @@ import { enrichBanksWithStats } from "@/utils/banks/enrichBanksWithStats";
 import { filterBanks } from "@/utils/banks/filterBanks";
 import { sortBanks } from "@/utils/banks/sortBanks";
 import { BankRow } from "./components/bank-row";
+import { BanksHeader } from "./components/banks-header";
 import { BanksSkeleton } from "./components/banks-skeleton";
 
 export const Banks = (): React.ReactElement => {
@@ -71,17 +70,7 @@ export const Banks = (): React.ReactElement => {
 
 	return (
 		<div className="flex flex-1 flex-col gap-6 p-6">
-			{/* Header */}
-			<div className="flex items-center justify-between">
-				<AppBreadcrumbs
-					backRoute={ROUTES.APP.DASHBOARD}
-					config={[{ label: "Inicio", href: ROUTES.APP.ROOT }, { label: "Bancos" }]}
-				/>
-				<Button onClick={() => navigate(ROUTES.APP.BANKS_NEW)}>
-					<Plus className="size-4" />
-					Nuevo banco
-				</Button>
-			</div>
+			<BanksHeader />
 
 			{/* Loading */}
 			{isLoading && <BanksSkeleton />}
