@@ -65,8 +65,8 @@ type IncomeVsExpenses = {
 // ====================== SERVICE =========================
 
 type BankService = {
-	getBanks: (params?: BankParams) => Promise<Bank[] | BankWithInfo[]>;
-	getBank: (id: string, info?: boolean) => Promise<Bank | BankWithInfo>;
+	getBanks: (params?: BankParams) => Promise<Bank[]>;
+	getBank: (id: string, info?: boolean) => Promise<Bank>;
 	createBank: (payload: CreateBankPayload) => Promise<Bank>;
 	updateBank: (id: string, payload: UpdateBankPayload) => Promise<Bank>;
 	deleteBank: (id: string) => Promise<void>;
