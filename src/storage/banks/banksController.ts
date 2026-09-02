@@ -7,13 +7,13 @@ type BanksController = {
 	setSearchQuery: (query: string) => void;
 	setSortBy: (sortBy: "name" | "createdAt") => void;
 	setOrder: (order: "asc" | "desc") => void;
-	setStatusFilter: (filter: "all" | "active" | "inactive") => void;
+	setActiveOnly: (activeOnly: boolean) => void;
 	resetFilters: () => void;
 };
 
 export const useBanksController = create<BanksController>()((set) => ({
 	banksFilters: {
-		isActive: undefined,
+		isActive: true,
 		sortBy: "name",
 		order: "asc",
 		info: true,
@@ -43,11 +43,11 @@ export const useBanksController = create<BanksController>()((set) => ({
 		}));
 	},
 
-	setStatusFilter: (filter) => {
+	setActiveOnly: (activeOnly) => {
 		set((state) => ({
 			banksFilters: {
 				...state.banksFilters,
-				isActive: filter === "all" ? undefined : filter === "active",
+				isActive: activeOnly ? true : undefined,
 			},
 		}));
 	},
@@ -56,7 +56,7 @@ export const useBanksController = create<BanksController>()((set) => ({
 		set({
 			searchQuery: "",
 			banksFilters: {
-				isActive: undefined,
+				isActive: true,
 				sortBy: "name",
 				order: "asc",
 				info: true,

@@ -1,8 +1,10 @@
+import { CheckCircle2, LayoutGrid } from "lucide-react";
 import type React from "react";
 import { FilterSelect } from "@/components/design-system/patterns/filters/filter-select";
+import { FilterToggle } from "@/components/design-system/patterns/filters/filter-toggle";
 import { FiltersWrapper } from "@/components/design-system/patterns/filters/filters-wrapper";
 import { SearchInput } from "@/components/design-system/patterns/filters/search-input";
-import { SORT_OPTIONS, STATUS_OPTIONS } from "@/content/banks/banksOptions";
+import { SORT_OPTIONS } from "@/content/banks/banksOptions";
 import { useBanksController } from "@/storage/banks/banksController";
 
 export const BanksFilters = (): React.ReactElement => {
@@ -10,13 +12,11 @@ export const BanksFilters = (): React.ReactElement => {
 	const banksFilters = useBanksController((state) => state.banksFilters);
 	const setSearchQuery = useBanksController((state) => state.setSearchQuery);
 	const setSortBy = useBanksController((state) => state.setSortBy);
-	const setStatusFilter = useBanksController((state) => state.setStatusFilter);
+	const setActiveOnly = useBanksController((state) => state.setActiveOnly);
 	const resetFilters = useBanksController((state) => state.resetFilters);
 
-	const statusValue =
-		banksFilters.isActive === undefined ? "all" : banksFilters.isActive ? "active" : "inactive";
-	const activeFilterCount =
-		(banksFilters.sortBy !== "name" ? 1 : 0) + (statusValue !== "all" ? 1 : 0);
+	const activeOnly = banksFilters.isActive === true;
+	const activeFilterCount = (banksFilters.sortBy !== "name" ? 1 : 0) + (activeOnly ? 1 : 0);
 	const hasActiveFilters = activeFilterCount > 0;
 
 	const handleSearchCommit = (value: string | undefined): void => {
@@ -25,10 +25,6 @@ export const BanksFilters = (): React.ReactElement => {
 
 	const handleSortChange = (value: string): void => {
 		setSortBy(value as "name" | "createdAt");
-	};
-
-	const handleStatusChange = (value: string): void => {
-		setStatusFilter(value as "all" | "active" | "inactive");
 	};
 
 	return (
@@ -50,10 +46,11 @@ export const BanksFilters = (): React.ReactElement => {
 						value={banksFilters.sortBy ?? "name"}
 						onChange={handleSortChange}
 					/>
-					<FilterSelect
-						options={STATUS_OPTIONS}
-						value={statusValue}
-						onChange={handleStatusChange}
+					<FilterToggle
+						label={activeOnly ? "Solo activos" : "Todos"}
+						icon={activeOnly ? CheckCircle2 : LayoutGrid}
+						checked={activeOnly}
+						onChange={setActiveOnly}
 					/>
 				</div>
 			</FiltersWrapper>

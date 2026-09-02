@@ -1,46 +1,41 @@
-import { CheckCircle2, CreditCard, Landmark } from "lucide-react";
+import { CheckCircle2, Landmark, Wallet } from "lucide-react";
 import type React from "react";
-import { useMemo } from "react";
 import { ScaleFadeIn } from "@/components/design-system/patterns/animations/scale-fade-in";
 import { KpiCard } from "@/components/design-system/patterns/data-display/kpi-card";
-import { useQueryAccounts } from "@/hooks/accounts/useQueryAccounts";
 import { useQueryBanks } from "@/hooks/banks/useQueryBanks";
+import { useBanksController } from "@/storage/banks/banksController";
+import { formatCurrency } from "@/utils/formatters/formatCurrency";
 
 export const BanksKpis = (): React.ReactElement => {
-	const { data: banks } = useQueryBanks({ info: true });
-	const { data: accounts } = useQueryAccounts();
+	const banksFilters = useBanksController((state) => state.banksFilters);
+	const { data: banks } = useQueryBanks(banksFilters);
 
-	const stats = useMemo(() => {
-		const bankList = banks ?? [];
-		const accountList = accounts ?? [];
-		return {
-			totalBanks: bankList.length,
-			activeBanks: bankList.filter((bank) => bank.isActive).length,
-			totalAccounts: accountList.length,
-		};
-	}, [banks, accounts]);
+	const bankList = banks ?? [];
+	const totalBanks = bankList.length;
+	const activeBanks = bankList.filter((bank) => bank.isActive).length;
+	const netWorth = bankList.reduce((sum, bank) => sum + (bank.info?.netWorth ?? 0), 0);
 
 	return (
 		<div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
 			<ScaleFadeIn>
 				<KpiCard
 					label="Total bancos"
-					value={stats.totalBanks}
+					value={totalBanks}
 					icon={Landmark}
 				/>
 			</ScaleFadeIn>
 			<ScaleFadeIn>
 				<KpiCard
-					label="Cuentas"
-					value={stats.totalAccounts}
-					icon={CreditCard}
+					label="Bancos activos"
+					value={activeBanks}
+					icon={CheckCircle2}
 				/>
 			</ScaleFadeIn>
 			<ScaleFadeIn>
 				<KpiCard
-					label="Bancos activos"
-					value={stats.activeBanks}
-					icon={CheckCircle2}
+					label="Patrimonio total"
+					value={formatCurrency(netWorth)}
+					icon={Wallet}
 				/>
 			</ScaleFadeIn>
 		</div>

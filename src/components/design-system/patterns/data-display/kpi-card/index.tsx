@@ -5,7 +5,7 @@ import { merge } from "@/utils/ui/mergeStyles";
 
 type KpiCardProps = {
 	label: string;
-	value: string;
+	value: string | number;
 	delta?: number | null;
 	icon?: LucideIcon;
 	currency?: string;

@@ -98,26 +98,110 @@ account-card/
 ## Query keys conventions
 
 - Query keys live in `src/content/services/{domain}.ts` (one file per domain), re-exported via `src/content/services/index.ts`.
-- Keys are **factory functions** (not static arrays) — this prevents mutation and is the recommended pattern by TanStack Query.
-- Factory naming mirrors the service method that feeds the query — `getAccounts()` → `accountKeys.accounts()`, `getAccount(id)` → `accountKeys.account(id)`.
+- Keys are **string constants** (not static arrays, not factory functions). Each key is a string that mirrors the service method name it feeds.
+- Key naming mirrors the service method — `getAccounts()` → `accountKeys.accounts`, `getAccount(id)` → `accountKeys.account`.
 - Each domain exports a `{entity}Keys` object (e.g., `accountKeys`, `bankKeys`, `categoryKeys`).
 - **Forbidden**: defining query keys inline in hooks, exporting `*_QUERY_KEY` constants from services, or using generic names (`all`, `list`, `detail`).
-- Use `queryKey: accountKeys.accounts()` for invalidation — React Query's prefix matching invalidates the entire namespace.
+- Hooks build the query key array inline: `queryKey: [accountKeys.accounts]`, `queryKey: [accountKeys.account, id]`.
+- Use `queryKey: [accountKeys.accounts]` for invalidation — React Query's prefix matching invalidates the entire namespace.
 
-### Factory structure per domain
+### Structure per domain
 
 ```typescript
 export const accountKeys = {
-	accounts: () => ["accounts"] as const,                                    // base for invalidation
-	accountsByParams: (params?: AccountParams) => ["accounts", params ?? {}] as const,
-	account: (id: string) => ["accounts", id] as const,
+	accounts: "getAccounts",
+	account: "getAccount",
 };
 ```
 
-- `{entity}s()` — base key for list queries and invalidation (prefix match clears all entries in the namespace).
-- `{entity}sByParams(params?)` — list query with filter parameters.
-- `{entity}(id)` — single entity detail.
-- Custom keys (e.g., `bankAccounts(id)`, `budgetProgress(id)`) mirror the corresponding service method name.
+- `{entity}s` — base key for list queries and invalidation (prefix match clears all entries in the namespace).
+- `{entity}` — single entity detail (used as `[entityKeys.entity, id]` in hooks).
+- Custom keys (e.g., `bankAccounts`, `budgetProgress`) mirror the corresponding service method name.
+
+## Screen conventions — entity list pages
+
+Entity list pages (banks, accounts, transactions, budgets, etc.) follow a strict component decomposition. The page `index.tsx` is a **layout orchestrator only** — no data logic, no handlers, no memoization. Each section is a self-contained component that manages its own data fetching, loading, and error states.
+
+### Page structure
+
+```
+screens/app/{entity}/
+├── index.tsx                  ← layout only: renders components in order
+├── {entity}.d.ts              ← screen-level shared types (e.g., enriched types)
+└── components/
+    ├── {entity}-header/       ← breadcrumbs, page title, actions
+    ├── {entity}-kpis/         ← KPI cards, fetches its own data
+    ├── {entity}-filters/      ← search + filter controls, reads/writes controller
+    └── {entity}-list/         ← list with loading/error/empty states
+        └── components/
+            └── {entity}-list-skeleton/
+```
+
+### `index.tsx` — layout orchestrator only
+
+The page index contains ONLY the component composition. No hooks, no queries, no handlers, no `useMemo`.
+
+```tsx
+export const Banks = (): React.ReactElement => {
+	return (
+		<div className="flex flex-1 flex-col gap-6 p-6">
+			<BanksHeader />
+			<BanksKpis />
+			<BanksFilters />
+			<BanksList />
+		</div>
+	);
+};
+```
+
+### Data fetching — shared query, deduplicated
+
+Each component calls the same query hook with the same params. React Query deduplicates identical queries — **one HTTP request, one shared cache entry**. Each component reads `data`, `isLoading`, and `isError` independently.
+
+- **KPIs component**: calls `useQuery{Entity}s(filters)` from the controller. On error or empty data, shows `0` values — never shows error or empty states.
+- **List component**: calls `useQuery{Entity}s(filters)` + any enrichment queries (e.g., `useQueryAccounts` for bank stats). Manages its own `isLoading`, `isError`, and empty states. The skeleton, error, and empty states only appear in the list component.
+- **Filters component**: reads/writes the controller. Does NOT fetch data.
+
+### Controller — `{entity}Controller.ts` in `src/storage/`
+
+Manages UI state for the screen: `searchQuery` (client-side) and `{entity}Filters: {Entity}Params` (server-side). The filters object is passed directly to the query hook — the API handles sorting and filtering.
+
+```typescript
+type BanksController = {
+	banksFilters: BankParams;
+	searchQuery: string;
+
+	setSearchQuery: (query: string) => void;
+	setSortBy: (sortBy: "name" | "createdAt") => void;
+	setActiveOnly: (activeOnly: boolean) => void;
+	resetFilters: () => void;
+};
+```
+
+### Search — client-side only
+
+Search filtering stays client-side. The list component filters the enriched data by `searchQuery` from the controller. Search is NOT sent to the API as a param.
+
+### Filters — server-side via params
+
+Sort, status, and other filter params flow from the controller to the query hook to the API. The API returns pre-sorted and pre-filtered data.
+
+- **Binary filters** (e.g., "active only") use `FilterToggle` from the design system — a toggle button with dynamic label and icon.
+- **Multi-option filters** (e.g., sort by) use `FilterSelect`.
+- **Filter options** live in `src/content/{entity}/{entity}Options.ts`.
+
+### `FilterToggle` — design system primitive
+
+Binary filter toggle button located at `src/components/design-system/patterns/filters/filter-toggle/`. Shows active state with `bg-primary/10 border-primary/20 text-primary`. Supports dynamic label, icon, and `aria-pressed`.
+
+```tsx
+<FilterToggle
+	label={activeOnly ? "Solo activos" : "Todos"}
+	icon={activeOnly ? CheckCircle2 : LayoutGrid}
+	checked={activeOnly}
+	onChange={setActiveOnly}
+/>
+```
 
 ## Service conventions
 
@@ -190,10 +274,9 @@ Services are the bridge to the API, decoupled from the frontend. Method names MU
 
 The `index.ts` file contains ONLY:
 - The `import` from `../http-client`.
-- The `QUERY_KEY` constant (e.g., `export const ACCOUNTS_QUERY_KEY = ["accounts"] as const;`).
 - The service object implementation (typed by the service type from the `.d.ts`).
 
-No type definitions, no type aliases, no interfaces in `index.ts`.
+No type definitions, no type aliases, no interfaces, no query key constants in `index.ts`.
 
 ### HTTP client
 
