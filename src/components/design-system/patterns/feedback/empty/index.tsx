@@ -1,5 +1,6 @@
 import type { LucideIcon } from "lucide-react";
 import type React from "react";
+import { isValidElement } from "react";
 import { Button } from "@/components/ui/button";
 import { merge } from "@/utils/ui/mergeStyles";
 
@@ -13,8 +14,27 @@ type EmptyProps = {
 	title?: string;
 	description?: string;
 	icon?: LucideIcon;
-	action?: EmptyAction;
+	/** Pass an object for a default Button action, or a ReactElement for a custom component (e.g. <CreateBank/>). */
+	action?: EmptyAction | React.ReactElement;
 	className?: string;
+};
+
+const renderAction = (action: EmptyAction | React.ReactElement): React.ReactNode => {
+	if (isValidElement(action)) {
+		return action;
+	}
+
+	const { label, onClick, icon: ActionIcon } = action as EmptyAction;
+
+	return (
+		<Button
+			size="sm"
+			onClick={onClick}
+		>
+			{ActionIcon && <ActionIcon className="mr-1 h-4 w-4" />}
+			{label}
+		</Button>
+	);
 };
 
 export const Empty = ({
@@ -43,17 +63,7 @@ export const Empty = ({
 				{description && <p className="text-sm text-gray-500">{description}</p>}
 			</div>
 
-			{action && (
-				<div className="mt-2">
-					<Button
-						size="sm"
-						onClick={action.onClick}
-					>
-						{action.icon && <action.icon className="mr-1 h-4 w-4" />}
-						{action.label}
-					</Button>
-				</div>
-			)}
+			{action && <div className="mt-2">{renderAction(action)}</div>}
 		</div>
 	);
 };

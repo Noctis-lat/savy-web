@@ -12,6 +12,7 @@ import { useQueryBanks } from "@/hooks/banks/useQueryBanks";
 import { useBanksController } from "@/storage/banks/banksController";
 import { enrichBanksWithStats } from "@/utils/banks/enrichBanksWithStats";
 import { BankRow } from "../bank-row";
+import { CreateBank } from "../banks-header/components/create-bank";
 import { BanksListSkeleton } from "./components/banks-list-skeleton";
 
 export const BanksList = (): React.ReactElement => {
@@ -65,10 +66,7 @@ export const BanksList = (): React.ReactElement => {
 					icon={Landmark}
 					title="Sin bancos"
 					description="Agrega tu primer banco para comenzar a organizar tus cuentas."
-					action={{
-						label: "Agregar banco",
-						onClick: () => navigate(ROUTES.APP.BANKS_NEW),
-					}}
+					action={<CreateBank />}
 				/>
 			</GlassCard>
 		);
