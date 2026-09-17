@@ -105,15 +105,22 @@ export const BankDetailHero = ({ bankId }: BankDetailHeroProps): React.ReactElem
 					})}
 				</div>
 				<div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+					<ScaleFadeIn>
+						<BalanceChart
+							assets={info.balanceBreakdown.assets}
+							liabilities={info.balanceBreakdown.liabilities}
+							netWorth={info.netWorth}
+							currency={currency}
+							locale={locale}
+						/>
+					</ScaleFadeIn>
+
 					{incomeQuery.isLoading ? (
-						<>
-							<Skeleton className="h-64 rounded-xl" />
-							<Skeleton className="h-64 rounded-xl" />
-						</>
+						<Skeleton className="h-64 rounded-xl" />
 					) : incomeQuery.isError || !income ? (
 						<Empty
 							icon={RefreshCw}
-							title="No pudimos cargar los gráficos"
+							title="No pudimos cargar ingresos vs gastos"
 							description="Revisa tu conexión e inténtalo de nuevo."
 							action={{
 								label: "Reintentar",
@@ -123,26 +130,15 @@ export const BankDetailHero = ({ bankId }: BankDetailHeroProps): React.ReactElem
 							}}
 						/>
 					) : (
-						<>
-							<ScaleFadeIn>
-								<BalanceChart
-									assets={info.balanceBreakdown.assets}
-									liabilities={info.balanceBreakdown.liabilities}
-									netWorth={info.netWorth}
-									currency={currency}
-									locale={locale}
-								/>
-							</ScaleFadeIn>
-							<ScaleFadeIn>
-								<IncomeExpensesChart
-									income={income.income}
-									expenses={income.expenses}
-									periodLabel={income.periodLabel}
-									currency={currency}
-									locale={locale}
-								/>
-							</ScaleFadeIn>
-						</>
+						<ScaleFadeIn>
+							<IncomeExpensesChart
+								income={income.income}
+								expenses={income.expenses}
+								periodLabel={income.periodLabel}
+								currency={currency}
+								locale={locale}
+							/>
+						</ScaleFadeIn>
 					)}
 				</div>
 			</div>
