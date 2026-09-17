@@ -1,2 +1,2 @@
-export PATH="/Users/dev-014/.bun/bin:$PATH"
+export PATH="$HOME/.bun/bin:$PATH"
 bunx lint-staged

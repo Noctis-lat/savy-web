@@ -101,7 +101,6 @@ export const Modal = ({
 						{showCancel && (
 							<Button
 								variant="outline"
-								size="sm"
 								onClick={handleClose}
 							>
 								<Ban />

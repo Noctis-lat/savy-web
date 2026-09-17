@@ -1,6 +1,7 @@
 import type React from "react";
 import { ROUTES } from "@/app/router/routes";
 import { AppBreadcrumbs } from "@/components/design-system/patterns/navigation/app-breadcrumbs";
+import { CreateBank } from "./components/create-bank";
 
 export const BanksHeader = (): React.ReactElement => {
 	return (
@@ -9,6 +10,8 @@ export const BanksHeader = (): React.ReactElement => {
 				backRoute={ROUTES.APP.DASHBOARD}
 				config={[{ label: "Inicio", href: ROUTES.APP.ROOT }, { label: "Bancos" }]}
 			/>
+
+			<CreateBank />
 		</div>
 	);
 };
