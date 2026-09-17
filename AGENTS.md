@@ -59,7 +59,7 @@ account-card/
   - `useState<boolean>(false)` — never `useState(false)`
   - `useState<number>(0)` — never `useState(0)`
   - `useState<string>("")` — never `useState("")`
-  - `useState<string | null>(null)`
+  - `useState<string | undefined>(undefined)`
 
 ### Variables and naming
 
@@ -86,6 +86,56 @@ account-card/
 - Zustand 5 syntax: `create<Type>()((set, get) => ...)` — note the double parentheses.
 - Standalone selectors exported outside `create()`, not inside.
 - Store types go in `{name}.d.ts` inside the storage folder (e.g., `src/storage/auth.d.ts`).
+
+## Form conventions
+
+### Schema and types
+
+- **Schemas live in `src/schemas/{domain}/`** — one Zod schema per file, named `{entity}Schema.ts`.
+- A schema file contains ONLY: the Zod schema object, and the inferred type (`z.infer`).
+- **NEVER mix constants into schema files.** Default values, initial values, and any static configuration live in `src/content/{domain}/` — e.g., `src/content/banks/createBankValues.ts`.
+- Optional fields use `.optional()` (produces `undefined`), never `.nullable()` (produces `null`) unless the backend explicitly sends `null`.
+
+### Form structure — modal-based forms
+
+When a form lives inside a modal with separated form and submit children:
+
+```
+create-bank/
+├── index.tsx                  ← owns useForm + FormProvider, renders Modal
+└── components/
+    ├── create-bank-form/      ← useFormContext, renders fields only
+    └── create-bank-submit/    ← useFormContext, handles mutation only
+```
+
+- **Parent** owns `useForm` with `zodResolver`, `mode: "onChange"`, and `defaultValues` from `content/`. Wraps everything in `FormProvider`.
+- **Form child** uses `useFormContext` — renders fields only. No mutation, no submit logic.
+- **Submit child** uses `useFormContext` — handles mutation only. No field rendering.
+- The submit child receives an `onSuccess` callback to close the modal after a successful mutation.
+- The parent's `handleOpenChange` resets the form on close.
+
+### Naming
+
+- **NEVER use generic variable names** like `form`, `s`, `j`, `a`, `b`. Always use descriptive names: `createBankForm`, `bankForm`, `accountForm`.
+- Mutation destructuring with rename: `const { mutate: createBank, isPending } = useCreateBank()` — the renamed variable is descriptive, not `mutate`.
+- Handler functions are named after their action: `onSubmit`, `handleOpenChange`, `handleSelect`.
+
+### Submit handler pattern
+
+- Separate the handler from the JSX: define `onSubmit` as a named function, then pass it to `handleSubmit`.
+- Use `mutate` with `onSuccess` callback (not `mutateAsync` + await) when you need side-effects after success.
+- `disabled` combines `!formState.isValid` and `isPending`.
+
+### Spinner
+
+- Use the **Spinner** primitive (`@/components/design-system/primitives/spinner`) instead of raw `<Loader2 className="animate-spin" />`.
+- Spinner accepts `size` (number, px) and `className` for customization.
+
+### Submit button icons
+
+- Use **Save** icon (`lucide-react`) for "Guardar" submit buttons, not Check.
+- Use **Plus** for "Agregar" / "Create" action buttons.
+- Match the icon to the action semantics, not to a generic success state.
 
 ## Hook conventions
 
@@ -335,6 +385,7 @@ test/
 - Elevation: ring or box-shadow, whichever looks better for the case.
 - Icons: Lucide React.
 - Toast: Sonner.
+- **Prefer `undefined` over `null`** throughout the codebase: schemas, types, state, props, and function return values. Use `.optional()` (not `.nullable()`) in Zod. Use `useState<T | undefined>(undefined)` (not `useState<T | null>(null)`). The only exception is when the backend explicitly sends `null` in its JSON response — in that case the service type reflects `T | null` to match the wire format, and the frontend maps it to `undefined` at the boundary if needed.
 
 ## Response style
 
