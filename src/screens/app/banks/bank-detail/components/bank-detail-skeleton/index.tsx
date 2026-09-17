@@ -1,7 +1,7 @@
 import type React from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export const DetailSkeleton = (): React.ReactElement => (
+export const BankDetailSkeleton = (): React.ReactElement => (
 	<div className="flex flex-1 flex-col gap-6 p-6">
 		<div className="flex items-center justify-between">
 			<Skeleton className="h-8 w-48" />

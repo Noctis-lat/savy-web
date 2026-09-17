@@ -66,7 +66,7 @@ export const router = createBrowserRouter([
 							{
 								path: ROUTES.APP.BANKS_DETAIL,
 								lazy: () =>
-									import("@/screens/app/banks/detail").then((m) => ({
+									import("@/screens/app/banks/bank-detail").then((m) => ({
 										Component: m.BankDetail,
 									})),
 							},

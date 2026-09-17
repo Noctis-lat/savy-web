@@ -5,7 +5,7 @@ import { GlassCard } from "@/components/design-system/patterns/glass-card";
 import { buildIncomeExpensesChartData } from "@/utils/banks/buildIncomeExpensesChartData";
 import { formatCurrency } from "@/utils/formatters/formatCurrency";
 
-type Props = {
+type IncomeExpensesChartProps = {
 	income: number;
 	expenses: number;
 	periodLabel: string;
@@ -19,7 +19,7 @@ export const IncomeExpensesChart = ({
 	periodLabel,
 	currency,
 	locale,
-}: Props): React.ReactElement => {
+}: IncomeExpensesChartProps): React.ReactElement => {
 	const data = buildIncomeExpensesChartData(income, expenses);
 	const netFlow = income - expenses;
 	const centerValue = formatCurrency(netFlow, currency, locale);

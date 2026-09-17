@@ -5,7 +5,7 @@ import { GlassCard } from "@/components/design-system/patterns/glass-card";
 import { buildBalanceChartData } from "@/utils/banks/buildBalanceChartData";
 import { formatCurrency } from "@/utils/formatters/formatCurrency";
 
-type Props = {
+type BalanceChartProps = {
 	assets: number;
 	liabilities: number;
 	netWorth: number;
@@ -19,7 +19,7 @@ export const BalanceChart = ({
 	netWorth,
 	currency,
 	locale,
-}: Props): React.ReactElement => {
+}: BalanceChartProps): React.ReactElement => {
 	const data = buildBalanceChartData(assets, liabilities);
 	const centerValue = formatCurrency(netWorth, currency, locale);
 

@@ -2,7 +2,7 @@ import type React from "react";
 import { GlassCard } from "@/components/design-system/patterns/glass-card";
 import { formatCurrency } from "@/utils/formatters/formatCurrency";
 
-type Props = {
+type BankHeroProps = {
 	bankName: string;
 	bankColor: string | null;
 	isActive: boolean;
@@ -24,7 +24,7 @@ export const BankHero = ({
 	debt,
 	currency,
 	locale,
-}: Props): React.ReactElement => {
+}: BankHeroProps): React.ReactElement => {
 	return (
 		<GlassCard className="p-6">
 			<div className="flex items-center gap-2">
