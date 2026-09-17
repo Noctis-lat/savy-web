@@ -66,7 +66,7 @@ export const BanksList = (): React.ReactElement => {
 					icon={Landmark}
 					title="Sin bancos"
 					description="Agrega tu primer banco para comenzar a organizar tus cuentas."
-					action={<CreateBank />}
+					action={<CreateBank size="sm" />}
 				/>
 			</GlassCard>
 		);

@@ -5,6 +5,7 @@ import { ROUTES } from "@/app/router/routes";
 import { BankChip } from "@/components/design-system/patterns/data-display/bank-chip";
 import { SummaryCard } from "@/components/design-system/patterns/data-display/summary-card";
 import { Empty } from "@/components/design-system/patterns/feedback/empty";
+import { CreateBank } from "@/screens/app/banks/components/banks-header/components/create-bank";
 
 type BanksCardProps = {
 	banks: DashboardBank[];
@@ -30,10 +31,7 @@ export const BanksCard = ({ banks, className }: BanksCardProps): React.ReactElem
 				<Empty
 					title="Sin bancos"
 					description="Registra un banco para organizar tus cuentas."
-					action={{
-						label: "Agregar banco",
-						onClick: () => navigate(ROUTES.APP.BANKS),
-					}}
+					action={<CreateBank size="sm" />}
 				/>
 			) : (
 				<div className="flex flex-wrap gap-2">

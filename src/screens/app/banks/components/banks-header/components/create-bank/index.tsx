@@ -10,7 +10,11 @@ import { type CreateBankFormValues, createBankSchema } from "@/schemas/banks/cre
 import { CreateBankForm } from "./components/create-bank-form";
 import { CreateBankSubmit } from "./components/create-bank-submit";
 
-export const CreateBank = (): React.ReactElement => {
+type CreateBankProps = {
+	size?: "default" | "icon" | "xs" | "sm" | "lg" | "icon-xs" | "icon-sm" | "icon-lg";
+};
+
+export const CreateBank = ({ size = "default" }: CreateBankProps): React.ReactElement => {
 	const [open, setOpen] = useState<boolean>(false);
 
 	const createBankForm = useForm<CreateBankFormValues>({
@@ -38,7 +42,10 @@ export const CreateBank = (): React.ReactElement => {
 				actions={<CreateBankSubmit onSuccess={() => handleOpenChange(false)} />}
 				showCancel
 			>
-				<Button onClick={() => setOpen(true)}>
+				<Button
+					onClick={() => setOpen(true)}
+					size={size}
+				>
 					<Plus className="size-4" />
 					Agregar banco
 				</Button>
