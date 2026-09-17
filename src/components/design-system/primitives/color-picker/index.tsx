@@ -71,15 +71,22 @@ export const ColorPicker = ({
 									onClick={() => handleSelect(color.value)}
 									className={merge(
 										"flex size-7 items-center justify-center rounded-md border-2 transition-all",
-										isSelected
-											? "border-foreground scale-110"
-											: "border-transparent hover:scale-110",
+										isSelected ? "border-foreground scale-110" : "border-border hover:scale-110",
 									)}
 									style={{ backgroundColor: color.value }}
 									title={color.label}
 									aria-label={color.label}
 								>
-									{isSelected && <Check className="size-3.5 text-white drop-shadow-sm" />}
+									{isSelected && (
+										<Check
+											className={merge(
+												"size-3.5 drop-shadow-sm",
+												["#ffffff", "#eab308", "#84cc16", "#fde047"].includes(color.value)
+													? "text-black"
+													: "text-white",
+											)}
+										/>
+									)}
 								</button>
 							);
 						})}

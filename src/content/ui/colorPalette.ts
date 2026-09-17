@@ -9,6 +9,9 @@ type ColorOption = {
  * and consistent contrast against both light and dark backgrounds.
  */
 export const COLOR_PALETTE: ColorOption[] = [
+	{ label: "White", value: "#ffffff" },
+	{ label: "Gray", value: "#6b7280" },
+	{ label: "Black", value: "#000000" },
 	{ label: "Red", value: "#ef4444" },
 	{ label: "Orange", value: "#f97316" },
 	{ label: "Amber", value: "#f59e0b" },
