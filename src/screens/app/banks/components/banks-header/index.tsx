@@ -1,7 +1,7 @@
 import type React from "react";
 import { ROUTES } from "@/app/router/routes";
+import { CreateBank } from "@/components/banks/create-bank";
 import { AppBreadcrumbs } from "@/components/design-system/patterns/navigation/app-breadcrumbs";
-import { CreateBank } from "./components/create-bank";
 
 export const BanksHeader = (): React.ReactElement => {
 	return (

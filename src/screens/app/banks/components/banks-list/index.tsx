@@ -2,7 +2,6 @@ import { Landmark, RefreshCw } from "lucide-react";
 import type React from "react";
 import { useMemo } from "react";
 import { useNavigate } from "react-router";
-import { ROUTES } from "@/app/router/routes";
 import { ScaleFadeIn } from "@/components/design-system/patterns/animations/scale-fade-in";
 import { StaggerContainer } from "@/components/design-system/patterns/animations/stagger-container";
 import { Empty } from "@/components/design-system/patterns/feedback/empty";
@@ -12,7 +11,6 @@ import { useQueryBanks } from "@/hooks/banks/useQueryBanks";
 import { useBanksController } from "@/storage/banks/banksController";
 import { enrichBanksWithStats } from "@/utils/banks/enrichBanksWithStats";
 import { BankRow } from "../bank-row";
-import { CreateBank } from "../banks-header/components/create-bank";
 import { BanksListSkeleton } from "./components/banks-list-skeleton";
 
 export const BanksList = (): React.ReactElement => {
@@ -66,7 +64,6 @@ export const BanksList = (): React.ReactElement => {
 					icon={Landmark}
 					title="Sin bancos"
 					description="Agrega tu primer banco para comenzar a organizar tus cuentas."
-					action={<CreateBank size="sm" />}
 				/>
 			</GlassCard>
 		);

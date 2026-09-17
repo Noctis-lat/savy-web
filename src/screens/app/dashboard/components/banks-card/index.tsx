@@ -2,10 +2,10 @@ import { Landmark } from "lucide-react";
 import type React from "react";
 import { useNavigate } from "react-router";
 import { ROUTES } from "@/app/router/routes";
+import { CreateBank } from "@/components/banks/create-bank";
 import { BankChip } from "@/components/design-system/patterns/data-display/bank-chip";
 import { SummaryCard } from "@/components/design-system/patterns/data-display/summary-card";
 import { Empty } from "@/components/design-system/patterns/feedback/empty";
-import { CreateBank } from "@/screens/app/banks/components/banks-header/components/create-bank";
 
 type BanksCardProps = {
 	banks: DashboardBank[];
