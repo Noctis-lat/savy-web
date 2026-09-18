@@ -77,6 +77,8 @@ export const AccountsDistributionCard = ({
 					data={chartData}
 					centerLabel={currency}
 					centerValue={formatCurrency(totalBalance, currency, locale)}
+					currency={currency}
+					locale={locale}
 				/>
 			)}
 		</SummaryCard>
