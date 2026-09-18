@@ -3,10 +3,10 @@ import { Edit3 } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { CreateBankForm } from "@/components/banks/create-bank/components/create-bank-form";
 import { Modal } from "@/components/design-system/primitives/modal";
 import { Button } from "@/components/ui/button";
 import { type CreateBankFormValues, createBankSchema } from "@/schemas/banks/createBanksSchema";
+import { BankEditForm } from "./components/bank-edit-form";
 import { BankEditSubmit } from "./components/bank-edit-submit";
 
 type BankEditProps = {
@@ -43,7 +43,7 @@ export const BankEdit = ({ bank }: BankEditProps): React.ReactElement => {
 				description="Modifica la información de tu banco."
 				openModal={open}
 				setOpenModal={handleOpenChange}
-				content={<CreateBankForm />}
+				content={<BankEditForm />}
 				actions={
 					<BankEditSubmit
 						bankId={bank.id}
