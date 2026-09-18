@@ -12,6 +12,7 @@ type ProvidersProps = {
 };
 
 function App({ children }: ProvidersProps): React.ReactElement {
+	const isProduction = import.meta.env.VITE_SCOPE === "production";
 	return (
 		<ThemeProvider
 			attribute="class"
@@ -27,7 +28,7 @@ function App({ children }: ProvidersProps): React.ReactElement {
 					{children}
 					<AppToaster />
 				</TooltipProvider>
-				{!import.meta.env.PROD && <DevTools />}
+				{!isProduction && <DevTools />}
 			</PersistQueryClientProvider>
 		</ThemeProvider>
 	);
