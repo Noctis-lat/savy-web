@@ -5,7 +5,7 @@ import { formatCurrency } from "@/utils/formatters/formatCurrency";
 import { merge } from "@/utils/ui/mergeStyles";
 
 type BankHeroProps = {
-	bank: BankWithInfo;
+	bank: Bank;
 	currency: string;
 	locale: string;
 };

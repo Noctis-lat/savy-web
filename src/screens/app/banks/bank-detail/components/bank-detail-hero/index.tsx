@@ -27,8 +27,7 @@ export const BankDetailHero = ({ bank }: BankDetailHeroProps): React.ReactElemen
 
 	const [period, setPeriod] = useState<PeriodType>("month");
 
-	const bankWithInfo = bank as BankWithInfo;
-	const info = bankWithInfo.info;
+	const info = bank.info;
 
 	const incomeQuery = useQueryBankIncomeVsExpenses(bank.id, period);
 	const income = incomeQuery.data;
@@ -36,7 +35,7 @@ export const BankDetailHero = ({ bank }: BankDetailHeroProps): React.ReactElemen
 	return (
 		<div className="flex flex-col gap-4">
 			<BankHero
-				bank={bankWithInfo}
+				bank={bank}
 				currency={currency}
 				locale={locale}
 			/>
