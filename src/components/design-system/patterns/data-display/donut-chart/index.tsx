@@ -101,6 +101,7 @@ export const DonutChart = ({
 				<PieChart>
 					<ChartTooltip
 						cursor={false}
+						wrapperStyle={{ zIndex: 10 }}
 						content={
 							<ChartTooltipContent
 								nameKey={undefined}
@@ -159,7 +160,7 @@ export const DonutChart = ({
 
 			{(centerLabel || centerValue) && (
 				<div
-					className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-0.5"
+					className="pointer-events-none absolute inset-0 z-0 flex flex-col items-center justify-center gap-0.5"
 					aria-hidden="true"
 				>
 					{centerValue && (
