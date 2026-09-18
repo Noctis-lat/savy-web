@@ -1,7 +1,6 @@
 import { RefreshCw } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
-import { ScaleFadeIn } from "@/components/design-system/patterns/animations/scale-fade-in";
 import { Empty } from "@/components/design-system/patterns/feedback/empty";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -63,13 +62,11 @@ export const BankDetailHero = ({ bank }: BankDetailHeroProps): React.ReactElemen
 				</div>
 
 				<div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-					<ScaleFadeIn>
-						<BalanceChart
-							bank={bank}
-							currency={currency}
-							locale={locale}
-						/>
-					</ScaleFadeIn>
+					<BalanceChart
+						bank={bank}
+						currency={currency}
+						locale={locale}
+					/>
 
 					{isIncomeLoading ? (
 						<Skeleton className="h-64 rounded-xl" />
@@ -80,13 +77,11 @@ export const BankDetailHero = ({ bank }: BankDetailHeroProps): React.ReactElemen
 							description="Revisa tu conexión e inténtalo de nuevo."
 						/>
 					) : (
-						<ScaleFadeIn>
-							<IncomeExpensesChart
-								incomeVsExpenses={income}
-								currency={currency}
-								locale={locale}
-							/>
-						</ScaleFadeIn>
+						<IncomeExpensesChart
+							incomeVsExpenses={income}
+							currency={currency}
+							locale={locale}
+						/>
 					)}
 				</div>
 			</div>
