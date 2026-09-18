@@ -23,10 +23,10 @@ export const BankDetailTopCategories = ({
 	const locale = profile?.locale ?? DEFAULT_LOCALE;
 
 	const topCategoriesQuery = useQueryTopCategoriesByBank(bankId);
-	const incomeQuery = useQueryBankIncomeVsExpenses(bankId, "month");
+	const { incomeVsExpenses } = useQueryBankIncomeVsExpenses(bankId, "month");
 
 	const categories = topCategoriesQuery.data ?? [];
-	const totalExpenses = incomeQuery.data?.expenses ?? 0;
+	const totalExpenses = incomeVsExpenses?.expenses ?? 0;
 
 	if (topCategoriesQuery.isLoading) {
 		return <Skeleton className="h-48 w-full rounded-xl" />;

@@ -3,11 +3,16 @@ import { bankKeys } from "@/content/services";
 import { bankService } from "@/services/banks";
 
 export const useQueryBankIncomeVsExpenses = (id: string, period: PeriodType) => {
-	return useQuery({
+	const incomeVsExpensesQuery = useQuery({
 		queryKey: [bankKeys.bankIncomeVsExpenses, id, period],
 		queryFn: () => bankService.getBankIncomeVsExpenses(id, period),
 		enabled: !!id,
 		staleTime: 60_000,
 		gcTime: 1000 * 60 * 5,
 	});
+
+	return {
+		incomeVsExpenses: incomeVsExpensesQuery.data,
+		isLoading: incomeVsExpensesQuery.isLoading,
+	};
 };

@@ -29,8 +29,10 @@ export const BankDetailHero = ({ bank }: BankDetailHeroProps): React.ReactElemen
 
 	const info = bank.info;
 
-	const incomeQuery = useQueryBankIncomeVsExpenses(bank.id, period);
-	const income = incomeQuery.data;
+	const { incomeVsExpenses: income, isLoading: isIncomeLoading } = useQueryBankIncomeVsExpenses(
+		bank.id,
+		period,
+	);
 
 	return (
 		<div className="flex flex-col gap-4">
@@ -73,19 +75,13 @@ export const BankDetailHero = ({ bank }: BankDetailHeroProps): React.ReactElemen
 						/>
 					</ScaleFadeIn>
 
-					{incomeQuery.isLoading ? (
+					{isIncomeLoading ? (
 						<Skeleton className="h-64 rounded-xl" />
-					) : incomeQuery.isError || !income ? (
+					) : !income ? (
 						<Empty
 							icon={RefreshCw}
 							title="No pudimos cargar ingresos vs gastos"
 							description="Revisa tu conexión e inténtalo de nuevo."
-							action={{
-								label: "Reintentar",
-								onClick: () => {
-									void incomeQuery.refetch();
-								},
-							}}
 						/>
 					) : (
 						<ScaleFadeIn>
