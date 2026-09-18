@@ -32,13 +32,13 @@ export const BankHero = ({ bank, currency, locale }: BankHeroProps): React.React
 						<div className="flex flex-col gap-0.5 pr-6">
 							<span className="text-xs text-muted-foreground">Patrimonio</span>
 							<span className="text-xl font-bold tabular-nums text-foreground">
-								{formatCurrency(bank.info.netWorth, currency, locale)}
+								{formatCurrency(bank?.info?.netWorth ?? 0, currency, locale)}
 							</span>
 						</div>
 						<div className="flex flex-col gap-0.5 px-6">
 							<span className="text-xs text-muted-foreground">Liquidez</span>
 							<span className="text-base font-semibold tabular-nums text-foreground">
-								{formatCurrency(bank.info.liquidity, currency, locale)}
+								{formatCurrency(bank.info?.liquidity ?? 0, currency, locale)}
 							</span>
 						</div>
 						<div className="flex flex-col gap-0.5 pl-6">
@@ -46,10 +46,10 @@ export const BankHero = ({ bank, currency, locale }: BankHeroProps): React.React
 							<span
 								className={merge(
 									"text-base font-semibold tabular-nums",
-									bank.info.debt > 0 ? "text-destructive" : "text-foreground",
+									bank?.info?.debt && bank?.info?.debt > 0 ? "text-destructive" : "text-foreground",
 								)}
 							>
-								{formatCurrency(bank.info.debt, currency, locale)}
+								{formatCurrency(bank.info?.debt ?? 0, currency, locale)}
 							</span>
 						</div>
 					</div>
