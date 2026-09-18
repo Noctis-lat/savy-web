@@ -6,22 +6,18 @@ import { buildBalanceChartData } from "@/utils/banks/buildBalanceChartData";
 import { formatCurrency } from "@/utils/formatters/formatCurrency";
 
 type BalanceChartProps = {
-	assets: number;
-	liabilities: number;
-	netWorth: number;
+	bank: Bank;
 	currency: string;
 	locale: string;
 };
 
-export const BalanceChart = ({
-	assets,
-	liabilities,
-	netWorth,
-	currency,
-	locale,
-}: BalanceChartProps): React.ReactElement => {
-	const data = buildBalanceChartData(assets, liabilities);
-	const centerValue = formatCurrency(netWorth, currency, locale);
+export const BalanceChart = ({ bank, currency, locale }: BalanceChartProps): React.ReactElement => {
+	const info = bank.info;
+	const data = buildBalanceChartData(
+		info.balanceBreakdown.assets,
+		info.balanceBreakdown.liabilities,
+	);
+	const centerValue = formatCurrency(info.netWorth, currency, locale);
 
 	return (
 		<GlassCard className="flex flex-col gap-4 p-6">

@@ -6,22 +6,18 @@ import { buildIncomeExpensesChartData } from "@/utils/banks/buildIncomeExpensesC
 import { formatCurrency } from "@/utils/formatters/formatCurrency";
 
 type IncomeExpensesChartProps = {
-	income: number;
-	expenses: number;
-	periodLabel: string;
+	incomeVsExpenses: IncomeVsExpenses;
 	currency: string;
 	locale: string;
 };
 
 export const IncomeExpensesChart = ({
-	income,
-	expenses,
-	periodLabel,
+	incomeVsExpenses,
 	currency,
 	locale,
 }: IncomeExpensesChartProps): React.ReactElement => {
-	const data = buildIncomeExpensesChartData(income, expenses);
-	const netFlow = income - expenses;
+	const data = buildIncomeExpensesChartData(incomeVsExpenses.income, incomeVsExpenses.expenses);
+	const netFlow = incomeVsExpenses.income - incomeVsExpenses.expenses;
 	const centerValue = formatCurrency(netFlow, currency, locale);
 
 	return (
@@ -31,7 +27,7 @@ export const IncomeExpensesChart = ({
 					<TrendingUp className="size-4 text-primary" />
 					<h3 className="text-sm font-semibold text-foreground">Ingresos vs gastos</h3>
 				</div>
-				<span className="text-xs text-muted-foreground">{periodLabel}</span>
+				<span className="text-xs text-muted-foreground">{incomeVsExpenses.periodLabel}</span>
 			</div>
 			<DonutChart
 				data={data}

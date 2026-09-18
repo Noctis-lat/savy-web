@@ -27,8 +27,6 @@ export const BankDetailHero = ({ bank }: BankDetailHeroProps): React.ReactElemen
 
 	const [period, setPeriod] = useState<PeriodType>("month");
 
-	const info = bank.info;
-
 	const { incomeVsExpenses: income, isLoading: isIncomeLoading } = useQueryBankIncomeVsExpenses(
 		bank.id,
 		period,
@@ -67,9 +65,7 @@ export const BankDetailHero = ({ bank }: BankDetailHeroProps): React.ReactElemen
 				<div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
 					<ScaleFadeIn>
 						<BalanceChart
-							assets={info.balanceBreakdown.assets}
-							liabilities={info.balanceBreakdown.liabilities}
-							netWorth={info.netWorth}
+							bank={bank}
 							currency={currency}
 							locale={locale}
 						/>
@@ -86,9 +82,7 @@ export const BankDetailHero = ({ bank }: BankDetailHeroProps): React.ReactElemen
 					) : (
 						<ScaleFadeIn>
 							<IncomeExpensesChart
-								income={income.income}
-								expenses={income.expenses}
-								periodLabel={income.periodLabel}
+								incomeVsExpenses={income}
 								currency={currency}
 								locale={locale}
 							/>
