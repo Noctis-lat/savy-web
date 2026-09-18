@@ -14,7 +14,7 @@ export const BankDetailHeader = ({ bank }: BankDetailHeaderProps): React.ReactEl
 				backRoute={ROUTES.APP.BANKS}
 				config={[{ label: "Bancos", href: ROUTES.APP.BANKS }, { label: bank.name }]}
 			/>
-			<BankEdit bankId={bank.id} />
+			<BankEdit bank={bank} />
 		</div>
 	);
 };
