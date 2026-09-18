@@ -7,13 +7,13 @@ type AccountType = "DEBIT" | "CREDIT" | "LOAN" | "CASH";
 type Account = {
 	id: string;
 	profileId: string;
-	bankId: string | null;
+	bankId: string | undefined;
 	name: string;
 	type: AccountType;
 	currency: string;
 	balance: number;
-	color: string | null;
-	icon: string | null;
+	color: string | undefined;
+	icon: string | undefined;
 	isActive: boolean;
 	createdAt: string;
 	updatedAt: string;
@@ -22,7 +22,7 @@ type Account = {
 // ====================== SERVICE =========================
 
 type AccountService = {
-	getAccounts: (params?: AccountParams) => Promise<Account[]>;
+	getAccounts: (params?: AccountParams) => Promise<getAccountsResponse>;
 	getAccount: (id: string) => Promise<Account>;
 	createAccount: (payload: CreateAccountPayload) => Promise<Account>;
 	updateAccount: (id: string, payload: UpdateAccountPayload) => Promise<Account>;
@@ -37,7 +37,27 @@ type AccountParams = {
 	isActive?: boolean;
 	sortBy?: "balance" | "name" | "createdAt";
 	order?: "asc" | "desc";
+	page?: number;
+	perPage?: number;
+	info?: boolean;
 };
+
+type getAccountsResponse = {
+	accounts: Account[];
+	info?: {
+		netWorth: number;
+		liquidity: number;
+		debt: number;
+		balanceBreakdown: {
+			assets: number;
+			liabilities: number;
+		}
+	},
+	page: number;
+	perPage: number;
+	total: number;
+	totalPages: number;
+}
 
 type CreateAccountPayload = {
 	name: string;

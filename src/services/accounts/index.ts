@@ -1,11 +1,11 @@
 import { httpClient, unwrap } from "../http-client";
 
 export const accountService: AccountService = {
-	getAccounts: async (params?: AccountParams): Promise<Account[]> => {
-		const response = await httpClient.get<APIResponse<Account[]>>("/accounts", {
+	getAccounts: async (params?: AccountParams): Promise<getAccountsResponse> => {
+		const response = await httpClient.get<APIResponse<getAccountsResponse>>("/accounts", {
 			params,
 		});
-		return unwrap<Account[]>(response);
+		return unwrap<getAccountsResponse>(response);
 	},
 
 	getAccount: async (id: string): Promise<Account> => {
