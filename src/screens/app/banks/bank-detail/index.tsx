@@ -16,14 +16,14 @@ export const BankDetail = (): React.ReactElement => {
 	const { id } = useParams<{ id: string }>();
 	const bankId = id ?? "";
 
-	const bankQuery = useQueryBank(bankId, true);
+	const { bank, isLoading } = useQueryBank(bankId, true);
 	const queryClient = useQueryClient();
 
-	if (bankQuery.isLoading) {
+	if (isLoading) {
 		return <BankDetailSkeleton />;
 	}
 
-	if (!bankQuery.data) {
+	if (!bank) {
 		return (
 			<Empty
 				title="Banco no disponible"
@@ -39,8 +39,6 @@ export const BankDetail = (): React.ReactElement => {
 			/>
 		);
 	}
-
-	const bank = bankQuery.data;
 
 	return (
 		<div className="flex flex-1 flex-col gap-6 p-6">

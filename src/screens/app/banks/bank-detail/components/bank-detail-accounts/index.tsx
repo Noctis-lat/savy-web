@@ -17,15 +17,14 @@ type BankDetailAccountsProps = {
 export const BankDetailAccounts = ({ bankId }: BankDetailAccountsProps): React.ReactElement => {
 	const navigate = useNavigate();
 
-	const bankQuery = useQueryBank(bankId, false);
+	const { bank } = useQueryBank(bankId, false);
 	const accountsQuery = useQueryBankAccounts(bankId);
 	const creditCardsQuery = useQueryBankCreditCards(bankId);
 
-	const bank = bankQuery.data;
 	const accounts = accountsQuery.data ?? [];
 	const creditCards = creditCardsQuery.data ?? [];
 
-	const isLoading = bankQuery.isLoading || accountsQuery.isLoading || creditCardsQuery.isLoading;
+	const isLoading = accountsQuery.isLoading || creditCardsQuery.isLoading;
 	const isError = accountsQuery.isError || creditCardsQuery.isError;
 
 	if (isLoading) {
