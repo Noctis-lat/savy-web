@@ -11,6 +11,7 @@ import {
 	ChartTooltip,
 	ChartTooltipContent,
 } from "@/components/ui/chart";
+import { formatCurrency } from "@/utils/formatters/formatCurrency";
 import { merge } from "@/utils/ui/mergeStyles";
 
 type DonutDatum = {
@@ -23,6 +24,8 @@ type DonutChartProps = {
 	data: DonutDatum[];
 	centerLabel?: string;
 	centerValue?: string;
+	currency?: string;
+	locale?: string;
 	emptyIcon?: LucideIcon;
 	className?: string;
 };
@@ -50,6 +53,8 @@ export const DonutChart = ({
 	data,
 	centerLabel,
 	centerValue,
+	currency,
+	locale,
 	emptyIcon,
 	className,
 }: DonutChartProps): React.ReactElement => {
@@ -57,15 +62,24 @@ export const DonutChart = ({
 
 	const config = useMemo<ChartConfig>(() => {
 		const entries: Record<string, { label: string; color: string }> = {};
-		data.forEach((item, index) => {
+		for (const [index, item] of data.entries()) {
 			const key = slugifyKey(item.label);
 			entries[key] = {
 				label: item.label,
 				color: item.color ?? FALLBACK_COLORS[index % FALLBACK_COLORS.length],
 			};
-		});
+		}
 		return entries;
 	}, [data]);
+
+	const tooltipFormatter = useMemo(() => {
+		if (!currency || !locale) return undefined;
+
+		return (value: number | string) => {
+			const numericValue = typeof value === "string" ? Number(value) : value;
+			return formatCurrency(numericValue, currency, locale);
+		};
+	}, [currency, locale]);
 
 	if (data.length === 0 || total === 0) {
 		return (
@@ -85,7 +99,41 @@ export const DonutChart = ({
 				className="mx-auto aspect-square w-full max-w-[240px]"
 			>
 				<PieChart>
-					<ChartTooltip content={<ChartTooltipContent nameKey={undefined} />} />
+					<ChartTooltip
+						cursor={false}
+						content={
+							<ChartTooltipContent
+								nameKey={undefined}
+								formatter={
+									tooltipFormatter
+										? (value, name, item, _index, _payload) => {
+												const key = `${item.name ?? item.dataKey ?? "value"}`;
+												const itemConfig = config[key];
+
+												return (
+													<div className="flex w-full items-center gap-2">
+														<div
+															className="h-2.5 w-2.5 shrink-0 rounded-[2px]"
+															style={{
+																backgroundColor: item.payload?.fill ?? item.color,
+															}}
+														/>
+														<div className="flex flex-1 items-center justify-between gap-4 leading-none">
+															<span className="text-muted-foreground">
+																{itemConfig?.label ?? name}
+															</span>
+															<span className="font-mono font-medium text-foreground tabular-nums">
+																{tooltipFormatter(value as number | string)}
+															</span>
+														</div>
+													</div>
+												);
+											}
+										: undefined
+								}
+							/>
+						}
+					/>
 					<Pie
 						data={data.map((item) => ({
 							...item,

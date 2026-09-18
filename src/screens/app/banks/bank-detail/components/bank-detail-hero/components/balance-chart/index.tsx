@@ -29,6 +29,8 @@ export const BalanceChart = ({ bank, currency, locale }: BalanceChartProps): Rea
 				data={data}
 				centerValue={centerValue}
 				centerLabel="Patrimonio"
+				currency={currency}
+				locale={locale}
 			/>
 		</GlassCard>
 	);

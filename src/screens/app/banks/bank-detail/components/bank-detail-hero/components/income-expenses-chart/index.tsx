@@ -33,6 +33,8 @@ export const IncomeExpensesChart = ({
 				data={data}
 				centerValue={centerValue}
 				centerLabel="Neto"
+				currency={currency}
+				locale={locale}
 			/>
 		</GlassCard>
 	);
