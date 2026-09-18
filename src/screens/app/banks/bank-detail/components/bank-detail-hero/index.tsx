@@ -6,7 +6,6 @@ import { Empty } from "@/components/design-system/patterns/feedback/empty";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { PERIOD_OPTIONS } from "@/content/banks/bankContent";
-import { useQueryBank } from "@/hooks/banks/useQueryBank";
 import { useQueryBankIncomeVsExpenses } from "@/hooks/banks/useQueryBankIncomeVsExpenses";
 import { useProfileStorage } from "@/storage/profile/profileStorage";
 import { merge } from "@/utils/ui/mergeStyles";
@@ -18,70 +17,29 @@ const DEFAULT_CURRENCY = "MXN";
 const DEFAULT_LOCALE = "es-MX";
 
 type BankDetailHeroProps = {
-	bankId: string;
+	bank: Bank;
 };
 
-export const BankDetailHero = ({ bankId }: BankDetailHeroProps): React.ReactElement => {
+export const BankDetailHero = ({ bank }: BankDetailHeroProps): React.ReactElement => {
 	const profile = useProfileStorage((state) => state.profile);
 	const currency = profile?.currency ?? DEFAULT_CURRENCY;
 	const locale = profile?.locale ?? DEFAULT_LOCALE;
 
 	const [period, setPeriod] = useState<PeriodType>("month");
 
-	const bankQuery = useQueryBank(bankId, true);
-	const incomeQuery = useQueryBankIncomeVsExpenses(bankId, period);
-
-	const bank = bankQuery.data;
-	const income = incomeQuery.data;
-
-	if (bankQuery.isLoading) {
-		return (
-			<div className="flex flex-col gap-4">
-				<Skeleton className="h-32 w-full rounded-xl" />
-				<div className="flex justify-end">
-					<Skeleton className="h-9 w-40 rounded-md" />
-				</div>
-				<div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-					<Skeleton className="h-64 rounded-xl" />
-					<Skeleton className="h-64 rounded-xl" />
-				</div>
-			</div>
-		);
-	}
-
-	if (bankQuery.isError || !bank) {
-		return (
-			<Empty
-				icon={RefreshCw}
-				title="No pudimos cargar la información del banco"
-				description="Revisa tu conexión e inténtalo de nuevo."
-				action={{
-					label: "Reintentar",
-					onClick: () => {
-						void bankQuery.refetch();
-					},
-				}}
-			/>
-		);
-	}
-
 	const bankWithInfo = bank as BankWithInfo;
 	const info = bankWithInfo.info;
 
+	const incomeQuery = useQueryBankIncomeVsExpenses(bank.id, period);
+	const income = incomeQuery.data;
+
 	return (
 		<div className="flex flex-col gap-4">
-			<ScaleFadeIn>
-				<BankHero
-					bankName={bank.name}
-					bankColor={bank.color}
-					isActive={bank.isActive}
-					netWorth={info.netWorth}
-					liquidity={info.liquidity}
-					debt={info.debt}
-					currency={currency}
-					locale={locale}
-				/>
-			</ScaleFadeIn>
+			<BankHero
+				bank={bankWithInfo}
+				currency={currency}
+				locale={locale}
+			/>
 
 			<div className="flex flex-col gap-4">
 				<div className="flex flex-nowrap items-center justify-end gap-1.5 overflow-x-auto">
@@ -104,6 +62,7 @@ export const BankDetailHero = ({ bankId }: BankDetailHeroProps): React.ReactElem
 						);
 					})}
 				</div>
+
 				<div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
 					<ScaleFadeIn>
 						<BalanceChart
