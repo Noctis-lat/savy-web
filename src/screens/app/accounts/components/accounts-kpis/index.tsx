@@ -1,4 +1,4 @@
-import { CreditCardX, Droplets, Landmark, Wallet } from "lucide-react";
+import { Coins, CreditCardX, Droplets, Landmark, Wallet } from "lucide-react";
 import type React from "react";
 import { ScaleFadeIn } from "@/components/design-system/patterns/animations/scale-fade-in";
 import { KpiCard } from "@/components/design-system/patterns/data-display/kpi-card";
@@ -24,7 +24,7 @@ export const AccountsKpis = ({ info, total }: AccountsKpisProps): React.ReactEle
 				<KpiCard
 					label="Liquidez"
 					value={formatCurrency(info?.liquidity ?? 0)}
-					icon={Droplets}
+					icon={Coins}
 				/>
 			</ScaleFadeIn>
 

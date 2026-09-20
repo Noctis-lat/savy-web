@@ -24,6 +24,8 @@ export const AccountItem = ({ account }: AccountItemProps): React.ReactElement =
 		navigate(buildRoute(ROUTES.APP.ACCOUNTS.DETAIL, { account_id: account.id }));
 	};
 
+	const balanceIsNegative = account.balance < 0;
+
 	const { bank, isLoading } = useQueryBank(account.bankId);
 
 	const gradientStyle = {
@@ -77,7 +79,12 @@ export const AccountItem = ({ account }: AccountItemProps): React.ReactElement =
 				)}
 			</div>
 
-			<span className="text-sm font-medium tabular-nums text-foreground">
+			<span
+				className={merge(
+					"text-sm font-medium tabular-nums ",
+					balanceIsNegative ? "text-destructive" : "text-primary",
+				)}
+			>
 				{formatCurrency(account.balance)}
 			</span>
 			<ChevronRight className="size-4 shrink-0 text-muted-foreground" />
