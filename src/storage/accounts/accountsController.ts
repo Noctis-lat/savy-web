@@ -18,7 +18,7 @@ const DEFAULT_FILTERS: AccountParams = {
 	search: undefined,
 	type: undefined,
 	bankId: undefined,
-	isActive: false,
+	isActive: true,
 	sortBy: "name",
 	order: "asc",
 	page: 1,

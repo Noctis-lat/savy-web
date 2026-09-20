@@ -19,10 +19,11 @@ export const AccountsFilters = (): React.ReactElement => {
 	const resetFilters = useAccountsController((state) => state.resetFilters);
 
 	const activeOnly = accountsFilters.isActive === true;
+	const showingAll = !activeOnly;
 	const hasTypeFilter = accountsFilters.type !== undefined;
 	const hasSortFilter = accountsFilters.sortBy !== "name" || accountsFilters.order !== "asc";
 	const activeFilterCount =
-		(hasSortFilter ? 1 : 0) + (activeOnly ? 1 : 0) + (hasTypeFilter ? 1 : 0);
+		(hasSortFilter ? 1 : 0) + (showingAll ? 1 : 0) + (hasTypeFilter ? 1 : 0);
 	const hasActiveFilters = activeFilterCount > 0;
 
 	const handleSearchCommit = useCallback(
@@ -58,18 +59,19 @@ export const AccountsFilters = (): React.ReactElement => {
 				direction="left"
 			>
 				<div className="flex flex-col gap-2 sm:flex-row">
+					<FilterToggle
+						label={showingAll ? "Mostrando todas" : "Mostrar solo activas"}
+						icon={showingAll ? LayoutGrid : CheckCircle2}
+						checked={showingAll}
+						onChange={(checked) => setIsActive(!checked)}
+					/>
 					<FilterSelect
 						options={ACCOUNT_TYPE_OPTIONS}
 						value={accountsFilters.type ?? "all"}
 						onChange={handleTypeChange}
 						placeholder="Tipo de cuenta"
 					/>
-					<FilterToggle
-						label={activeOnly ? "Solo activas" : "Todas"}
-						icon={activeOnly ? CheckCircle2 : LayoutGrid}
-						checked={activeOnly}
-						onChange={setIsActive}
-					/>
+
 					<FilterSortSelect
 						options={ACCOUNT_SORT_OPTIONS}
 						sortValue={accountsFilters.sortBy ?? "name"}

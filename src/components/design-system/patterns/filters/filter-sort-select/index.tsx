@@ -32,7 +32,6 @@ export const FilterSortSelect = ({
 	disabled = false,
 	className,
 }: FilterSortSelectProps): React.ReactElement => {
-	const isActive = sortValue && sortValue !== "all" && sortValue !== "";
 	const isAsc = order === "asc";
 
 	const handleOrderToggle = (): void => {
@@ -49,7 +48,6 @@ export const FilterSortSelect = ({
 				<SelectTrigger
 					className={merge(
 						"min-w-40 rounded-r-none border-r-0 bg-white! text-gray-900! cursor-pointer hover:border-gray-500",
-						isActive && "bg-primary/10! border-primary/20 **:text-primary! hover:border-primary!",
 						disabled && "cursor-not-allowed opacity-50",
 					)}
 				>
@@ -79,10 +77,7 @@ export const FilterSortSelect = ({
 				onPressedChange={handleOrderToggle}
 				disabled={disabled}
 				aria-label={isAsc ? "Orden ascendente" : "Orden descendente"}
-				className={merge(
-					"rounded-l-none border-input bg-white! text-gray-900! hover:border-gray-500",
-					isActive && "bg-primary/10! border-primary/20 text-primary! hover:border-primary!",
-				)}
+				className="rounded-l-none border-input bg-white! text-gray-900! hover:border-gray-500"
 			>
 				{isAsc ? <ArrowUpAZ className="size-4" /> : <ArrowDownAZ className="size-4" />}
 			</Toggle>
