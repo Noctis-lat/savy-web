@@ -40,7 +40,7 @@ export const BanksFilters = (): React.ReactElement => {
 				clearFilters={resetFilters}
 				direction="left"
 			>
-				<div className="flex flex-col gap-2 sm:flex-row">
+				<div className="flex flex-1 flex-col gap-2 sm:flex-row">
 					<FilterSelect
 						options={SORT_OPTIONS}
 						value={banksFilters.sortBy ?? "name"}

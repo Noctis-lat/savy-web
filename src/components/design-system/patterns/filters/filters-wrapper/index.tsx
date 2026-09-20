@@ -136,7 +136,7 @@ export const FiltersWrapper = ({
 	}
 
 	return (
-		<div className="flex items-center gap-1 min-w-0 overflow-x-auto">
+		<div className="flex items-center gap-1 shrink-0">
 			{direction === "left" ? (
 				<>
 					<ExpandedFilters
