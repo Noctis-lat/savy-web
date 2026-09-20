@@ -1,5 +1,11 @@
 import type React from "react";
+import { ROUTES } from "@/app/router/routes";
+import { CreateAccount } from "@/components/accounts/create-account";
+import { Empty } from "@/components/design-system/patterns/feedback/empty";
+import { Screen } from "@/components/design-system/primitives/screen";
 import { useQueryAccounts } from "@/hooks/accounts/useQueryAccounts";
+import { AccountsFilters } from "./components/accounts-filters";
+import { AccountsKpis } from "./components/accounts-kpis";
 
 export const Accounts = (): React.ReactElement => {
 	const { accounts, isLoading } = useQueryAccounts({ info: true });
@@ -9,8 +15,17 @@ export const Accounts = (): React.ReactElement => {
 	}
 
 	if (!accounts) {
-		return <div>No accounts found</div>;
+		return <Empty />;
 	}
 
-	return <div>Accounts</div>;
+	return (
+		<Screen
+			backRoute={ROUTES.APP.DASHBOARD}
+			breadcrumbsConfig={[{ label: "Inicio", href: ROUTES.APP.ROOT }, { label: "Cuentas" }]}
+			action={<CreateAccount />}
+		>
+			<AccountsKpis />
+			<AccountsFilters />
+		</Screen>
+	);
 };
