@@ -13,7 +13,7 @@ export const ROUTES = {
 
 	APP: {
 		ROOT: "/app",
-		DASHBOARD: "/app/dashboard",
+		DASHBOARD: "/app",
 		BANKS: {
 			ROOT: "/app/banks",
 			DETAIL: "/app/banks/:id",
