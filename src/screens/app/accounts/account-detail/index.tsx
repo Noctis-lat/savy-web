@@ -4,11 +4,16 @@ import { ROUTES } from "@/app/router/routes";
 import { Empty } from "@/components/design-system/patterns/feedback/empty";
 import { Screen } from "@/components/design-system/primitives/screen";
 import { useQueryAccount } from "@/hooks/accounts/useQueryAccount";
+import { useQueryBank } from "@/hooks/banks/useQueryBank";
+import { buildRoute } from "@/utils/routing/buildRoute";
 
 export const AccountDetail = (): React.ReactElement => {
 	const { account_id } = useParams<{ account_id: string }>();
 
 	const { account, isLoading } = useQueryAccount(account_id);
+	const { bank } = useQueryBank(account?.bankId);
+
+	const bankRoute = buildRoute(ROUTES.APP.BANKS.DETAIL, { id: account?.bankId as string });
 
 	if (isLoading) {
 		return <div>loading...</div>;
@@ -24,6 +29,7 @@ export const AccountDetail = (): React.ReactElement => {
 			breadcrumbsConfig={[
 				{ label: "Inicio", href: ROUTES.APP.ROOT },
 				{ label: "Cuentas", href: ROUTES.APP.ACCOUNTS.ROOT },
+				{ label: bank?.name ?? "Banco", href: bankRoute },
 				{ label: account.name },
 			]}
 		>
