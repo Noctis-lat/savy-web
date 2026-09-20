@@ -4,11 +4,13 @@ import { CreateAccount } from "@/components/accounts/create-account";
 import { Empty } from "@/components/design-system/patterns/feedback/empty";
 import { Screen } from "@/components/design-system/primitives/screen";
 import { useQueryAccounts } from "@/hooks/accounts/useQueryAccounts";
+import { useAccountsController } from "@/storage/accounts/accountsController";
 import { AccountsFilters } from "./components/accounts-filters";
 import { AccountsKpis } from "./components/accounts-kpis";
 
 export const Accounts = (): React.ReactElement => {
-	const { accounts, accountsInfo, total, isLoading } = useQueryAccounts({ info: true });
+	const { accountsFilters } = useAccountsController();
+	const { accounts, accountsInfo, total, isLoading } = useQueryAccounts(accountsFilters);
 
 	if (isLoading) {
 		return <div>Loading...</div>;
