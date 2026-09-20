@@ -44,19 +44,21 @@ type AccountParams = {
 
 type getAccountsResponse = {
 	accounts: Account[];
-	info?: {
-		netWorth: number;
-		liquidity: number;
-		debt: number;
-		balanceBreakdown: {
-			assets: number;
-			liabilities: number;
-		}
-	},
+	info?: AccountsInfo,
 	page: number;
 	perPage: number;
 	total: number;
 	totalPages: number;
+}
+
+type AccountsInfo = {
+	netWorth: number;
+	liquidity: number;
+	debt: number;
+	balanceBreakdown: {
+		assets: number;
+		liabilities: number;
+	}
 }
 
 type CreateAccountPayload = {

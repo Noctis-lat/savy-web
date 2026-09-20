@@ -8,7 +8,7 @@ import { AccountsFilters } from "./components/accounts-filters";
 import { AccountsKpis } from "./components/accounts-kpis";
 
 export const Accounts = (): React.ReactElement => {
-	const { accounts, isLoading } = useQueryAccounts({ info: true });
+	const { accounts, accountsInfo, total, isLoading } = useQueryAccounts({ info: true });
 
 	if (isLoading) {
 		return <div>Loading...</div>;
@@ -24,7 +24,10 @@ export const Accounts = (): React.ReactElement => {
 			breadcrumbsConfig={[{ label: "Inicio", href: ROUTES.APP.ROOT }, { label: "Cuentas" }]}
 			action={<CreateAccount />}
 		>
-			<AccountsKpis />
+			<AccountsKpis
+				info={accountsInfo}
+				total={total}
+			/>
 			<AccountsFilters />
 		</Screen>
 	);
