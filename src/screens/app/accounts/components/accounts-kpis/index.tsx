@@ -1,4 +1,4 @@
-import { Coins, CreditCardX, Droplets, Landmark, Wallet } from "lucide-react";
+import { Coins, CreditCardX, Landmark, Wallet } from "lucide-react";
 import type React from "react";
 import { ScaleFadeIn } from "@/components/design-system/patterns/animations/scale-fade-in";
 import { KpiCard } from "@/components/design-system/patterns/data-display/kpi-card";
