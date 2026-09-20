@@ -12,19 +12,25 @@ const PRIMARY_FALLBACK = "oklch(0.511 0.096 186.391)";
 export const BankRow = ({ bank, onClick }: Props): React.ReactElement => {
 	const accountLabel = bank.accountCount === 1 ? "cuenta" : "cuentas";
 	const typesLabel = bank.accountTypes.length > 0 ? bank.accountTypes.join(", ") : "Sin cuentas";
+	const bankColor = bank.color ?? PRIMARY_FALLBACK;
+
+	const gradientStyle = {
+		background: `linear-gradient(135deg, color-mix(in oklch, ${bankColor} 12%, transparent) 0%, color-mix(in oklch, ${bankColor} 5%, transparent) 60%, transparent 100%)`,
+	};
 
 	return (
 		<button
 			type="button"
 			onClick={onClick}
 			className={merge(
-				"flex w-full cursor-pointer items-center gap-3 border-b border-border/30 px-4 py-3 text-left transition-colors last:border-b-0 hover:bg-white/20",
+				"flex w-full cursor-pointer items-center gap-3 overflow-hidden border-b border-border/30 px-4 py-3 text-left transition-all last:border-b-0 hover:brightness-115",
 				!bank.isActive && "opacity-60",
 			)}
+			style={gradientStyle}
 		>
 			<span
 				className="size-3 shrink-0 rounded-full"
-				style={{ backgroundColor: bank.color ?? PRIMARY_FALLBACK }}
+				style={{ backgroundColor: bankColor }}
 			/>
 
 			<div className="flex flex-1 flex-col gap-0.5">
