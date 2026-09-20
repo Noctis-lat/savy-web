@@ -29,7 +29,7 @@ export const AccountsList = (): React.ReactElement => {
 	return (
 		<StaggerContainer>
 			<ScaleFadeIn>
-				<GlassCard className="overflow-hidden p-0">
+				<GlassCard className="overflow-hidden p-0 gap-0">
 					{accounts.map((account) => {
 						return (
 							<AccountItem
