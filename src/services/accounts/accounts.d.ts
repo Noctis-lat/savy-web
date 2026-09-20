@@ -32,6 +32,7 @@ type AccountService = {
 // ====================== METHOD TYPES =========================
 
 type AccountParams = {
+	search?: string;
 	type?: AccountType;
 	bankId?: string;
 	isActive?: boolean;
