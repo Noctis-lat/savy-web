@@ -4,19 +4,18 @@ import { CreateAccount } from "@/components/accounts/create-account";
 import { Empty } from "@/components/design-system/patterns/feedback/empty";
 import { Screen } from "@/components/design-system/primitives/screen";
 import { useQueryAccounts } from "@/hooks/accounts/useQueryAccounts";
-import { useAccountsController } from "@/storage/accounts/accountsController";
 import { AccountsFilters } from "./components/accounts-filters";
 import { AccountsKpis } from "./components/accounts-kpis";
+import { AccountsList } from "./components/accounts-list";
 
 export const Accounts = (): React.ReactElement => {
-	const { accountsFilters } = useAccountsController();
-	const { accounts, accountsInfo, total, isLoading } = useQueryAccounts(accountsFilters);
+	const { accountsInfo, total, isLoading } = useQueryAccounts({ info: true });
 
 	if (isLoading) {
 		return <div>Loading...</div>;
 	}
 
-	if (!accounts) {
+	if (!accountsInfo) {
 		return <Empty />;
 	}
 
@@ -31,6 +30,7 @@ export const Accounts = (): React.ReactElement => {
 				total={total}
 			/>
 			<AccountsFilters />
+			<AccountsList />
 		</Screen>
 	);
 };

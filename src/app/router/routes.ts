@@ -14,12 +14,16 @@ export const ROUTES = {
 	APP: {
 		ROOT: "/app",
 		DASHBOARD: "/app/dashboard",
-		BANKS: "/app/banks",
-		BANKS_NEW: "/app/banks/new",
-		BANKS_DETAIL: "/app/banks/:id",
-		BANKS_EDIT: "/app/banks/:id/edit",
-		ACCOUNTS: "/app/accounts",
-		ACCOUNTS_NEW: "/app/accounts/new",
+		BANKS: {
+			ROOT: "/app/banks",
+			DETAIL: "/app/banks/:id",
+		},
+		ACCOUNTS: {
+			ROOT: "/app/accounts",
+			DETAIL: "/app/accounts/:account_id",
+			NEW: "/app/accounts/new",
+			EDIT: "/app/accounts/:account_id/edit",
+		},
 		TRANSACTIONS: "/app/transactions",
 		TRANSACTIONS_NEW: "/app/transactions/new",
 		BUDGETS: "/app/budgets",

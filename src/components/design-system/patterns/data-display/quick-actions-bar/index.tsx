@@ -22,8 +22,8 @@ type QuickAction = {
 };
 
 const ACTIONS: QuickAction[] = [
-	{ label: "Bancos", icon: Landmark, path: ROUTES.APP.BANKS },
-	{ label: "Cuentas", icon: Wallet, path: ROUTES.APP.ACCOUNTS },
+	{ label: "Bancos", icon: Landmark, path: ROUTES.APP.BANKS.ROOT },
+	{ label: "Cuentas", icon: Wallet, path: ROUTES.APP.ACCOUNTS.ROOT },
 	{ label: "Transacciones", icon: ArrowLeftRight, path: ROUTES.APP.TRANSACTIONS },
 	{ label: "Ingresos", icon: ArrowUpRight, path: `${ROUTES.APP.TRANSACTIONS}?type=INCOME` },
 	{ label: "Gastos", icon: ArrowDownRight, path: `${ROUTES.APP.TRANSACTIONS}?type=EXPENSE` },

@@ -33,8 +33,8 @@ export const menuItems: MenuGroup[] = [
 	{
 		groupLabel: "Finanzas",
 		children: [
-			{ label: "Bancos", href: ROUTES.APP.BANKS, icon: Landmark },
-			{ label: "Cuentas", href: ROUTES.APP.ACCOUNTS, icon: Wallet },
+			{ label: "Bancos", href: ROUTES.APP.BANKS.ROOT, icon: Landmark },
+			{ label: "Cuentas", href: ROUTES.APP.ACCOUNTS.ROOT, icon: Wallet },
 			{ label: "Movimientos", href: ROUTES.APP.TRANSACTIONS, icon: ArrowUpDown },
 			{ label: "Presupuestos", href: ROUTES.APP.BUDGETS, icon: PieChart },
 			{ label: "Metas", href: ROUTES.APP.GOALS, icon: Target },

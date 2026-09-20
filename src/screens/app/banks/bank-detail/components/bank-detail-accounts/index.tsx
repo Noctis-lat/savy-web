@@ -69,7 +69,7 @@ export const BankDetailAccounts = ({ bankId }: BankDetailAccountsProps): React.R
 					description="Este banco no tiene cuentas registradas."
 					action={{
 						label: "Agregar cuenta",
-						onClick: () => navigate(ROUTES.APP.ACCOUNTS_NEW),
+						onClick: () => navigate(ROUTES.APP.ACCOUNTS.NEW),
 					}}
 				/>
 			</GlassCard>
@@ -98,7 +98,7 @@ export const BankDetailAccounts = ({ bankId }: BankDetailAccountsProps): React.R
 				})}
 				<button
 					type="button"
-					onClick={() => navigate(ROUTES.APP.ACCOUNTS_NEW)}
+					onClick={() => navigate(ROUTES.APP.ACCOUNTS.NEW)}
 					className="flex aspect-[16/10] w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-border/50 text-muted-foreground transition-colors hover:border-primary/30 hover:text-primary"
 				>
 					<Plus className="size-6" />

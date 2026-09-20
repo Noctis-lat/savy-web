@@ -23,8 +23,8 @@ export const BanksCard = ({ banks, className }: BanksCardProps): React.ReactElem
 			title="Bancos"
 			icon={Landmark}
 			actionLabel="Ver todo"
-			onAction={() => navigate(ROUTES.APP.BANKS)}
-			onCreate={() => navigate(ROUTES.APP.BANKS)}
+			onAction={() => navigate(ROUTES.APP.BANKS.ROOT)}
+			onCreate={() => navigate(ROUTES.APP.BANKS.ROOT)}
 			className={className}
 		>
 			{isEmpty ? (
@@ -39,7 +39,7 @@ export const BanksCard = ({ banks, className }: BanksCardProps): React.ReactElem
 						<BankChip
 							key={bank.id}
 							bank={bank}
-							onClick={() => navigate(ROUTES.APP.BANKS)}
+							onClick={() => navigate(ROUTES.APP.BANKS.ROOT)}
 						/>
 					))}
 				</div>

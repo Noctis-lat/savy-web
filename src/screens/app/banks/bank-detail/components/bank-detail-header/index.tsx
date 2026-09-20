@@ -11,8 +11,8 @@ export const BankDetailHeader = ({ bank }: BankDetailHeaderProps): React.ReactEl
 	return (
 		<div className="flex items-center justify-between">
 			<AppBreadcrumbs
-				backRoute={ROUTES.APP.BANKS}
-				config={[{ label: "Bancos", href: ROUTES.APP.BANKS }, { label: bank.name }]}
+				backRoute={ROUTES.APP.BANKS.ROOT}
+				config={[{ label: "Bancos", href: ROUTES.APP.BANKS.ROOT }, { label: bank.name }]}
 			/>
 			<BankEdit bank={bank} />
 		</div>
