@@ -12,6 +12,7 @@ export const useQueryAccounts = (params?: AccountParams) => {
 
 	return {
 		accounts: accountsQuery.data?.accounts,
+		groupedAccounts: accountsQuery.data?.groupedAccounts,
 		accountsInfo: accountsQuery.data?.info,
 		page: accountsQuery.data?.page,
 		perPage: accountsQuery.data?.perPage,

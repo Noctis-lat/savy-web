@@ -48,11 +48,18 @@ type AccountParams = {
 
 type getAccountsResponse = {
 	accounts: Account[];
+	groupedAccounts?: GroupedAccount[];
 	info?: AccountsInfo,
 	page: number;
 	perPage: number;
 	total: number;
 	totalPages: number;
+}
+
+type GroupedAccount = {
+	key: string;
+	title: string;
+	accounts: Account[]
 }
 
 type AccountsInfo = {
