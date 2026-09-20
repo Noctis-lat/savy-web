@@ -19,15 +19,14 @@ export const BanksList = (): React.ReactElement => {
 	const searchQuery = useBanksController((state) => state.searchQuery);
 
 	const banksQuery = useQueryBanks(banksFilters);
-	const accountsQuery = useQueryAccounts();
+	const { accounts, isLoading: isLoadingAccounts } = useQueryAccounts();
 
-	const isLoading = banksQuery.isLoading || accountsQuery.isLoading;
-	const isError = banksQuery.isError || accountsQuery.isError;
+	const isLoading = banksQuery.isLoading || isLoadingAccounts;
 
 	const enrichedBanks = useMemo(() => {
-		if (!banksQuery.data || !accountsQuery.data) return [];
-		return enrichBanksWithStats(banksQuery.data, accountsQuery.data);
-	}, [banksQuery.data, accountsQuery.data]);
+		if (!banksQuery.data || !accounts) return [];
+		return enrichBanksWithStats(banksQuery.data, accounts);
+	}, [banksQuery.data, accounts]);
 
 	const filteredBanks = useMemo(() => {
 		if (!searchQuery) return enrichedBanks;
@@ -39,7 +38,7 @@ export const BanksList = (): React.ReactElement => {
 		return <BanksListSkeleton />;
 	}
 
-	if (isError) {
+	if (banksQuery.isError) {
 		return (
 			<Empty
 				icon={RefreshCw}
@@ -50,7 +49,6 @@ export const BanksList = (): React.ReactElement => {
 					icon: RefreshCw,
 					onClick: () => {
 						void banksQuery.refetch();
-						void accountsQuery.refetch();
 					},
 				}}
 			/>
