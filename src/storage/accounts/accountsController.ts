@@ -11,6 +11,7 @@ type AccountsController = {
 	setOrder: (order: "asc" | "desc") => void;
 	setPage: (page: number) => void;
 	setPerPage: (perPage: number) => void;
+	setGroupedBy: (grouped: AccountGrouped) => void;
 	resetFilters: () => void;
 };
 
@@ -24,6 +25,7 @@ const DEFAULT_FILTERS: AccountParams = {
 	page: 1,
 	perPage: 10,
 	info: true,
+	groupedBy: undefined,
 };
 
 export const useAccountsController = create<AccountsController>()((set) => ({
@@ -97,6 +99,15 @@ export const useAccountsController = create<AccountsController>()((set) => ({
 			accountsFilters: {
 				...state.accountsFilters,
 				perPage,
+			},
+		}));
+	},
+
+	setGroupedBy: (grouped) => {
+		set((state) => ({
+			accountsFilters: {
+				...state.accountsFilters,
+				groupedBy: grouped === "all" ? undefined : grouped,
 			},
 		}));
 	},

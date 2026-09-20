@@ -2,6 +2,8 @@
 
 type AccountType = "DEBIT" | "CREDIT" | "LOAN" | "CASH";
 
+type AccountGrouped = "all" | "banks" | "types";
+
 // ====================== ENTITY =========================
 
 type Account = {
@@ -41,6 +43,7 @@ type AccountParams = {
 	page?: number;
 	perPage?: number;
 	info?: boolean;
+	groupedBy?: AccountGrouped;
 };
 
 type getAccountsResponse = {

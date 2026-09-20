@@ -6,7 +6,11 @@ import { FilterSortSelect } from "@/components/design-system/patterns/filters/fi
 import { FilterToggle } from "@/components/design-system/patterns/filters/filter-toggle";
 import { FiltersWrapper } from "@/components/design-system/patterns/filters/filters-wrapper";
 import { SearchInput } from "@/components/design-system/patterns/filters/search-input";
-import { ACCOUNT_SORT_OPTIONS, ACCOUNT_TYPE_OPTIONS } from "@/content/accounts/accountsOptions";
+import {
+	ACCOUNT_SORT_OPTIONS,
+	ACCOUNT_TYPE_OPTIONS,
+	GROUPED_OPTIONS,
+} from "@/content/accounts/accountsOptions";
 import { useAccountsController } from "@/storage/accounts/accountsController";
 
 export const AccountsFilters = (): React.ReactElement => {
@@ -16,6 +20,7 @@ export const AccountsFilters = (): React.ReactElement => {
 	const setOrder = useAccountsController((state) => state.setOrder);
 	const setType = useAccountsController((state) => state.setType);
 	const setIsActive = useAccountsController((state) => state.setIsActive);
+	const setGroupedBy = useAccountsController((state) => state.setGroupedBy);
 	const resetFilters = useAccountsController((state) => state.resetFilters);
 
 	const activeOnly = accountsFilters.isActive === true;
@@ -45,6 +50,10 @@ export const AccountsFilters = (): React.ReactElement => {
 		setType(value === "all" ? (undefined as unknown as AccountType) : (value as AccountType));
 	};
 
+	const handleGroupedBy = (value: string): void => {
+		setGroupedBy(value as AccountGrouped);
+	};
+
 	return (
 		<div className="flex items-center justify-between gap-3">
 			<SearchInput
@@ -70,6 +79,13 @@ export const AccountsFilters = (): React.ReactElement => {
 						value={accountsFilters.type ?? "all"}
 						onChange={handleTypeChange}
 						placeholder="Tipo de cuenta"
+					/>
+
+					<FilterSelect
+						options={GROUPED_OPTIONS}
+						value={accountsFilters.groupedBy ?? "all"}
+						onChange={handleGroupedBy}
+						placeholder="Agrupar por"
 					/>
 
 					<FilterSortSelect
