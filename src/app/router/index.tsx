@@ -76,6 +76,13 @@ export const router = createBrowserRouter([
 									import("@/screens/app/accounts").then((m) => ({ Component: m.Accounts })),
 							},
 							{
+								path: ROUTES.APP.ACCOUNTS.DETAIL,
+								lazy: () =>
+									import("@/screens/app/accounts/account-detail").then((m) => ({
+										Component: m.AccountDetail,
+									})),
+							},
+							{
 								path: ROUTES.APP.ACCOUNTS.NEW,
 								lazy: () =>
 									import("@/screens/app/accounts/new").then((m) => ({ Component: m.AccountNew })),
