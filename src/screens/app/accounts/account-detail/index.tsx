@@ -6,6 +6,8 @@ import { Screen } from "@/components/design-system/primitives/screen";
 import { useQueryAccount } from "@/hooks/accounts/useQueryAccount";
 import { useQueryBank } from "@/hooks/banks/useQueryBank";
 import { buildRoute } from "@/utils/routing/buildRoute";
+import { AccountEdit } from "./components/account-edit";
+import { AccountHeader } from "./components/account-header";
 
 export const AccountDetail = (): React.ReactElement => {
 	const { account_id } = useParams<{ account_id: string }>();
@@ -32,8 +34,9 @@ export const AccountDetail = (): React.ReactElement => {
 				{ label: bank?.name ?? "Banco", href: bankRoute },
 				{ label: account.name },
 			]}
+			action={<AccountEdit />}
 		>
-			<div></div>
+			<AccountHeader />
 		</Screen>
 	);
 };
