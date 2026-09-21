@@ -8,13 +8,14 @@ import { useQueryAccounts } from "@/hooks/accounts/useQueryAccounts";
 import { useAccountsController } from "@/storage/accounts/accountsController";
 import { AccountItem } from "./components/account-item";
 import { AccountsGrouped } from "./components/accounts-grouped";
+import { AccountsListSkeleton } from "./components/accounts-list-skeleton";
 
 export const AccountsList = (): React.ReactElement => {
 	const { accountsFilters } = useAccountsController();
 	const { accounts, groupedAccounts, isLoading } = useQueryAccounts(accountsFilters);
 
 	if (isLoading) {
-		return <div>loading...</div>;
+		return <AccountsListSkeleton />;
 	}
 
 	if (groupedAccounts) {

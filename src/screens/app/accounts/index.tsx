@@ -7,16 +7,22 @@ import { useQueryAccounts } from "@/hooks/accounts/useQueryAccounts";
 import { AccountsFilters } from "./components/accounts-filters";
 import { AccountsKpis } from "./components/accounts-kpis";
 import { AccountsList } from "./components/accounts-list";
+import { AccountsSkeleton } from "./components/accounts-skeleton";
 
 export const Accounts = (): React.ReactElement => {
 	const { accountsInfo, total, isLoading } = useQueryAccounts({ info: true });
 
 	if (isLoading) {
-		return <div>Loading...</div>;
+		return <AccountsSkeleton />;
 	}
 
 	if (!accountsInfo) {
-		return <Empty />;
+		return (
+			<Empty
+				title="Sin cuentas para mostrar"
+				description="No hay cuentas para mostrar"
+			/>
+		);
 	}
 
 	return (
