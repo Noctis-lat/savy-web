@@ -1,12 +1,12 @@
 import type React from "react";
 import { useParams } from "react-router";
 import { ROUTES } from "@/app/router/routes";
+import { AccountEdit } from "@/components/accounts/account-edit";
 import { Empty } from "@/components/design-system/patterns/feedback/empty";
 import { Screen } from "@/components/design-system/primitives/screen";
 import { useQueryAccount } from "@/hooks/accounts/useQueryAccount";
 import { useQueryBank } from "@/hooks/banks/useQueryBank";
 import { buildRoute } from "@/utils/routing/buildRoute";
-import { AccountEdit } from "./components/account-edit";
 import { AccountHeader } from "./components/account-header";
 
 export const AccountDetail = (): React.ReactElement => {
@@ -34,7 +34,7 @@ export const AccountDetail = (): React.ReactElement => {
 				{ label: bank?.name ?? "Banco", href: bankRoute },
 				{ label: account.name },
 			]}
-			action={<AccountEdit />}
+			action={<AccountEdit account={account} />}
 		>
 			<AccountHeader />
 		</Screen>

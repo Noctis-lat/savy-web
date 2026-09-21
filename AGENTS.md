@@ -137,6 +137,27 @@ create-bank/
 - Use **Plus** for "Agregar" / "Create" action buttons.
 - Match the icon to the action semantics, not to a generic success state.
 
+### Watching fields and side effects
+
+- **Use `useWatch({ control, name })`** to subscribe to specific field changes — NEVER `form.watch()`.
+- `useWatch` only re-renders when the watched field changes. `watch()` re-renders on every form state change.
+- **NEVER put the form object** (e.g. `createAccountForm`) **in a `useEffect` dependency array** — its reference changes on every render and causes infinite loops.
+- Destructure `{ control, setValue }` from the form and use those stable references in `useEffect` deps.
+- The full form object is still passed to `FormField`/`FormSelect` as the `form` prop, but it must never enter hook dependency arrays.
+
+```typescript
+const createAccountForm = useFormContext<CreateAccountFormValues>();
+const { control, setValue } = createAccountForm;
+
+const selectedBankId = useWatch({ control, name: "bankId" });
+
+useEffect(() => {
+  if (!selectedBankId || !banks) return;
+  const bank = banks.find((bank) => bank.id === selectedBankId);
+  if (bank?.color) setValue("color", bank.color);
+}, [selectedBankId, banks, setValue]);
+```
+
 ## Hook conventions
 
 - Hooks in `src/hooks/` named `use{Name}.ts` (camelCase): `useAccounts.ts`, `useAuth.ts`.
