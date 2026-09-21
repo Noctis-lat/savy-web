@@ -11,10 +11,14 @@ import { CreateBankForm } from "./components/create-bank-form";
 import { CreateBankSubmit } from "./components/create-bank-submit";
 
 type CreateBankProps = {
+	mode?: "button" | "icon";
 	size?: "default" | "icon" | "xs" | "sm" | "lg" | "icon-xs" | "icon-sm" | "icon-lg";
 };
 
-export const CreateBank = ({ size = "default" }: CreateBankProps): React.ReactElement => {
+export const CreateBank = ({
+	mode = "button",
+	size = "default",
+}: CreateBankProps): React.ReactElement => {
 	const [open, setOpen] = useState<boolean>(false);
 
 	const createBankForm = useForm<CreateBankFormValues>({
@@ -42,13 +46,25 @@ export const CreateBank = ({ size = "default" }: CreateBankProps): React.ReactEl
 				actions={<CreateBankSubmit onSuccess={() => handleOpenChange(false)} />}
 				showCancel
 			>
-				<Button
-					onClick={() => setOpen(true)}
-					size={size}
-				>
-					<Plus className="size-4" />
-					Agregar banco
-				</Button>
+				{mode === "icon" ? (
+					<Button
+						variant="ghost"
+						size="icon-sm"
+						onClick={() => setOpen(true)}
+						aria-label="Agregar banco"
+						className="text-primary hover:bg-primary/10"
+					>
+						<Plus className="size-4" />
+					</Button>
+				) : (
+					<Button
+						onClick={() => setOpen(true)}
+						size={size}
+					>
+						<Plus className="size-4" />
+						Agregar banco
+					</Button>
+				)}
 			</Modal>
 		</FormProvider>
 	);

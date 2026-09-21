@@ -1,6 +1,7 @@
 import { ChevronRight, type LucideIcon, Plus } from "lucide-react";
 import type React from "react";
 import { GlassCard } from "@/components/design-system/patterns/glass-card";
+import { Button } from "@/components/ui/button";
 import { merge } from "@/utils/ui/mergeStyles";
 
 type SummaryCardProps = {
@@ -9,6 +10,7 @@ type SummaryCardProps = {
 	actionLabel?: string;
 	onAction?: () => void;
 	onCreate?: () => void;
+	createContent?: React.ReactElement;
 	children: React.ReactNode;
 	className?: string;
 };
@@ -19,6 +21,7 @@ export const SummaryCard = ({
 	actionLabel,
 	onAction,
 	onCreate,
+	createContent,
 	children,
 	className,
 }: SummaryCardProps): React.ReactElement => {
@@ -36,16 +39,19 @@ export const SummaryCard = ({
 				</div>
 
 				<div className="flex items-center gap-2">
-					{onCreate && (
-						<button
-							type="button"
-							onClick={onCreate}
-							aria-label={`Crear ${title.toLowerCase()}`}
-							className="flex size-7 items-center justify-center rounded-md text-primary transition-colors hover:bg-primary/10"
-						>
-							<Plus className="size-4" />
-						</button>
-					)}
+					{createContent
+						? createContent
+						: onCreate && (
+								<Button
+									variant="ghost"
+									size="icon-sm"
+									onClick={onCreate}
+									aria-label={`Crear ${title.toLowerCase()}`}
+									className="text-primary hover:bg-primary/10"
+								>
+									<Plus className="size-4" />
+								</Button>
+							)}
 
 					{hasAction && (
 						<button

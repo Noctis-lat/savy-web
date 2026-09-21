@@ -24,7 +24,7 @@ export const BanksCard = ({ banks, className }: BanksCardProps): React.ReactElem
 			icon={Landmark}
 			actionLabel="Ver todo"
 			onAction={() => navigate(ROUTES.APP.BANKS.ROOT)}
-			onCreate={() => navigate(ROUTES.APP.BANKS.ROOT)}
+			createContent={<CreateBank mode="icon" />}
 			className={className}
 		>
 			{isEmpty ? (

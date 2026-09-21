@@ -3,6 +3,7 @@ import type React from "react";
 import { useMemo } from "react";
 import { useNavigate } from "react-router";
 import { ROUTES } from "@/app/router/routes";
+import { CreateAccount } from "@/components/accounts/create-account";
 import { DonutChart } from "@/components/design-system/patterns/data-display/donut-chart";
 import { SummaryCard } from "@/components/design-system/patterns/data-display/summary-card";
 import { Empty } from "@/components/design-system/patterns/feedback/empty";
@@ -60,7 +61,7 @@ export const AccountsDistributionCard = ({
 			icon={PieChart}
 			actionLabel="Ver todo"
 			onAction={() => navigate(ROUTES.APP.ACCOUNTS.ROOT)}
-			onCreate={() => navigate(ROUTES.APP.ACCOUNTS.NEW)}
+			createContent={<CreateAccount mode="icon" />}
 			className={className}
 		>
 			{isEmpty ? (
