@@ -68,10 +68,7 @@ export const AccountsDistributionCard = ({
 				<Empty
 					title="Sin cuentas"
 					description="Aún no tienes cuentas registradas."
-					action={{
-						label: "Agregar cuenta",
-						onClick: () => navigate(ROUTES.APP.ACCOUNTS.NEW),
-					}}
+					action={<CreateAccount size="sm" />}
 				/>
 			) : (
 				<DonutChart

@@ -2,6 +2,7 @@ import { Plus, RefreshCw } from "lucide-react";
 import type React from "react";
 import { useNavigate } from "react-router";
 import { ROUTES } from "@/app/router/routes";
+import { CreateAccount } from "@/components/accounts/create-account";
 import { BankCard } from "@/components/design-system/patterns/data-display/bank-card";
 import { Empty } from "@/components/design-system/patterns/feedback/empty";
 import { GlassCard } from "@/components/design-system/patterns/glass-card";
@@ -67,10 +68,12 @@ export const BankDetailAccounts = ({ bankId }: BankDetailAccountsProps): React.R
 					icon={Plus}
 					title="Sin cuentas"
 					description="Este banco no tiene cuentas registradas."
-					action={{
-						label: "Agregar cuenta",
-						onClick: () => navigate(ROUTES.APP.ACCOUNTS.NEW),
-					}}
+					action={
+						<CreateAccount
+							size="sm"
+							bankId={bank?.id}
+						/>
+					}
 				/>
 			</GlassCard>
 		);
@@ -96,14 +99,12 @@ export const BankDetailAccounts = ({ bankId }: BankDetailAccountsProps): React.R
 						/>
 					);
 				})}
-				<button
-					type="button"
-					onClick={() => navigate(ROUTES.APP.ACCOUNTS.NEW)}
-					className="flex aspect-[16/10] w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-border/50 text-muted-foreground transition-colors hover:border-primary/30 hover:text-primary"
-				>
-					<Plus className="size-6" />
-					<span className="text-sm">Agregar cuenta</span>
-				</button>
+
+				<CreateAccount
+					mode="card"
+					size="sm"
+					bankId={bank?.id}
+				/>
 			</div>
 		</div>
 	);
