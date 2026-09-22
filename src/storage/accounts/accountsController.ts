@@ -25,7 +25,7 @@ const DEFAULT_FILTERS: AccountParams = {
 	page: 1,
 	perPage: 10,
 	info: true,
-	groupedBy: undefined,
+	groupedBy: "banks",
 };
 
 export const useAccountsController = create<AccountsController>()((set) => ({
