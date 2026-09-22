@@ -83,11 +83,6 @@ export const router = createBrowserRouter([
 									})),
 							},
 							{
-								path: ROUTES.APP.ACCOUNTS.NEW,
-								lazy: () =>
-									import("@/screens/app/accounts/new").then((m) => ({ Component: m.AccountNew })),
-							},
-							{
 								path: ROUTES.APP.TRANSACTIONS,
 								lazy: () =>
 									import("@/screens/app/transactions").then((m) => ({ Component: m.Transactions })),

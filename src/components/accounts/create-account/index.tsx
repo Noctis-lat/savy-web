@@ -74,7 +74,7 @@ export const CreateAccount = ({
 					<button
 						type="button"
 						onClick={() => setOpen(true)}
-						className="flex aspect-[16/10] w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-border/50 text-muted-foreground transition-colors hover:border-primary/30 hover:text-primary hover:bg-emerald-50/30"
+						className="flex aspect-16/10 w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-border/50 text-muted-foreground transition-colors hover:border-primary/30 hover:text-primary hover:bg-emerald-50/30"
 					>
 						<CreditCardPlus className="size-6" />
 						<span className="text-sm">Agregar cuenta</span>

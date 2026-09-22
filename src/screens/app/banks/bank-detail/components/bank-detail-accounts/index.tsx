@@ -1,7 +1,7 @@
 import { Plus, RefreshCw } from "lucide-react";
 import type React from "react";
 import { useNavigate } from "react-router";
-import { ROUTES } from "@/app/router/routes";
+
 import { CreateAccount } from "@/components/accounts/create-account";
 import { BankCard } from "@/components/design-system/patterns/data-display/bank-card";
 import { Empty } from "@/components/design-system/patterns/feedback/empty";
@@ -31,10 +31,10 @@ export const BankDetailAccounts = ({ bankId }: BankDetailAccountsProps): React.R
 	if (isLoading) {
 		return (
 			<div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-				<Skeleton className="aspect-[16/10] rounded-xl" />
-				<Skeleton className="aspect-[16/10] rounded-xl" />
-				<Skeleton className="aspect-[16/10] rounded-xl" />
-				<Skeleton className="aspect-[16/10] rounded-xl" />
+				<Skeleton className="aspect-16/10ounded-xl" />
+				<Skeleton className="aspect-16/10 rounded-xl" />
+				<Skeleton className="aspect-16/10 rounded-xl" />
+				<Skeleton className="aspect-16/10 rounded-xl" />
 			</div>
 		);
 	}
