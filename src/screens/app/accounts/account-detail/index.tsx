@@ -36,7 +36,10 @@ export const AccountDetail = (): React.ReactElement => {
 			]}
 			action={<AccountEdit account={account} />}
 		>
-			<AccountHeader />
+			<AccountHeader
+				account={account}
+				bank={bank}
+			/>
 		</Screen>
 	);
 };

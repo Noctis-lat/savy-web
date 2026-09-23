@@ -2,7 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import { bankKeys } from "@/content/services";
 import { bankService } from "@/services/banks";
 
-export const useQueryBank = (bankId: string | undefined, info = false) => {
+type UseQueryBankReturn = {
+	bank: Bank | undefined;
+	isLoading: boolean;
+};
+
+export const useQueryBank = (bankId: string | undefined, info = false): UseQueryBankReturn => {
 	const bankQuery = useQuery({
 		queryKey: [bankKeys.bank, bankId, { info }],
 		queryFn: () => bankService.getBank(bankId as string, info),
