@@ -26,6 +26,7 @@ type Account = {
 type AccountService = {
 	getAccounts: (params?: AccountParams) => Promise<getAccountsResponse>;
 	getAccount: (id: string) => Promise<Account>;
+	getAccountTransactions: (accountId: string,params?: AccountTransactionsParams) => Promise<AccountTransactionsResponse>;
 	createAccount: (payload: CreateAccountPayload) => Promise<Account>;
 	updateAccount: (id: string, payload: UpdateAccountPayload) => Promise<Account>;
 	deleteAccount: (id: string) => Promise<void>;
@@ -90,3 +91,25 @@ type UpdateAccountPayload = {
 	color?: string;
 	icon?: string;
 };
+
+type AccountTransactionsParams = {
+	type?:string;
+	categoryId?: string;
+	search?: string;
+	from?: string;
+	to?: string;
+	page?: string;
+	limit?: string;
+	sortBy?: string;
+	order?: string;
+}
+
+type AccountTransactionsResponse = {
+	data: Transaction[];
+	meta: {
+		page: number;
+		limit: number;
+		total: number;
+		totalPages: number;
+	}
+}

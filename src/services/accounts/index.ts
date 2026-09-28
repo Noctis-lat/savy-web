@@ -13,6 +13,19 @@ export const accountService: AccountService = {
 		return unwrap<Account>(response);
 	},
 
+	getAccountTransactions: async (
+		accountId: string,
+		params?: AccountTransactionsParams,
+	): Promise<AccountTransactionsResponse> => {
+		const response = await httpClient.get<APIResponse<AccountTransactionsResponse>>(
+			`/accounts/${accountId}/transactions`,
+			{
+				params,
+			},
+		);
+		return unwrap<AccountTransactionsResponse>(response);
+	},
+
 	createAccount: async (payload: CreateAccountPayload): Promise<Account> => {
 		const response = await httpClient.post<APIResponse<Account>>("/accounts", payload);
 		return unwrap<Account>(response);
