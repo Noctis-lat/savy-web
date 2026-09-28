@@ -2,7 +2,18 @@ import { useQuery } from "@tanstack/react-query";
 import { accountKeys } from "@/content/services";
 import { accountService } from "@/services/accounts";
 
-export const useQueryAccounts = (params?: AccountParams) => {
+type useQueryAccountsReturn = {
+	accounts: Account[] | undefined;
+	groupedAccounts: GroupedAccount[] | undefined;
+	accountsInfo: AccountsInfo | undefined;
+	page: number | undefined;
+	perPage: number | undefined;
+	total: number | undefined;
+	totalPages: number | undefined;
+	isLoading: boolean;
+};
+
+export const useQueryAccounts = (params?: AccountParams): useQueryAccountsReturn => {
 	const accountsQuery = useQuery({
 		queryKey: [accountKeys.accounts, params],
 		queryFn: () => accountService.getAccounts(params),
