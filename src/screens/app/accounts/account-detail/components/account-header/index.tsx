@@ -1,4 +1,5 @@
 import { Dot } from "lucide-react";
+import { DynamicIcon, type IconName } from "lucide-react/dynamic";
 import type React from "react";
 import { ScaleFadeIn } from "@/components/design-system/patterns/animations/scale-fade-in";
 import { GlassCard } from "@/components/design-system/patterns/glass-card";
@@ -15,15 +16,30 @@ type AccountHeaderProps = {
 
 export const AccountHeader = ({ account, bank }: AccountHeaderProps): React.ReactElement => {
 	const balanceIsNegative = account.balance < 0;
+	const accountColor = account.color ?? PRIMARY_FALLBACK;
+
+	const gradientStyle = {
+		background: `linear-gradient(135deg, color-mix(in oklch, ${accountColor} 12%, transparent) 0%, color-mix(in oklch, ${accountColor} 5%, transparent) 60%, transparent 100%)`,
+	};
+
 	return (
 		<ScaleFadeIn>
-			<GlassCard className="p-6">
-				<div className="flex flex-row items-center justify-between">
+			<GlassCard className="overflow-hidden p-0 border-none">
+				<div
+					className="flex flex-row items-center justify-between p-4 "
+					style={gradientStyle}
+				>
 					<div className="flex flex-row items-center gap-4">
-						<span
-							className="size-3 shrink-0 rounded-full"
-							style={{ backgroundColor: account.color ?? PRIMARY_FALLBACK }}
-						/>
+						<div
+							className="flex size-12 shrink-0 items-center justify-center rounded-full shadow-sm"
+							style={{ backgroundColor: accountColor }}
+						>
+							<DynamicIcon
+								name={(account.icon ?? "wallet") as IconName}
+								className="text-white"
+								size={24}
+							/>
+						</div>
 
 						<div className="flex flex-col gap-1">
 							<h1 className="text-lg font-semibold text-foreground">{account.name}</h1>
