@@ -22,12 +22,14 @@ export const useQueryAccountTransactions = (
 		gcTime: 1000 * 60 * 20,
 	});
 
+	const meta = accountTransactionsQuery.data?.meta;
+
 	return {
 		transactions: accountTransactionsQuery.data?.data,
-		page: accountTransactionsQuery.data?.meta.page,
-		limit: accountTransactionsQuery.data?.meta.limit,
-		total: accountTransactionsQuery.data?.meta.total,
-		totalPages: accountTransactionsQuery.data?.meta.totalPages,
+		page: meta?.page,
+		limit: meta?.limit,
+		total: meta?.total,
+		totalPages: meta?.totalPages,
 		isLoading: accountTransactionsQuery.isLoading,
 	};
 };
