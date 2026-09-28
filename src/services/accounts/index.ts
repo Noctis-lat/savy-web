@@ -26,6 +26,19 @@ export const accountService: AccountService = {
 		return unwrap<AccountTransactionsResponse>(response);
 	},
 
+	getIncomesExpenses: async (
+		params?: AccountIncomesExpensesParams,
+	): Promise<AccountIncomesExpensesResponse> => {
+		const response = await httpClient.get<APIResponse<AccountIncomesExpensesResponse>>(
+			`/accounts/${params?.accountId}/income-vs-expenses`,
+			{
+				params: {
+					period: params?.period,
+				},
+			},
+		);
+		return unwrap<AccountIncomesExpensesResponse>(response);
+	},
 	createAccount: async (payload: CreateAccountPayload): Promise<Account> => {
 		const response = await httpClient.post<APIResponse<Account>>("/accounts", payload);
 		return unwrap<Account>(response);
