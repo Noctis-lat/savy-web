@@ -7,6 +7,7 @@ import { Screen } from "@/components/design-system/primitives/screen";
 import { useQueryAccount } from "@/hooks/accounts/useQueryAccount";
 import { useQueryBank } from "@/hooks/banks/useQueryBank";
 import { buildRoute } from "@/utils/routing/buildRoute";
+import { AccountCategories } from "./components/account-categories";
 import { AccountExpenses } from "./components/account-expenses";
 import { AccountHeader } from "./components/account-header";
 import { AccountTransactions } from "./components/account-transactions";
@@ -43,9 +44,10 @@ export const AccountDetail = (): React.ReactElement => {
 				bank={bank}
 			/>
 			<div className="flex flex-row gap-4">
-				<AccountTransactions account={account} />
+				<AccountCategories />
 				<AccountExpenses account={account} />
 			</div>
+			<AccountTransactions account={account} />
 		</Screen>
 	);
 };

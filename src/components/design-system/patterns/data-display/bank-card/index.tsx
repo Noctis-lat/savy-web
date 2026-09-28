@@ -1,5 +1,4 @@
-import type { LucideIcon } from "lucide-react";
-import { CreditCard, Landmark, Wallet } from "lucide-react";
+import { DynamicIcon, type IconName } from "lucide-react/dynamic";
 import type React from "react";
 import { formatCurrency } from "@/utils/formatters/formatCurrency";
 import { merge } from "@/utils/ui/mergeStyles";
@@ -13,13 +12,6 @@ type BankCardProps = {
 	className?: string;
 };
 
-const ACCOUNT_TYPE_ICON: Record<string, LucideIcon> = {
-	DEBIT: Wallet,
-	CASH: Wallet,
-	CREDIT: CreditCard,
-	LOAN: Landmark,
-};
-
 export const BankCard = ({
 	account,
 	bankName,
@@ -28,11 +20,11 @@ export const BankCard = ({
 	onClick,
 	className,
 }: BankCardProps): React.ReactElement => {
-	const Icon = ACCOUNT_TYPE_ICON[account.type] ?? Wallet;
+	const Icon = account.icon ?? "wallet";
 	const lastFour = account.id.slice(-4);
 
 	const gradientStyle = bankColor
-		? { background: `linear-gradient(135deg, ${bankColor}, ${bankColor}88)` }
+		? { background: `linear-gradient(135deg, ${account.color}, ${account.color}88)` }
 		: undefined;
 
 	return (
@@ -60,7 +52,10 @@ export const BankCard = ({
 			{/* Top row: bank name + large icon */}
 			<div className="flex items-start justify-between">
 				<span className="truncate text-[0.65rem] font-medium text-white/80">{bankName}</span>
-				<Icon className="size-7 shrink-0 text-white/70" />
+				<DynamicIcon
+					name={Icon as IconName}
+					className="size-7 shrink-0 text-white/70"
+				/>
 			</div>
 
 			{/* Middle: account name */}
