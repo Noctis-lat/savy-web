@@ -4,7 +4,7 @@ import { InfoItem } from "@/components/design-system/primitives/info-item";
 import { TransactionTypeBadge } from "@/components/transactions/transaction-type-badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useQueryAccount } from "@/hooks/accounts/useQueryAccount";
-import { useSkeletonStore } from "@/storage/skeletonTestStorage";
+import { useQueryCategory } from "@/hooks/categories/useQueryCategory";
 import { formatCurrency } from "@/utils/formatters/formatCurrency";
 import { formatDate } from "@/utils/formatters/formatDate";
 
@@ -19,6 +19,8 @@ export const TransactionDetail = ({ transaction }: TransactionDetailProps): Reac
 	const { account: destinationAccount, isLoading: destinationLoading } = useQueryAccount(
 		transaction.destinationAccountId,
 	);
+
+	const { category, isLoading: categoryLoading } = useQueryCategory(transaction?.categoryId ?? "");
 
 	return (
 		<div className="grid grid-cols-2 gap-4">
@@ -51,11 +53,15 @@ export const TransactionDetail = ({ transaction }: TransactionDetailProps): Reac
 					/>
 				))}
 
-			<InfoItem
-				label="Categoria"
-				value={transaction.categoryId}
-				icon={Copy}
-			/>
+			{categoryLoading ? (
+				<Skeleton />
+			) : (
+				<InfoItem
+					label="Categoria"
+					value={category?.name}
+					icon={Copy}
+				/>
+			)}
 
 			<InfoItem
 				label="Creada el:"
