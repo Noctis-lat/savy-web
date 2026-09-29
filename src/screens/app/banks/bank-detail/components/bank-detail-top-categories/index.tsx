@@ -1,10 +1,9 @@
-import { PieChart, RefreshCw } from "lucide-react";
+import { PieChart } from "lucide-react";
 import type React from "react";
 import { ProgressBar } from "@/components/design-system/patterns/data-display/progress-bar";
 import { Empty } from "@/components/design-system/patterns/feedback/empty";
 import { GlassCard } from "@/components/design-system/patterns/glass-card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useQueryBankIncomeVsExpenses } from "@/hooks/banks/useQueryBankIncomeVsExpenses";
 import { useQueryTopCategoriesByBank } from "@/hooks/categories/useQueryTopCategoriesByBank";
 import { useProfileStorage } from "@/storage/profile/profileStorage";
 
@@ -22,47 +21,19 @@ export const BankDetailTopCategories = ({
 	const currency = profile?.currency ?? DEFAULT_CURRENCY;
 	const locale = profile?.locale ?? DEFAULT_LOCALE;
 
-	const topCategoriesQuery = useQueryTopCategoriesByBank(bankId);
-	const { incomeVsExpenses } = useQueryBankIncomeVsExpenses(bankId, "month");
+	const { totalExpenses, categories, isLoading } = useQueryTopCategoriesByBank(bankId);
 
-	const categories = topCategoriesQuery.data ?? [];
-	const totalExpenses = incomeVsExpenses?.expenses ?? 0;
-
-	if (topCategoriesQuery.isLoading) {
+	if (isLoading) {
 		return <Skeleton className="h-48 w-full rounded-xl" />;
 	}
 
-	if (topCategoriesQuery.isError) {
+	if (!categories || categories.length === 0) {
 		return (
-			<GlassCard className="p-6">
-				<Empty
-					icon={RefreshCw}
-					title="No pudimos cargar las categorías"
-					description="Revisa tu conexión e inténtalo de nuevo."
-					action={{
-						label: "Reintentar",
-						onClick: () => {
-							void topCategoriesQuery.refetch();
-						},
-					}}
-				/>
-			</GlassCard>
-		);
-	}
-
-	if (categories.length === 0) {
-		return (
-			<GlassCard className="flex flex-col gap-4 p-6">
-				<div className="flex items-center gap-2">
-					<PieChart className="size-4 text-primary" />
-					<h3 className="text-sm font-semibold text-foreground">Top categorías de gasto</h3>
-				</div>
-				<Empty
-					icon={PieChart}
-					title="Sin gastos"
-					description="No hay gastos registrados en este periodo."
-				/>
-			</GlassCard>
+			<Empty
+				icon={PieChart}
+				title="Sin gastos"
+				description="No hay gastos registrados en este periodo."
+			/>
 		);
 	}
 
@@ -75,10 +46,10 @@ export const BankDetailTopCategories = ({
 			<div className="flex flex-col gap-3">
 				{categories.map((category) => (
 					<ProgressBar
-						key={category.categoryId}
-						label={category.categoryName}
-						current={category.amount}
-						total={totalExpenses}
+						key={category.id}
+						label={category.name}
+						current={category.amount ?? 0}
+						total={totalExpenses ?? 0}
 						currency={currency}
 						locale={locale}
 					/>
