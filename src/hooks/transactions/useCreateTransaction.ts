@@ -9,9 +9,11 @@ export const useCreateTransaction = () => {
 	return useMutation({
 		mutationFn: (payload: CreateTransactionPayload) =>
 			transactionService.createTransaction(payload),
-		onSuccess: () => {
+		onSuccess: (newTransaction: Transaction) => {
 			queryClient.invalidateQueries({ queryKey: [transactionKeys.transactions] });
 			queryClient.invalidateQueries({ queryKey: [accountKeys.accounts] });
+			queryClient.invalidateQueries({ queryKey: [accountKeys.account, newTransaction.accountId] });
+			queryClient.invalidateQueries({ queryKey: [accountKeys.accountTransactions] });
 			queryClient.invalidateQueries({ queryKey: [bankKeys.banks] });
 		},
 		onError: (error: unknown) => {

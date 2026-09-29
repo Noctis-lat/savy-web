@@ -7,6 +7,7 @@ import { StaggerContainer } from "@/components/design-system/patterns/animations
 import { Empty } from "@/components/design-system/patterns/feedback/empty";
 import { GlassCard } from "@/components/design-system/patterns/glass-card";
 import { TablePagination } from "@/components/design-system/patterns/navigation/table-pagination";
+import { CreateTransaction } from "@/components/transactions/create-transaction";
 import { TransactionRow } from "@/components/transactions/transaction-row";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useQueryAccountTransactions } from "@/hooks/accounts/useQueryAccountTransactions";
@@ -68,13 +69,20 @@ export const AccountTransactionsList = ({
 					</h3>
 				</div>
 
-				<button
-					type="button"
-					onClick={() => navigate(ROUTES.APP.TRANSACTIONS)}
-					className="text-xs text-primary transition-opacity hover:opacity-80 cursor-pointer"
-				>
-					Ver todas
-				</button>
+				<div className="flex flex-row-reverse gap-4">
+					<CreateTransaction
+						size="sm"
+						mode="icon"
+					/>
+
+					<button
+						type="button"
+						onClick={() => navigate(ROUTES.APP.TRANSACTIONS)}
+						className="text-xs text-primary transition-opacity hover:opacity-80 cursor-pointer"
+					>
+						Ver todas
+					</button>
+				</div>
 			</div>
 
 			<StaggerContainer className="flex flex-col">
