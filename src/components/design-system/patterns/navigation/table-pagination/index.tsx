@@ -19,9 +19,11 @@ type TablePaginationProps = {
 	pageSize?: number;
 	/** Callback invoked when the user changes the page size */
 	onPageSizeChange?: (size: number) => void;
+	/** Available page size options */
+	pageSizeOptions?: number[];
 };
 
-const PAGE_SIZE_OPTIONS = [10, 20, 50] as const;
+const DEFAULT_PAGE_SIZE_OPTIONS = [10, 20, 50];
 
 const ARROW_CLASSES =
 	"inline-flex items-center justify-center size-8 rounded-md border border-gray-200 bg-white shadow-xs cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed hover:bg-primary/10 hover:border-primary/50 hover:text-primary active:bg-primary/10 transition-colors";
@@ -42,6 +44,7 @@ export const TablePagination = ({
 	onPageChange,
 	pageSize,
 	onPageSizeChange,
+	pageSizeOptions = DEFAULT_PAGE_SIZE_OPTIONS,
 }: TablePaginationProps): React.ReactElement => {
 	const showPageSizeSelector = pageSize !== undefined && onPageSizeChange !== undefined;
 
@@ -59,7 +62,7 @@ export const TablePagination = ({
 							<SelectValue />
 						</SelectTrigger>
 						<SelectContent>
-							{PAGE_SIZE_OPTIONS.map((size) => (
+							{pageSizeOptions.map((size) => (
 								<SelectItem
 									key={size}
 									value={String(size)}

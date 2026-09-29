@@ -99,20 +99,18 @@ type AccountTransactionsParams = {
 	search?: string;
 	from?: string;
 	to?: string;
-	page?: string;
-	limit?: string;
+	page?: number;
+	limit?: number;
 	sortBy?: string;
 	order?: string;
 }
 
 type AccountTransactionsResponse = {
 	data: Transaction[];
-	meta: {
-		page: number;
-		limit: number;
-		total: number;
-		totalPages: number;
-	}
+	total: number;
+	page: number;
+	limit: number;
+	totalPages: number;
 }
 
 type AccountIncomesExpensesParams = {

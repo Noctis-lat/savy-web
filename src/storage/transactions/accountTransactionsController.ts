@@ -8,8 +8,8 @@ type AccountTransactionsController = {
 	setCategoryId: (categoryId: string | undefined) => void;
 	setFrom: (from: string | undefined) => void;
 	setTo: (to: string | undefined) => void;
-	setPage: (page: string) => void;
-	setLimit: (limit: string) => void;
+	setPage: (page: number) => void;
+	setLimit: (limit: number) => void;
 	setSortBy: (sortBy: string) => void;
 	setOrder: (order: "asc" | "desc") => void;
 	resetFilters: () => void;
@@ -22,7 +22,7 @@ const DEFAULT_FILTERS: AccountTransactionsParams = {
 	from: undefined,
 	to: undefined,
 	page: undefined,
-	limit: "5",
+	limit: 5,
 	sortBy: "date",
 	order: "desc",
 };
