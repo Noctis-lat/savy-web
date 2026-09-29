@@ -70,7 +70,7 @@ export const AccountTransactionsList = ({
 				<button
 					type="button"
 					onClick={() => navigate(ROUTES.APP.TRANSACTIONS)}
-					className="text-xs text-primary transition-opacity hover:opacity-80"
+					className="text-xs text-primary transition-opacity hover:opacity-80 cursor-pointer"
 				>
 					Ver todas
 				</button>
