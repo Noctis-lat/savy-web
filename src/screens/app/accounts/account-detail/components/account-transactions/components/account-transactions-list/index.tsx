@@ -67,6 +67,7 @@ export const AccountTransactionsList = ({
 						<span className="text-xs text-muted-foreground font-light ">({total})</span>
 					</h3>
 				</div>
+
 				<button
 					type="button"
 					onClick={() => navigate(ROUTES.APP.TRANSACTIONS)}

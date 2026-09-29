@@ -4,8 +4,7 @@ import { ScaleFadeIn } from "@/components/design-system/patterns/animations/scal
 import { ProgressBar } from "@/components/design-system/patterns/data-display/progress-bar";
 import { Empty } from "@/components/design-system/patterns/feedback/empty";
 import { GlassCard } from "@/components/design-system/patterns/glass-card";
-import { Spinner } from "@/components/design-system/primitives/spinner";
-import { useQueryAccountIncomesExpenses } from "@/hooks/accounts/useQueryAccountIncomesExpenses";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useQueryTopCategoriesByAccount } from "@/hooks/categories/useQueryTopCategoriesByAccount";
 import { formatCurrency } from "@/utils/formatters/formatCurrency";
 
@@ -14,14 +13,22 @@ type AccountCategoriesProps = {
 };
 
 export const AccountCategories = ({ account }: AccountCategoriesProps): React.ReactElement => {
-	const topCategoriesQuery = useQueryTopCategoriesByAccount(account.id);
-	const { expenses } = useQueryAccountIncomesExpenses({
-		accountId: account.id,
-		period: "month",
-	});
+	const { categories, totalExpenses, isLoading } = useQueryTopCategoriesByAccount(account.id);
 
-	const categories = topCategoriesQuery.data ?? [];
-	const totalExpenses = expenses ?? 0;
+	if (isLoading) {
+		return <Skeleton />;
+	}
+
+	if (!categories || categories.length === 0) {
+		return (
+			<Empty
+				icon={RefreshCw}
+				title="No pudimos cargar las categorías"
+				description="Revisa tu conexión e inténtalo de nuevo."
+				className="py-8"
+			/>
+		);
+	}
 
 	return (
 		<ScaleFadeIn className="flex-1">
@@ -31,49 +38,20 @@ export const AccountCategories = ({ account }: AccountCategoriesProps): React.Re
 					<h3 className="text-sm font-semibold text-foreground">Top categorías de gasto</h3>
 				</div>
 
-				{topCategoriesQuery.isLoading ? (
-					<div className="flex items-center justify-center py-8">
-						<Spinner
-							size={24}
-							className="text-primary"
+				<div className="flex flex-col gap-3">
+					{categories.map((category) => (
+						<ProgressBar
+							key={category.id}
+							label={category.name}
+							current={category.amount ?? 0}
+							total={totalExpenses ?? 0}
+							currency={account.currency}
 						/>
-					</div>
-				) : topCategoriesQuery.isError ? (
-					<Empty
-						icon={RefreshCw}
-						title="No pudimos cargar las categorías"
-						description="Revisa tu conexión e inténtalo de nuevo."
-						action={{
-							label: "Reintentar",
-							onClick: () => {
-								void topCategoriesQuery.refetch();
-							},
-						}}
-						className="py-8"
-					/>
-				) : categories.length === 0 ? (
-					<Empty
-						icon={PieChart}
-						title="Sin gastos"
-						description="No hay gastos registrados en este periodo."
-						className="py-8"
-					/>
-				) : (
-					<div className="flex flex-col gap-3">
-						{categories.map((category) => (
-							<ProgressBar
-								key={category.categoryId}
-								label={category.categoryName}
-								current={category.amount}
-								total={totalExpenses}
-								currency={account.currency}
-							/>
-						))}
-						<span className="text-xs text-muted-foreground">
-							Total de gastos: {formatCurrency(totalExpenses, account.currency)}
-						</span>
-					</div>
-				)}
+					))}
+					<span className="text-xs text-muted-foreground">
+						Total de gastos: {formatCurrency(totalExpenses ?? 0, account.currency)}
+					</span>
+				</div>
 			</GlassCard>
 		</ScaleFadeIn>
 	);
