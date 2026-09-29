@@ -7,12 +7,12 @@ type TransactionType = "INCOME" | "EXPENSE" | "TRANSFER" | "PAYMENT";
 type Transaction = {
 	id: string;
 	accountId: string;
-	destinationAccountId: string | null;
-	categoryId: string | null;
+	destinationAccountId: string | undefined;
+	categoryId: string | undefined;
 	type: TransactionType;
 	amount: number;
-	description: string | null;
-	note: string | null;
+	description: string | undefined;
+	note: string | undefined;
 	date: string;
 	createdAt: string;
 	updatedAt: string;

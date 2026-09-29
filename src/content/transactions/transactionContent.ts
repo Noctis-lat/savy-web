@@ -5,6 +5,9 @@ import {
 	CreditCard,
 	type LucideIcon,
 } from "lucide-react";
+import type { BadgeVariants } from "@/components/ui/badge";
+
+type TransactionBadgeVariant = NonNullable<BadgeVariants["variant"]>;
 
 export const TRANSACTION_TYPE_ICON: Record<TransactionType, LucideIcon> = {
 	INCOME: ArrowDownLeft,
@@ -21,6 +24,20 @@ export const TRANSACTION_TYPE_VARIANT: Record<
 	EXPENSE: "red",
 	TRANSFER: "blue",
 	PAYMENT: "neutral",
+};
+
+export const TRANSACTION_TYPE_BADGE_VARIANT: Record<TransactionType, TransactionBadgeVariant> = {
+	INCOME: "success",
+	EXPENSE: "destructive",
+	TRANSFER: "info",
+	PAYMENT: "outline",
+};
+
+export const TRANSACTION_TYPE_LABEL: Record<TransactionType, string> = {
+	INCOME: "Ingreso",
+	EXPENSE: "Gasto",
+	TRANSFER: "Transferencia",
+	PAYMENT: "Pago",
 };
 
 export const TRANSACTION_TYPE_ICON_CLASS: Record<TransactionType, string> = {

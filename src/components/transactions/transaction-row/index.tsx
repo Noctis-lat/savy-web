@@ -13,6 +13,8 @@ import { formatCurrency } from "@/utils/formatters/formatCurrency";
 import { formatDate, formatShortDate } from "@/utils/formatters/formatDate";
 import { signedAmount } from "@/utils/transactions/signedAmount";
 import { merge } from "@/utils/ui/mergeStyles";
+import { RemoveTransaction } from "./components/remove-transaction";
+import { TransactionDetail } from "./components/transaction-detail";
 
 type TransactionRowProps = {
 	transaction: Transaction;
@@ -46,8 +48,8 @@ export const TransactionRow = ({
 			description={`Transaccion realizada: ${formatDate(transaction.date)}`}
 			icon={Icon}
 			iconVariant={TRANSACTION_TYPE_VARIANT[transaction.type]}
-			content={<></>}
-			actions={<></>}
+			content={<TransactionDetail transaction={transaction} />}
+			actions={<RemoveTransaction transaction={transaction} />}
 		>
 			<button
 				type="button"
