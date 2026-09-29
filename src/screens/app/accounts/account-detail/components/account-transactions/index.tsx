@@ -7,8 +7,9 @@ import { StaggerContainer } from "@/components/design-system/patterns/animations
 import { TransactionRow } from "@/components/design-system/patterns/data-display/transaction-row";
 import { Empty } from "@/components/design-system/patterns/feedback/empty";
 import { GlassCard } from "@/components/design-system/patterns/glass-card";
-import { Spinner } from "@/components/design-system/primitives/spinner";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useQueryAccountTransactions } from "@/hooks/accounts/useQueryAccountTransactions";
+import { AccountTransactionsActions } from "./components/account-transactions-actions";
 
 type AccountTransactionsProps = {
 	account: Account;
@@ -17,14 +18,30 @@ type AccountTransactionsProps = {
 export const AccountTransactions = ({ account }: AccountTransactionsProps): React.ReactElement => {
 	const navigate = useNavigate();
 
-	const { transactions, isLoading, total } = useQueryAccountTransactions(account.id, {
+	const { transactions, isLoading } = useQueryAccountTransactions(account.id, {
 		limit: "5",
 		sortBy: "date",
 		order: "desc",
 	});
 
+	if (isLoading) {
+		return <Skeleton />;
+	}
+
+	if (!transactions || transactions.length === 0) {
+		return (
+			<Empty
+				title="Sin transacciones"
+				description="No hay movimientos en esta cuenta."
+				icon={ArrowUpDown}
+				className="py-8"
+			/>
+		);
+	}
+
 	return (
-		<ScaleFadeIn className="flex-1">
+		<ScaleFadeIn className="flex flex-col flex-1 gap-4">
+			<AccountTransactionsActions />
 			<GlassCard className="h-full p-4 flex flex-col gap-4">
 				<div className="flex items-center justify-between">
 					<div className="flex items-center gap-2">
@@ -40,44 +57,24 @@ export const AccountTransactions = ({ account }: AccountTransactionsProps): Reac
 					</button>
 				</div>
 
-				{isLoading ? (
-					<div className="flex items-center justify-center py-8">
-						<Spinner
-							size={24}
-							className="text-primary"
+				<StaggerContainer className="flex flex-col">
+					{transactions.map((transaction) => (
+						<TransactionRow
+							key={transaction.id}
+							transaction={{
+								id: transaction.id,
+								type: transaction.type,
+								amount: transaction.amount,
+								description: transaction.description,
+								date: transaction.date,
+								accountName: account.name,
+								categoryName: null,
+							}}
+							currency={account.currency}
+							locale="es-MX"
 						/>
-					</div>
-				) : !transactions || transactions.length === 0 ? (
-					<Empty
-						title="Sin transacciones"
-						description="No hay movimientos en esta cuenta."
-						icon={ArrowUpDown}
-						className="py-8"
-					/>
-				) : (
-					<StaggerContainer className="flex flex-col">
-						{transactions.map((transaction) => (
-							<TransactionRow
-								key={transaction.id}
-								transaction={{
-									id: transaction.id,
-									type: transaction.type,
-									amount: transaction.amount,
-									description: transaction.description,
-									date: transaction.date,
-									accountName: account.name,
-									categoryName: null,
-								}}
-								currency={account.currency}
-								locale="es-MX"
-							/>
-						))}
-					</StaggerContainer>
-				)}
-
-				{total !== undefined && total > 0 ? (
-					<span className="text-xs text-muted-foreground">{total} transacciones en total</span>
-				) : null}
+					))}
+				</StaggerContainer>
 			</GlassCard>
 		</ScaleFadeIn>
 	);
