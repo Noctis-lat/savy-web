@@ -208,10 +208,11 @@ One function per file. The file name matches the function name.
 
 ## 7. Storybook
 
-- **Only components in `src/components/`** (both `ui/` and `design-system/`) have `.stories.tsx` files.
+- **Only components in `src/components/`** (both `ui/`, `design-system/`, and entity-specific folders like `src/components/banks/`, `src/components/transactions/`) have `.stories.tsx` files.
 - **Screens (`src/screens/`) never have stories.** If a screen needs visual testing, extract the visual parts into reusable components in `src/components/` and write stories for those.
 - Every component in `src/components/` MUST have a co-located `.stories.tsx` file.
 - Stories must be kept up to date — when a component's props or behavior change, the story must be updated in the same commit.
+- Story titles should reflect the component's location: `"Banks/BankChip"`, `"Transactions/TransactionRow"`, `"Design System/Data Display/KpiCard"`.
 
 ---
 
@@ -244,10 +245,15 @@ test/
 
 Before writing any component that involves presentation logic, verify in order:
 
-1. **`src/components/design-system/`** — Does a design-system component already solve this? (`SearchInput`, `AppTable`, `GlassCard`, `Empty`, etc.)
-2. **`src/utils/`** — Does the function I need exist, or can one be extended?
-3. **`src/content/`** — Do the label maps, options, or static configuration exist?
-4. **`src/content/tables/`** — Do the table headers exist?
-5. **`AGENTS.md`** — When does a `.d.ts` apply? What component conventions apply?
-6. **`docs/dev/UI-usage.md`** — Reference for all available design-system components and their usage.
-7. Only after those checks, create the missing files.
+1. **`src/components/design-system/`** — Does a design-system component already solve this? (`SearchInput`, `AppTable`, `GlassCard`, `Empty`, etc.) Design-system components are entity-agnostic — they must NOT reference domain types (`Account`, `Bank`, `Transaction`, etc.) or import from `@/services`, `@/hooks`, or `@/storage`.
+2. **`src/components/{entity}/`** — If a reusable component is tied to a domain entity (its props reference `Account`, `Bank`, `Transaction`, etc.), it belongs here, NOT in the design system. Check existing entity-coupled components before creating new ones.
+3. **`src/utils/`** — Does the function I need exist, or can one be extended?
+4. **`src/content/`** — Do the label maps, options, or static configuration exist?
+5. **`src/content/tables/`** — Do the table headers exist?
+6. **`AGENTS.md`** — When does a `.d.ts` apply? What component conventions apply?
+7. **`docs/dev/UI-usage.md`** — Reference for all available design-system components and their usage.
+8. Only after those checks, create the missing files.
+
+### Entity-coupled vs design-system — the rule
+
+If a component's props reference a domain entity type (`Account`, `Bank`, `Transaction`, `Category`, etc.), it belongs in `src/components/{entity}/`. If it works with primitives (`string`, `number`, `LucideIcon`), it belongs in `src/components/design-system/patterns/`.

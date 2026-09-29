@@ -3,7 +3,7 @@ import type React from "react";
 import { useNavigate } from "react-router";
 
 import { CreateAccount } from "@/components/accounts/create-account";
-import { BankCard } from "@/components/design-system/patterns/data-display/bank-card";
+import { BankCard } from "@/components/banks/bank-card";
 import { Empty } from "@/components/design-system/patterns/feedback/empty";
 import { GlassCard } from "@/components/design-system/patterns/glass-card";
 import { Skeleton } from "@/components/ui/skeleton";

@@ -349,8 +349,10 @@ import { AppTable } from "@/components/design-system/patterns/data-display/app-t
 
 #### BankCard
 
-**Import**: `@/components/design-system/patterns/data-display/bank-card`
+**Import**: `@/components/banks/bank-card`
 **Replaces**: custom card-shaped account display with gradient, balance, and type icon.
+
+> **Entity-coupled component** — lives in `src/components/banks/` because its props reference `Account`.
 
 | Prop        | Type          | Default |
 | ----------- | ------------- | ------- |
@@ -362,15 +364,17 @@ import { AppTable } from "@/components/design-system/patterns/data-display/app-t
 | `className` | `string`      | —       |
 
 ```tsx
-import { BankCard } from "@/components/design-system/patterns/data-display/bank-card";
+import { BankCard } from "@/components/banks/bank-card";
 
 <BankCard account={account} bankName="BBVA" bankColor="#0040a1" onClick={handleClick} />
 ```
 
 #### BankChip
 
-**Import**: `@/components/design-system/patterns/data-display/bank-chip`
+**Import**: `@/components/banks/bank-chip`
 **Replaces**: inline pill/badge with bank logo/color dot + name + account count.
+
+> **Entity-coupled component** — lives in `src/components/banks/` because its props reference a bank-shaped type.
 
 | Prop        | Type                                                      | Default |
 | ----------- | --------------------------------------------------------- | ------- |
@@ -379,7 +383,7 @@ import { BankCard } from "@/components/design-system/patterns/data-display/bank-
 | `className` | `string`                                                  | —       |
 
 ```tsx
-import { BankChip } from "@/components/design-system/patterns/data-display/bank-chip";
+import { BankChip } from "@/components/banks/bank-chip";
 
 <BankChip bank={bank} onClick={handleBankFilter} />
 ```
@@ -568,8 +572,10 @@ import { PiggyBank } from "lucide-react";
 
 #### TransactionRow
 
-**Import**: `@/components/design-system/patterns/data-display/transaction-row`
+**Import**: `@/components/transactions/transaction-row`
 **Replaces**: custom transaction list item with type icon, description, date, and signed amount.
+
+> **Entity-coupled component** — lives in `src/components/transactions/` because its props reference `TransactionRowTransaction` with `accountName`, `categoryName`.
 
 | Prop          | Type                                                  | Default |
 | ------------- | ----------------------------------------------------- | ------- |
@@ -582,7 +588,7 @@ import { PiggyBank } from "lucide-react";
 `type`: `"INCOME" | "EXPENSE" | "TRANSFER" | "PAYMENT"` — auto-selects icon and color.
 
 ```tsx
-import { TransactionRow } from "@/components/design-system/patterns/data-display/transaction-row";
+import { TransactionRow } from "@/components/transactions/transaction-row";
 
 <TransactionRow transaction={tx} currency="MXN" locale="es-MX" onClick={() => openDetail(tx)} />
 ```

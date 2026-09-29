@@ -3,8 +3,8 @@ import type React from "react";
 import { useNavigate } from "react-router";
 import { ROUTES } from "@/app/router/routes";
 import { SummaryCard } from "@/components/design-system/patterns/data-display/summary-card";
-import { TransactionRow } from "@/components/design-system/patterns/data-display/transaction-row";
 import { Empty } from "@/components/design-system/patterns/feedback/empty";
+import { TransactionRow } from "@/components/transactions/transaction-row";
 
 type RecentTransactionsCardProps = {
 	transactions: DashboardRecentTransaction[];

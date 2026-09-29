@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { TransactionRow } from "@/components/design-system/patterns/data-display/transaction-row";
+import { TransactionRow } from "@/components/transactions/transaction-row";
 
 const meta = {
-	title: "Design System/Dashboard/TransactionRow",
+	title: "Transactions/TransactionRow",
 	component: TransactionRow,
 	parameters: { layout: "centered" },
 	tags: ["autodocs"],

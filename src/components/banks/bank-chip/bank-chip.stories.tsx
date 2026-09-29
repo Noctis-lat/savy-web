@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import type React from "react";
-import { BankChip } from "@/components/design-system/patterns/data-display/bank-chip";
+import { BankChip } from "@/components/banks/bank-chip";
 
 const GlassBackground = ({ children }: { children: React.ReactNode }) => (
 	<div className="relative flex size-full items-center justify-center overflow-hidden bg-gradient-to-br from-primary/10 via-background to-primary/15 p-8">
@@ -11,7 +11,7 @@ const GlassBackground = ({ children }: { children: React.ReactNode }) => (
 );
 
 const meta = {
-	title: "Design System/Dashboard/BankChip",
+	title: "Banks/BankChip",
 	component: BankChip,
 	parameters: { layout: "fullscreen" },
 	tags: ["autodocs"],

@@ -69,6 +69,22 @@ account-card/
   - `(a) => a.balance` -> `(account) => account.balance`
   - `(a, b) => a.date - b.date` -> `(prev, next) => prev.date - next.date`
 
+### Entity-coupled components vs design-system patterns
+
+**Design-system patterns are entity-agnostic.** They must NOT reference domain types (`Account`, `Bank`, `Transaction`, `Category`, etc.) or import from `@/services`, `@/hooks`, or `@/storage`. They live in `src/components/design-system/patterns/` and work with generic props or local prop types.
+
+**Entity-coupled reusable components** — components that are reusable across screens but inherently tied to a domain entity (because their props reference `Account`, `Bank`, `Transaction`, etc.) — live in `src/components/{entity}/`, NOT in the design system.
+
+| Component | Location | Why |
+|-----------|----------|-----|
+| `BankCard` | `src/components/banks/bank-card/` | Props include `Account`, `bankName`, `bankColor` |
+| `BankChip` | `src/components/banks/bank-chip/` | Props include a bank-shaped type with `accountCount` |
+| `TransactionRow` | `src/components/transactions/transaction-row/` | Props include `TransactionRowTransaction` with `accountName`, `categoryName` |
+| `KpiCard` | `src/components/design-system/patterns/data-display/kpi-card/` | Generic props: `label`, `value`, `delta`, `icon` — no entity coupling |
+| `ProgressBar` | `src/components/design-system/patterns/data-display/progress-bar/` | Generic props: `label`, `current`, `total` — no entity coupling |
+
+**Rule:** If a component's props reference a domain entity type, it belongs in `src/components/{entity}/`. If it works with primitives (`string`, `number`, `LucideIcon`), it belongs in the design system.
+
 ### Helpers and utilities
 
 - **There is no `utils.ts` inside component folders.** This file is prohibited.
@@ -369,9 +385,10 @@ No type definitions, no type aliases, no interfaces, no query key constants in `
 ## Storybook conventions
 
 - **Only components in `src/components/` have stories.** Screens (`src/screens/`) never have `.stories.tsx` files.
-- Every component in `src/components/` (both `ui/` and `design-system/`) MUST have a `.stories.tsx` file co-located in its folder.
+- Every component in `src/components/` (both `ui/`, `design-system/`, and entity-specific folders like `src/components/banks/`, `src/components/transactions/`) MUST have a `.stories.tsx` file co-located in its folder.
 - Stories must be kept up to date. When a component's props or behavior changes, the story must be updated in the same commit.
 - Storybook uses CSF format — `export default meta` is the only accepted use of `export default` in the project.
+- Story titles should reflect the component's location: `"Banks/BankChip"`, `"Transactions/TransactionRow"`, `"Design System/Data Display/KpiCard"`.
 
 ## Testing conventions
 
