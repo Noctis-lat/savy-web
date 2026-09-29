@@ -10,6 +10,7 @@ import { buildRoute } from "@/utils/routing/buildRoute";
 import { AccountCategories } from "./components/account-categories";
 import { AccountExpenses } from "./components/account-expenses";
 import { AccountHeader } from "./components/account-header";
+import { AccountSkeleton } from "./components/account-skeleton";
 import { AccountTransactions } from "./components/account-transactions";
 
 export const AccountDetail = (): React.ReactElement => {
@@ -21,7 +22,7 @@ export const AccountDetail = (): React.ReactElement => {
 	const bankRoute = buildRoute(ROUTES.APP.BANKS.DETAIL, { id: account?.bankId as string });
 
 	if (isLoading) {
-		return <div>loading...</div>;
+		return <AccountSkeleton />;
 	}
 
 	if (!account) {
