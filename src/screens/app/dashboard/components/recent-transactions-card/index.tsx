@@ -51,7 +51,6 @@ export const RecentTransactionsCard = ({
 							transaction={transaction}
 							currency={currency}
 							locale={locale}
-							onClick={() => navigate(ROUTES.APP.TRANSACTIONS)}
 						/>
 					))}
 				</div>

@@ -26,17 +26,18 @@ type ModalProps = {
 	/** Icon shown in a badge next to the title */
 	icon?: React.ElementType;
 	/** Badge color scheme — defaults to orange */
-	iconVariant?: "orange" | "neutral" | "amber" | "red";
+	iconVariant?: "default" | "neutral" | "amber" | "red" | "blue";
 	content: React.ReactElement;
 	actions?: React.ReactElement;
 	showCancel?: boolean;
 };
 
 const ICON_VARIANTS = {
-	orange: "bg-primary/10 ring-primary/20 text-primary",
+	default: "bg-primary/10 ring-primary/20 text-primary",
 	neutral: "bg-neutral-100 ring-neutral-200 text-neutral-600",
 	amber: "bg-amber-50 ring-amber-200 text-amber-600",
 	red: "bg-red-50 ring-red-200 text-red-600",
+	blue: "bg-blue-50 ring-blue-200 text-blue-600",
 } as const;
 
 export const Modal = ({
@@ -48,7 +49,7 @@ export const Modal = ({
 	title,
 	description,
 	icon: Icon,
-	iconVariant = "orange",
+	iconVariant = "default",
 	content,
 	actions,
 	showCancel = false,
