@@ -29,7 +29,7 @@ export const AccountTransactionsList = ({
 		return <Skeleton className="w-full h-65" />;
 	}
 
-	if ((!transactions || transactions.length === 0) && !isLoading) {
+	if (!transactions || transactions.length === 0) {
 		return (
 			<ScaleFadeIn className="flex flex-col flex-1 gap-4">
 				<Empty
