@@ -52,8 +52,9 @@ export const FilterSelect = ({
 			>
 				<SelectTrigger
 					id={label}
+					size="sm"
 					className={merge(
-						"min-w-40 bg-white! text-gray-900! cursor-pointer hover:border-gray-500",
+						"min-w-40 bg-white! text-xs text-gray-900! cursor-pointer hover:border-gray-500",
 						isActive && "bg-primary/10! border-primary/20 **:text-primary! hover:border-primary!",
 						disabled && "cursor-not-allowed opacity-50",
 						inputClassName,

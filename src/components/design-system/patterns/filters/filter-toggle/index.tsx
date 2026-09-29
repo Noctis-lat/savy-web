@@ -29,7 +29,7 @@ export const FilterToggle = ({
 			disabled={disabled}
 			aria-pressed={checked}
 			className={merge(
-				"flex h-9 items-center gap-2 rounded-md border border-border bg-white px-3 text-sm font-medium text-gray-900 cursor-pointer transition-colors hover:border-gray-500",
+				"flex h-8 items-center gap-2 rounded-md border border-border bg-white px-3 text-xs font-medium text-gray-900 cursor-pointer transition-colors hover:border-gray-500",
 				checked && "bg-primary/10 border-primary/20 text-primary hover:border-primary",
 				disabled && "cursor-not-allowed opacity-50",
 				className,

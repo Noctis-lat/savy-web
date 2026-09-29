@@ -94,7 +94,7 @@ export const FilterDateRangePicker = ({
 					variant="outline"
 					disabled={disabled}
 					className={merge(
-						"px-2! min-w-40 h-7 rounded-md! justify-between text-xs/relaxed font-normal bg-white! text-gray-900! cursor-pointer hover:border-gray-500",
+						"px-3! min-w-40 h-8 rounded-md! justify-between text-xs font-normal bg-white! text-gray-900! cursor-pointer hover:border-gray-500",
 						isActive && "bg-primary/10! border-primary/20 hover:border-primary!",
 						disabled && "cursor-not-allowed opacity-50",
 						className,
@@ -118,9 +118,13 @@ export const FilterDateRangePicker = ({
 					numberOfMonths={2}
 					fixedWeeks
 					classNames={{
-						range_start: "rounded-r-none!",
-						range_end: "rounded-l-none!",
-						range_middle: "rounded-none!",
+						day: "relative p-0 text-center text-sm focus-within:relative focus-within:z-20",
+						day_button:
+							"border cursor-pointer border-transparent size-8 rounded-md p-0 font-normal transition-all duration-300 hover:bg-primary/10 hover:text-accent-foreground",
+						selected: "bg-transparent border-transparent text-inherit",
+						range_start: "rounded-r-none! rounded-l-lg! bg-primary/10",
+						range_end: "rounded-l-none! rounded-r-lg! bg-primary/10",
+						range_middle: "rounded-none! bg-primary/10",
 						month: "justify-start",
 					}}
 					components={{

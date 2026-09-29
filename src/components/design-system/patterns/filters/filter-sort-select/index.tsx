@@ -46,8 +46,9 @@ export const FilterSortSelect = ({
 				disabled={disabled}
 			>
 				<SelectTrigger
+					size="sm"
 					className={merge(
-						"min-w-40 rounded-r-none border-r-0 bg-white! text-gray-900! cursor-pointer hover:border-gray-500",
+						"min-w-40 rounded-r-none border-r-0 bg-white! text-xs text-gray-900! cursor-pointer hover:border-gray-500",
 						disabled && "cursor-not-allowed opacity-50",
 					)}
 				>
@@ -77,7 +78,7 @@ export const FilterSortSelect = ({
 				onPressedChange={handleOrderToggle}
 				disabled={disabled}
 				aria-label={isAsc ? "Orden ascendente" : "Orden descendente"}
-				className="rounded-l-none border-input bg-white! text-gray-900! hover:border-gray-500"
+				className="h-8 rounded-l-none border-input bg-white! text-gray-900! hover:border-gray-500"
 			>
 				{isAsc ? <ArrowUpAZ className="size-4" /> : <ArrowDownAZ className="size-4" />}
 			</Toggle>

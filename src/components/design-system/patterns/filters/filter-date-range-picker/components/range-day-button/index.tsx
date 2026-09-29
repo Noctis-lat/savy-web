@@ -35,14 +35,14 @@ export const RangeDayButton = ({
 			data-range-middle={modifiers.range_middle}
 			className={merge(
 				"relative isolate z-10 flex aspect-square size-auto w-full min-w-(--cell-size) flex-col gap-1 border-0 leading-none font-normal",
-				// range start — solid primary, rounded left
-				"data-[range-start=true]:bg-primary data-[range-start=true]:text-white data-[range-start=true]:rounded-r-none data-[range-start=true]:rounded-l-(--cell-radius) data-[range-start=true]:hover:bg-primary/80",
-				// range end — solid primary, rounded right
-				"data-[range-end=true]:bg-primary data-[range-end=true]:text-white data-[range-end=true]:rounded-l-none data-[range-end=true]:rounded-r-(--cell-radius) data-[range-end=true]:hover:bg-primary/80",
-				// range middle — soft primary, no rounding
-				"data-[range-middle=true]:bg-primary/10 data-[range-middle=true]:text-primary data-[range-middle=true]:rounded-none data-[range-middle=true]:hover:bg-primary/10",
-				// selected single (when only from exists, no to yet)
-				"data-[selected-single=true]:bg-primary data-[selected-single=true]:text-white data-[selected-single=true]:rounded-(--cell-radius) data-[selected-single=true]:hover:bg-primary/80",
+				// range start — solid primary, rounded left only
+				"data-[range-start=true]:bg-primary data-[range-start=true]:text-white data-[range-start=true]:rounded-l-lg data-[range-start=true]:rounded-r-none data-[range-start=true]:hover:bg-primary/80",
+				// range end — solid primary, rounded right only
+				"data-[range-end=true]:bg-primary data-[range-end=true]:text-white data-[range-end=true]:rounded-r-lg data-[range-end=true]:rounded-l-none data-[range-end=true]:hover:bg-primary/80",
+				// range middle — soft primary tint, no rounding
+				"data-[range-middle=true]:bg-primary/10 data-[range-middle=true]:text-primary data-[range-middle=true]:rounded-none data-[range-middle=true]:hover:bg-primary/15",
+				// selected single — full pill
+				"data-[selected-single=true]:bg-primary data-[selected-single=true]:text-white data-[selected-single=true]:rounded-lg data-[selected-single=true]:hover:bg-primary/80",
 				"[&>span]:text-xs [&>span]:opacity-70",
 				defaultClassNames.day,
 				className,

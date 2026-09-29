@@ -88,7 +88,7 @@ export const SearchFilterSelect = ({
 						role="combobox"
 						aria-expanded={open}
 						className={merge(
-							"flex h-7 w-fit items-center justify-between gap-1.5 whitespace-nowrap rounded-md border border-input bg-white px-2 py-1.5 text-xs/relaxed cursor-pointer hover:border-gray-500 min-w-40 text-gray-900",
+							"flex h-8 w-fit items-center justify-between gap-1.5 whitespace-nowrap rounded-md border border-input bg-white px-3 text-xs cursor-pointer hover:border-gray-500 min-w-40 text-gray-900",
 							isActive && "bg-primary/10! border-primary/20 text-primary! hover:border-primary!",
 						)}
 					>
