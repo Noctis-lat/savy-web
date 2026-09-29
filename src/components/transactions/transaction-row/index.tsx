@@ -38,7 +38,9 @@ export const TransactionRow = ({
 	const signed = signedAmount(transaction.type, transaction.amount);
 	const prefix = signed < 0 ? "-" : "";
 
-	console.log("transaction:", transaction);
+	const handleClose = () => {
+		setIsOpen(false);
+	};
 
 	return (
 		<Modal
@@ -49,7 +51,12 @@ export const TransactionRow = ({
 			icon={Icon}
 			iconVariant={TRANSACTION_TYPE_VARIANT[transaction.type]}
 			content={<TransactionDetail transaction={transaction} />}
-			actions={<RemoveTransaction transaction={transaction} />}
+			actions={
+				<RemoveTransaction
+					transaction={transaction}
+					onClose={handleClose}
+				/>
+			}
 		>
 			<button
 				type="button"
