@@ -43,7 +43,7 @@ export const TRANSACTION_TYPE_LABEL: Record<TransactionType, string> = {
 export const TRANSACTION_TYPE_ICON_CLASS: Record<TransactionType, string> = {
 	INCOME: "bg-primary/10 text-primary",
 	EXPENSE: "bg-destructive/10 text-destructive",
-	TRANSFER: "bg-blue-300 text-blue-600",
+	TRANSFER: "bg-blue-100 text-blue-500",
 	PAYMENT: "bg-muted text-muted-foreground",
 };
 
