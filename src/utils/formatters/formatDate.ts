@@ -55,3 +55,9 @@ export function formatTime(value: DateInput): string {
 
 	return format(parsed, "HH:mm");
 }
+
+export function formatShortDate(value: string): string {
+	const date = parseISO(value);
+	if (!isValid(date)) return "-";
+	return format(date, "d MMM", { locale: es });
+}

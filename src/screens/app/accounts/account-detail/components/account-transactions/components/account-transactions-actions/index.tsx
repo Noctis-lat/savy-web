@@ -1,5 +1,10 @@
 import type React from "react";
 
 export const AccountTransactionsActions = (): React.ReactElement => {
-	return <div>AccountTransactionsActions</div>;
+	return (
+		<div className="flex flex-row items-center justify-between">
+			<p>search</p>
+			<p>filtros</p>
+		</div>
+	);
 };

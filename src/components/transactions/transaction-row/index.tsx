@@ -1,24 +1,14 @@
-import { format, isValid, parseISO } from "date-fns";
-import { es } from "date-fns/locale";
 import { ArrowDownLeft, ArrowRightLeft, ArrowUpRight, CreditCard } from "lucide-react";
 import type React from "react";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useQueryAccount } from "@/hooks/accounts/useQueryAccount";
 import { formatCurrency } from "@/utils/formatters/formatCurrency";
+import { formatShortDate } from "@/utils/formatters/formatDate";
+import { signedAmount } from "@/utils/transactions/signedAmount";
 import { merge } from "@/utils/ui/mergeStyles";
 
-type TransactionType = "INCOME" | "EXPENSE" | "TRANSFER" | "PAYMENT";
-
-type TransactionRowTransaction = {
-	id: string;
-	type: TransactionType;
-	amount: number;
-	description: string | null;
-	date: string;
-	accountName: string;
-	categoryName: string | null;
-};
-
 type TransactionRowProps = {
-	transaction: TransactionRowTransaction;
+	transaction: Transaction;
 	currency: string;
 	locale: string;
 	onClick?: () => void;
@@ -35,26 +25,16 @@ const TYPE_ICON: Record<TransactionType, React.ElementType> = {
 const TYPE_ICON_CLASS: Record<TransactionType, string> = {
 	INCOME: "bg-primary/10 text-primary",
 	EXPENSE: "bg-destructive/10 text-destructive",
-	TRANSFER: "bg-muted text-muted-foreground",
+	TRANSFER: "bg-blue-300 text-blue-600",
 	PAYMENT: "bg-muted text-muted-foreground",
 };
 
 const TYPE_AMOUNT_CLASS: Record<TransactionType, string> = {
 	INCOME: "text-primary",
 	EXPENSE: "text-destructive",
-	TRANSFER: "text-muted-foreground",
+	TRANSFER: "text-blue-600",
 	PAYMENT: "text-muted-foreground",
 };
-
-function formatShortDate(value: string): string {
-	const date = parseISO(value);
-	if (!isValid(date)) return "-";
-	return format(date, "d MMM", { locale: es });
-}
-
-function signedAmount(type: TransactionType, amount: number): number {
-	return type === "EXPENSE" || type === "PAYMENT" ? -amount : amount;
-}
 
 export const TransactionRow = ({
 	transaction,
@@ -63,6 +43,8 @@ export const TransactionRow = ({
 	onClick,
 	className,
 }: TransactionRowProps): React.ReactElement => {
+	const { account, isLoading } = useQueryAccount(transaction.accountId);
+
 	const Icon = TYPE_ICON[transaction.type];
 	const description = transaction.description ?? "Sin descripción";
 	const amountClass = TYPE_AMOUNT_CLASS[transaction.type];
@@ -83,7 +65,7 @@ export const TransactionRow = ({
 			<div className="flex min-w-0 flex-1 flex-col gap-0.5">
 				<span className="truncate text-sm font-medium text-foreground">{description}</span>
 				<span className="truncate text-xs text-muted-foreground">
-					{formatShortDate(transaction.date)} · {transaction.accountName}
+					{formatShortDate(transaction.date)} · {isLoading ? <Skeleton /> : account?.name}
 				</span>
 			</div>
 
