@@ -7,7 +7,7 @@ import { Empty } from "@/components/design-system/patterns/feedback/empty";
 import { TransactionRow } from "@/components/transactions/transaction-row";
 
 type RecentTransactionsCardProps = {
-	transactions: DashboardRecentTransaction[];
+	transactions: Transaction[];
 	currency: string;
 	locale: string;
 	maxItems?: number;

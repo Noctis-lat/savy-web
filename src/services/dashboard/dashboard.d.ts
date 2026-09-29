@@ -15,16 +15,6 @@ type DashboardAccountDistribution = {
 	percentage: number;
 };
 
-type DashboardRecentTransaction = {
-	id: string;
-	type: TransactionType;
-	amount: number;
-	description: string | null;
-	date: string;
-	accountName: string;
-	categoryName: string | null;
-};
-
 type DashboardActiveBudget = {
 	id: string;
 	categoryName: string;
@@ -76,7 +66,7 @@ type DashboardBank = {
 type DashboardSummary = {
 	netWorth: DashboardNetWorth;
 	accountsDistribution: DashboardAccountDistribution[];
-	recentTransactions: DashboardRecentTransaction[];
+	recentTransactions: Transaction[];
 	activeBudgets: DashboardActiveBudget[];
 	savingsGoals: DashboardSavingsGoal[];
 	creditOverview: DashboardCreditOverview;
