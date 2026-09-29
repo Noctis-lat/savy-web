@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { transactionKeys } from "@/content/services";
+import { accountKeys, bankKeys, transactionKeys } from "@/content/services";
 import { transactionService } from "@/services/transactions";
 import { apiErrorToast } from "@/utils/errors/apiErrorToast";
 
@@ -11,9 +11,11 @@ export const useCreateTransaction = () => {
 			transactionService.createTransaction(payload),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: [transactionKeys.transactions] });
+			queryClient.invalidateQueries({ queryKey: [accountKeys.accounts] });
+			queryClient.invalidateQueries({ queryKey: [bankKeys.banks] });
 		},
 		onError: (error: unknown) => {
-			apiErrorToast(error, "Error al crear la transaccion");
+			apiErrorToast(error, "Error al crear la transacción");
 		},
 	});
 };

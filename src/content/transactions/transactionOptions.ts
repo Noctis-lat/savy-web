@@ -1,9 +1,13 @@
+export const TRANSACTION_TYPE_OPTIONS: Option[] = [
+	{ label: "Ingreso", value: "INCOME" },
+	{ label: "Gasto", value: "EXPENSE" },
+	{ label: "Transferencia", value: "TRANSFER" },
+	{ label: "Pago", value: "PAYMENT" },
+];
+
 export const TRANSACTION_TYPE_FILTER_OPTIONS: Option[] = [
 	{ label: "Todos los tipos", value: "all" },
-	{ label: "Ingresos", value: "INCOME" },
-	{ label: "Gastos", value: "EXPENSE" },
-	{ label: "Transferencias", value: "TRANSFER" },
-	{ label: "Pagos", value: "PAYMENT" },
+	...TRANSACTION_TYPE_OPTIONS,
 ];
 
 export const TRANSACTION_SORT_OPTIONS: Option[] = [
