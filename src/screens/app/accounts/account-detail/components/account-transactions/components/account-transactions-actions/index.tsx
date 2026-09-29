@@ -26,7 +26,7 @@ export const AccountTransactionsActions = (): React.ReactElement => {
 	const setOrder = useAccountTransactionsController((state) => state.setOrder);
 	const resetFilters = useAccountTransactionsController((state) => state.resetFilters);
 
-	const { data: categories, isLoading: isLoadingCategories } = useQueryCategories("EXPENSE");
+	const { categories, isLoading: isLoadingCategories } = useQueryCategories("EXPENSE");
 
 	const categoryOptions = useMemo<Option[]>(
 		() =>
