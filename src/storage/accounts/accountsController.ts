@@ -36,6 +36,7 @@ export const useAccountsController = create<AccountsController>()((set) => ({
 			accountsFilters: {
 				...state.accountsFilters,
 				search: search || undefined,
+				page: 1,
 			},
 		}));
 	},
@@ -45,6 +46,7 @@ export const useAccountsController = create<AccountsController>()((set) => ({
 			accountsFilters: {
 				...state.accountsFilters,
 				type,
+				page: 1,
 			},
 		}));
 	},
@@ -54,6 +56,7 @@ export const useAccountsController = create<AccountsController>()((set) => ({
 			accountsFilters: {
 				...state.accountsFilters,
 				bankId: id,
+				page: 1,
 			},
 		}));
 	},
@@ -63,6 +66,7 @@ export const useAccountsController = create<AccountsController>()((set) => ({
 			accountsFilters: {
 				...state.accountsFilters,
 				isActive: activeOnly ? true : undefined,
+				page: 1,
 			},
 		}));
 	},
@@ -72,6 +76,7 @@ export const useAccountsController = create<AccountsController>()((set) => ({
 			accountsFilters: {
 				...state.accountsFilters,
 				sortBy,
+				page: 1,
 			},
 		}));
 	},
@@ -81,6 +86,7 @@ export const useAccountsController = create<AccountsController>()((set) => ({
 			accountsFilters: {
 				...state.accountsFilters,
 				order,
+				page: 1,
 			},
 		}));
 	},
@@ -99,6 +105,7 @@ export const useAccountsController = create<AccountsController>()((set) => ({
 			accountsFilters: {
 				...state.accountsFilters,
 				perPage,
+				page: 1,
 			},
 		}));
 	},
@@ -108,6 +115,7 @@ export const useAccountsController = create<AccountsController>()((set) => ({
 			accountsFilters: {
 				...state.accountsFilters,
 				groupedBy: grouped === "all" ? undefined : grouped,
+				page: 1,
 			},
 		}));
 	},
