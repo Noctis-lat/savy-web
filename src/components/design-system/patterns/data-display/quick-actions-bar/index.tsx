@@ -12,6 +12,7 @@ import {
 import type React from "react";
 import { useNavigate } from "react-router";
 import { ROUTES } from "@/app/router/routes";
+import { CreateTransaction } from "@/components/transactions/create-transaction";
 import { Button } from "@/components/ui/button";
 import { merge } from "@/utils/ui/mergeStyles";
 
@@ -45,19 +46,22 @@ export const QuickActionsBar = ({ className }: QuickActionsBarProps): React.Reac
 	};
 
 	return (
-		<div className={merge("flex w-full gap-2 overflow-x-auto md:flex-nowrap", className)}>
-			{ACTIONS.map((action) => (
-				<Button
-					key={action.label}
-					variant="ghost"
-					size="sm"
-					className="shrink-0"
-					onClick={() => handleClick(action.path)}
-				>
-					<action.icon className="size-4" />
-					{action.label}
-				</Button>
-			))}
+		<div className="flex flex-row items-center justify-between">
+			<div className={merge("flex w-full gap-2 overflow-x-auto md:flex-nowrap", className)}>
+				{ACTIONS.map((action) => (
+					<Button
+						key={action.label}
+						variant="ghost"
+						size="sm"
+						className="shrink-0"
+						onClick={() => handleClick(action.path)}
+					>
+						<action.icon className="size-4" />
+						{action.label}
+					</Button>
+				))}
+			</div>
+			<CreateTransaction size="sm" />
 		</div>
 	);
 };

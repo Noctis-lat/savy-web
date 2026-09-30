@@ -97,7 +97,6 @@ export const Dashboard = (): React.ReactElement => {
 				<ScaleFadeIn className="lg:col-span-1">
 					<RecentTransactionsCard
 						transactions={data.recentTransactions}
-						currency={currency}
 						locale={locale}
 					/>
 				</ScaleFadeIn>

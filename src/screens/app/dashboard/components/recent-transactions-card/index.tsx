@@ -4,11 +4,11 @@ import { useNavigate } from "react-router";
 import { ROUTES } from "@/app/router/routes";
 import { SummaryCard } from "@/components/design-system/patterns/data-display/summary-card";
 import { Empty } from "@/components/design-system/patterns/feedback/empty";
+import { CreateTransaction } from "@/components/transactions/create-transaction";
 import { TransactionRow } from "@/components/transactions/transaction-row";
 
 type RecentTransactionsCardProps = {
 	transactions: Transaction[];
-	currency: string;
 	locale: string;
 	maxItems?: number;
 	className?: string;
@@ -16,7 +16,6 @@ type RecentTransactionsCardProps = {
 
 export const RecentTransactionsCard = ({
 	transactions,
-	currency,
 	locale,
 	maxItems = 5,
 	className,
@@ -31,7 +30,7 @@ export const RecentTransactionsCard = ({
 			icon={Receipt}
 			actionLabel="Ver todo"
 			onAction={() => navigate(ROUTES.APP.TRANSACTIONS)}
-			onCreate={() => navigate(ROUTES.APP.TRANSACTIONS_NEW)}
+			createContent={<CreateTransaction mode="icon" />}
 			className={className}
 		>
 			{isEmpty ? (
@@ -49,7 +48,6 @@ export const RecentTransactionsCard = ({
 						<TransactionRow
 							key={transaction.id}
 							transaction={transaction}
-							currency={currency}
 							locale={locale}
 						/>
 					))}
