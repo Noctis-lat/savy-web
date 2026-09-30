@@ -13,6 +13,7 @@ import { formatCurrency } from "@/utils/formatters/formatCurrency";
 import { formatDate, formatShortDate } from "@/utils/formatters/formatDate";
 import { signedAmount } from "@/utils/transactions/signedAmount";
 import { merge } from "@/utils/ui/mergeStyles";
+import { EditTransaction } from "../edit-transaction";
 import { RemoveTransaction } from "./components/remove-transaction";
 import { TransactionDetail } from "./components/transaction-detail";
 
@@ -20,12 +21,14 @@ type TransactionRowProps = {
 	transaction: Transaction;
 	locale: string;
 	className?: string;
+	editable?: boolean;
 };
 
 export const TransactionRow = ({
 	transaction,
 	locale,
 	className,
+	editable = false,
 }: TransactionRowProps): React.ReactElement => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const { account, isLoading } = useQueryAccount(transaction.accountId);
@@ -38,7 +41,7 @@ export const TransactionRow = ({
 	const signed = signedAmount(transaction.type, transaction.amount);
 	const prefix = signed < 0 ? "-" : "";
 
-	const handleClose = () => {
+	const handleClose = (): void => {
 		setIsOpen(false);
 	};
 
@@ -86,6 +89,19 @@ export const TransactionRow = ({
 					{prefix}
 					{formatCurrency(Math.abs(transaction.amount), currency, locale)}
 				</span>
+
+				{editable && (
+					<button
+						type="button"
+						onClick={(event) => event.stopPropagation()}
+						onKeyDown={(event) => event.stopPropagation()}
+					>
+						<EditTransaction
+							transaction={transaction}
+							mode="icon"
+						/>
+					</button>
+				)}
 			</button>
 		</Modal>
 	);

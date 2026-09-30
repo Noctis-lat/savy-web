@@ -58,6 +58,7 @@ export const TransactionsList = (): React.ReactElement => {
 						key={transaction.id}
 						transaction={transaction}
 						locale="es-MX"
+						editable
 					/>
 				))}
 			</StaggerContainer>

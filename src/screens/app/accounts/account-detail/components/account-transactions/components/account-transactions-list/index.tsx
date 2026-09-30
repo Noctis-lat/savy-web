@@ -91,6 +91,7 @@ export const AccountTransactionsList = ({
 						key={transaction.id}
 						transaction={transaction}
 						locale="es-MX"
+						editable
 					/>
 				))}
 			</StaggerContainer>
