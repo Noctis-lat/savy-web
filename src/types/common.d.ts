@@ -14,4 +14,10 @@ type BreadcrumbItemConfig =
 	| { label: string; href: string }
 	| { label: string; href?: never };
 
-	type PeriodType = "day" | "week" | "month" | "other_month" | "quarter" | "semester" | "year";
+	type PeriodType = "day" | "week" | "month" | "other_month" | "quarter" | "semester" | "year" | undefined;
+
+	type PeriodOption = {
+	label: string;
+	shortLabel: string;
+	value: PeriodType;
+};

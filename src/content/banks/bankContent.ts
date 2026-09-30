@@ -18,12 +18,6 @@ export const ACCOUNT_TYPE_LABELS: Record<string, string> = {
 	LOAN: "Préstamo",
 };
 
-type PeriodOption = {
-	label: string;
-	shortLabel: string;
-	value: PeriodType;
-};
-
 export const PERIOD_OPTIONS: PeriodOption[] = [
 	{ label: "Hoy", shortLabel: "Hoy", value: "day" },
 	{ label: "Esta semana", shortLabel: "Sem", value: "week" },

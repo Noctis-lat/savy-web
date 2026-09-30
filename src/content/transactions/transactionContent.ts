@@ -53,3 +53,14 @@ export const TRANSACTION_TYPE_AMOUNT_CLASS: Record<TransactionType, string> = {
 	TRANSFER: "text-blue-600",
 	PAYMENT: "text-muted-foreground",
 };
+
+export const TRANSACTIONS_PERIOD_OPTIONS: PeriodOption[] = [
+	{ label: "Todo", shortLabel: "Todo", value: undefined },
+	{ label: "Hoy", shortLabel: "Hoy", value: "day" },
+	{ label: "Esta semana", shortLabel: "Sem", value: "week" },
+	{ label: "Este mes", shortLabel: "Mes", value: "month" },
+	{ label: "Mes anterior", shortLabel: "Mes ant", value: "other_month" },
+	{ label: "Trimestre", shortLabel: "Trim", value: "quarter" },
+	{ label: "Semestre", shortLabel: "Semest", value: "semester" },
+	{ label: "Año", shortLabel: "Año", value: "year" },
+];

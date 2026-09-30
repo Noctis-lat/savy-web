@@ -7,7 +7,7 @@ import { FiltersWrapper } from "@/components/design-system/patterns/filters/filt
 import { SearchFilterSelect } from "@/components/design-system/patterns/filters/search-filter-select";
 import { SearchInput } from "@/components/design-system/patterns/filters/search-input";
 import { Button } from "@/components/ui/button";
-import { PERIOD_OPTIONS } from "@/content/banks/bankContent";
+import { TRANSACTIONS_PERIOD_OPTIONS } from "@/content/transactions/transactionContent";
 import {
 	TRANSACTION_SORT_OPTIONS,
 	TRANSACTION_TYPE_FILTER_OPTIONS,
@@ -136,7 +136,7 @@ export const TransactionsActions = (): React.ReactElement => {
 
 						<div className="flex items-center gap-1.5">
 							<div className="flex flex-nowrap items-center gap-1.5 overflow-x-auto">
-								{PERIOD_OPTIONS.map((option) => {
+								{TRANSACTIONS_PERIOD_OPTIONS.map((option) => {
 									const isSelected = transactionsFilters.period === option.value;
 									return (
 										<Button
