@@ -90,7 +90,6 @@ export const AccountTransactionsList = ({
 					<TransactionRow
 						key={transaction.id}
 						transaction={transaction}
-						currency={account.currency}
 						locale="es-MX"
 					/>
 				))}

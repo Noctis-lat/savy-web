@@ -18,19 +18,19 @@ import { TransactionDetail } from "./components/transaction-detail";
 
 type TransactionRowProps = {
 	transaction: Transaction;
-	currency: string;
 	locale: string;
 	className?: string;
 };
 
 export const TransactionRow = ({
 	transaction,
-	currency,
 	locale,
 	className,
 }: TransactionRowProps): React.ReactElement => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const { account, isLoading } = useQueryAccount(transaction.accountId);
+
+	const currency = account?.currency;
 
 	const Icon = TRANSACTION_TYPE_ICON[transaction.type];
 	const description = transaction.description ?? "Sin descripción";

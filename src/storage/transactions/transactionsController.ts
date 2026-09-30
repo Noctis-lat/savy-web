@@ -30,9 +30,9 @@ const DEFAULT_FILTERS: TransactionParams = {
 	sortBy: "createdAt",
 	order: "desc",
 	page: 1,
-	limit: 20,
+	limit: 10,
 	info: false,
-	period: "day",
+	period: undefined,
 };
 
 export const useTransactionsController = create<TransactionsController>()((set) => ({
