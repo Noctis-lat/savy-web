@@ -57,13 +57,15 @@ export const BanksList = (): React.ReactElement => {
 
 	if (filteredBanks.length === 0) {
 		return (
-			<GlassCard>
-				<Empty
-					icon={Landmark}
-					title="Sin bancos"
-					description="Agrega tu primer banco para comenzar a organizar tus cuentas."
-				/>
-			</GlassCard>
+			<ScaleFadeIn className="flex flex-col flex-1 gap-4">
+				<GlassCard>
+					<Empty
+						icon={Landmark}
+						title="Sin bancos"
+						description="Agrega tu primer banco para comenzar a organizar tus cuentas."
+					/>
+				</GlassCard>
+			</ScaleFadeIn>
 		);
 	}
 

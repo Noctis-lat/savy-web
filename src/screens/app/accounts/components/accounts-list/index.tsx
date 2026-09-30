@@ -42,7 +42,7 @@ export const AccountsList = (): React.ReactElement => {
 		/>
 	);
 
-	if (groupedAccounts) {
+	if (groupedAccounts && groupedAccounts.length > 0) {
 		return (
 			<div className="flex flex-col gap-2">
 				<AccountsGrouped groupedAccounts={groupedAccounts} />
@@ -72,10 +72,14 @@ export const AccountsList = (): React.ReactElement => {
 	}
 
 	return (
-		<Empty
-			icon={Wallet}
-			title="Sin cuentas"
-			description="No hay cuentas para mostrar"
-		/>
+		<ScaleFadeIn className="flex flex-col flex-1 gap-4">
+			<GlassCard>
+				<Empty
+					icon={Wallet}
+					title="Sin cuentas"
+					description="No hay cuentas para mostrar"
+				/>
+			</GlassCard>
+		</ScaleFadeIn>
 	);
 };

@@ -33,12 +33,14 @@ export const TransactionsList = (): React.ReactElement => {
 	if (!transactions || transactions.length === 0) {
 		return (
 			<ScaleFadeIn className="flex flex-col flex-1 gap-4">
-				<Empty
-					title="Sin transacciones"
-					description="No hay movimientos que coincidan con los filtros."
-					icon={ArrowUpDown}
-					className="py-8"
-				/>
+				<GlassCard>
+					<Empty
+						title="Sin transacciones"
+						description="No hay movimientos que coincidan con los filtros."
+						icon={ArrowUpDown}
+						className="py-8"
+					/>
+				</GlassCard>
 			</ScaleFadeIn>
 		);
 	}
