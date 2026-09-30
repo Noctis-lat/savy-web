@@ -1,6 +1,6 @@
 // ====================== ENUMS =========================
 
-type PeriodType = "day" | "week" | "month" | "other_month" | "quarter" | "semester" | "year";
+
 
 // ====================== ENTITY =========================
 

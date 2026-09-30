@@ -13,3 +13,5 @@ type NavigatorItem = {
 type BreadcrumbItemConfig =
 	| { label: string; href: string }
 	| { label: string; href?: never };
+
+	type PeriodType = "day" | "week" | "month" | "other_month" | "quarter" | "semester" | "year";

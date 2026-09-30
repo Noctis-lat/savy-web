@@ -18,18 +18,16 @@ type Transaction = {
 	updatedAt: string;
 };
 
-type PaginatedResponse<T> = {
-	data: T[];
-	total: number;
-	page: number;
-	limit: number;
-	totalPages: number;
-};
+type TransactionsInfo = {
+	netWorth: number;
+	liquidity: number;
+	debt: number;
+}
 
 // ====================== SERVICE =========================
 
 type TransactionService = {
-	getTransactions: (params?: TransactionParams) => Promise<PaginatedResponse<Transaction>>;
+	getTransactions: (params?: TransactionParams) => Promise<GetTransactionsResponse>;
 	getTransaction: (id: string) => Promise<Transaction>;
 	createTransaction: (payload: CreateTransactionPayload) => Promise<Transaction>;
 	updateTransaction: (id: string, payload: UpdateTransactionPayload) => Promise<Transaction>;
@@ -50,7 +48,18 @@ type TransactionParams = {
 	order?: "asc" | "desc";
 	page?: number;
 	limit?: number;
+	info?: boolean;
+	period?: PeriodType;
 };
+
+type GetTransactionsResponse = {
+	data: Transaction[];
+	info?: TransactionsInfo;
+	total: number;
+	page: number;
+	limit: number;
+	totalPages: number;
+}
 
 type CreateTransactionPayload = {
 	accountId: string;
