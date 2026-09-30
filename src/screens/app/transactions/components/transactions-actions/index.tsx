@@ -16,6 +16,9 @@ import { useQueryAccounts } from "@/hooks/accounts/useQueryAccounts";
 import { useQueryBanks } from "@/hooks/banks/useQueryBanks";
 import { useQueryCategories } from "@/hooks/categories/useQueryCategories";
 import { useTransactionsController } from "@/storage/transactions/transactionsController";
+import { formatAccountOptions } from "@/utils/accounts/formatAccountOptions";
+import { formatBankOptions } from "@/utils/banks/formatBankOptions";
+import { formatCategoryOptions } from "@/utils/categories/formatCategoryOptions";
 import { merge } from "@/utils/ui/mergeStyles";
 
 export const TransactionsActions = (): React.ReactElement => {
@@ -37,31 +40,13 @@ export const TransactionsActions = (): React.ReactElement => {
 	const { accounts, isLoading: isLoadingAccounts } = useQueryAccounts();
 
 	const categoryOptions = useMemo<Option[]>(
-		() =>
-			(categories ?? []).map((category) => ({
-				label: category.name,
-				value: category.id,
-			})),
+		() => formatCategoryOptions(categories ?? []),
 		[categories],
 	);
 
-	const bankOptions = useMemo<Option[]>(
-		() =>
-			(banks ?? []).map((bank) => ({
-				label: bank.name,
-				value: bank.id,
-			})),
-		[banks],
-	);
+	const bankOptions = useMemo<Option[]>(() => formatBankOptions(banks ?? []), [banks]);
 
-	const accountOptions = useMemo<Option[]>(
-		() =>
-			(accounts ?? []).map((account) => ({
-				label: account.name,
-				value: account.id,
-			})),
-		[accounts],
-	);
+	const accountOptions = useMemo<Option[]>(() => formatAccountOptions(accounts ?? []), [accounts]);
 
 	const hasTypeFilter = transactionsFilters.type !== undefined;
 	const hasCategoryFilter = transactionsFilters.categoryId !== undefined;
