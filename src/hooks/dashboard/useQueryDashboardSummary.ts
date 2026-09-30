@@ -6,7 +6,8 @@ export const useQueryDashboardSummary = () => {
 	return useQuery({
 		queryKey: [dashboardKeys.dashboardSummary],
 		queryFn: () => dashboardService.getSummary(),
-		staleTime: 60_000,
-		gcTime: 1000 * 60 * 5,
+		staleTime: 1000 * 60 * 5,
+		gcTime: 1000 * 60 * 10,
+		refetchOnMount: true,
 	});
 };
