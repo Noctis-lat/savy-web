@@ -69,61 +69,67 @@ export const Dashboard = (): React.ReactElement => {
 			/>
 			<QuickActionsBar />
 
-			<StaggerContainer className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-				<ScaleFadeIn className="lg:col-span-1">
-					<NetWorthCard
-						netWorth={data.netWorth}
-						currency={currency}
-						locale={locale}
-					/>
-				</ScaleFadeIn>
+			<StaggerContainer className="grid grid-cols-1 ms:grid-cols-2 md:grid-cols-3 gap-4">
+				<div className="flex flex-col gap-4 flex-1">
+					<ScaleFadeIn className="lg:col-span-1">
+						<NetWorthCard
+							netWorth={data.netWorth}
+							currency={currency}
+							locale={locale}
+						/>
+					</ScaleFadeIn>
 
-				<ScaleFadeIn className="lg:col-span-1">
-					<BanksCard
-						banks={data.banks}
-						currency={currency}
-						locale={locale}
-					/>
-				</ScaleFadeIn>
+					<ScaleFadeIn className="lg:col-span-1">
+						<CreditOverviewCard
+							creditOverview={data.creditOverview}
+							currency={currency}
+							locale={locale}
+						/>
+					</ScaleFadeIn>
+				</div>
 
-				<ScaleFadeIn className="lg:col-span-1">
-					<AccountsDistributionCard
-						distribution={data.accountsDistribution}
-						currency={currency}
-						locale={locale}
-					/>
-				</ScaleFadeIn>
+				<div className="flex flex-col gap-4 flex-1">
+					<ScaleFadeIn className="lg:col-span-1">
+						<BanksCard
+							banks={data.banks}
+							currency={currency}
+							locale={locale}
+						/>
+					</ScaleFadeIn>
 
-				<ScaleFadeIn className="lg:col-span-1">
-					<RecentTransactionsCard
-						transactions={data.recentTransactions}
-						locale={locale}
-					/>
-				</ScaleFadeIn>
+					<ScaleFadeIn className="lg:col-span-1">
+						<RecentTransactionsCard
+							transactions={data.recentTransactions}
+							locale={locale}
+						/>
+					</ScaleFadeIn>
 
-				<ScaleFadeIn className="lg:col-span-1">
-					<ActiveBudgetsCard
-						budgets={data.activeBudgets}
-						currency={currency}
-						locale={locale}
-					/>
-				</ScaleFadeIn>
+					<ScaleFadeIn className="lg:col-span-1">
+						<SavingsGoalsCard
+							goals={data.savingsGoals}
+							currency={currency}
+							locale={locale}
+						/>
+					</ScaleFadeIn>
+				</div>
 
-				<ScaleFadeIn className="lg:col-span-1">
-					<SavingsGoalsCard
-						goals={data.savingsGoals}
-						currency={currency}
-						locale={locale}
-					/>
-				</ScaleFadeIn>
+				<div className="flex flex-col gap-4 flex-1">
+					<ScaleFadeIn className="lg:col-span-1">
+						<AccountsDistributionCard
+							distribution={data.accountsDistribution}
+							currency={currency}
+							locale={locale}
+						/>
+					</ScaleFadeIn>
 
-				<ScaleFadeIn className="lg:col-span-1">
-					<CreditOverviewCard
-						creditOverview={data.creditOverview}
-						currency={currency}
-						locale={locale}
-					/>
-				</ScaleFadeIn>
+					<ScaleFadeIn className="lg:col-span-1">
+						<ActiveBudgetsCard
+							budgets={data.activeBudgets}
+							currency={currency}
+							locale={locale}
+						/>
+					</ScaleFadeIn>
+				</div>
 			</StaggerContainer>
 		</div>
 	);
