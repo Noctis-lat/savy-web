@@ -10,6 +10,7 @@ type AccountsKpisProps = {
 };
 
 export const AccountsKpis = ({ info, total }: AccountsKpisProps): React.ReactElement => {
+	console.log("Accounts neto:", info?.netWorth);
 	return (
 		<div className="grid grid-cols-1 gap-4 sm:grid-cols-4">
 			<ScaleFadeIn>

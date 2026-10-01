@@ -15,47 +15,33 @@ import { BanksListSkeleton } from "./components/banks-list-skeleton";
 
 export const BanksList = (): React.ReactElement => {
 	const navigate = useNavigate();
-	const banksFilters = useBanksController((state) => state.banksFilters);
-	const searchQuery = useBanksController((state) => state.searchQuery);
 
-	const banksQuery = useQueryBanks(banksFilters);
+	const banksFilters = useBanksController((state) => state.banksFilters);
+	const { banks, isLoading: isBanksLoading } = useQueryBanks(banksFilters);
 	const { accounts, isLoading: isLoadingAccounts } = useQueryAccounts();
 
-	const isLoading = banksQuery.isLoading || isLoadingAccounts;
+	const isLoading = isBanksLoading || isLoadingAccounts;
 
 	const enrichedBanks = useMemo(() => {
-		if (!banksQuery.data || !accounts) return [];
-		return enrichBanksWithStats(banksQuery.data, accounts);
-	}, [banksQuery.data, accounts]);
-
-	const filteredBanks = useMemo(() => {
-		if (!searchQuery) return enrichedBanks;
-		const query = searchQuery.toLowerCase();
-		return enrichedBanks.filter((bank) => bank.name.toLowerCase().includes(query));
-	}, [enrichedBanks, searchQuery]);
+		if (!banks || !accounts) return [];
+		return enrichBanksWithStats(banks, accounts);
+	}, [banks, accounts]);
 
 	if (isLoading) {
 		return <BanksListSkeleton />;
 	}
 
-	if (banksQuery.isError) {
+	if (!banks) {
 		return (
 			<Empty
 				icon={RefreshCw}
 				title="No pudimos cargar los bancos"
 				description="Revisa tu conexión e inténtalo de nuevo."
-				action={{
-					label: "Reintentar",
-					icon: RefreshCw,
-					onClick: () => {
-						void banksQuery.refetch();
-					},
-				}}
 			/>
 		);
 	}
 
-	if (filteredBanks.length === 0) {
+	if (banks.length === 0) {
 		return (
 			<ScaleFadeIn className="flex flex-col flex-1 gap-4">
 				<GlassCard>
@@ -73,7 +59,7 @@ export const BanksList = (): React.ReactElement => {
 		<StaggerContainer>
 			<ScaleFadeIn>
 				<GlassCard className="overflow-hidden p-0 gap-0">
-					{filteredBanks.map((bank) => (
+					{enrichedBanks.map((bank) => (
 						<BankRow
 							key={bank.id}
 							bank={bank}

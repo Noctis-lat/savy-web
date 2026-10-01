@@ -1,5 +1,5 @@
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { Code, Database, FlaskConical, Wrench } from "lucide-react";
+import { Code, Database, FlaskConical, RefreshCw, Wrench } from "lucide-react";
 import { type ReactElement, useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -11,6 +11,7 @@ import {
 	ContextMenuSeparator,
 	ContextMenuTrigger,
 } from "@/components/ui/context-menu";
+import { queryClient } from "@/services/query-client";
 import { useSkeletonStore } from "@/storage/skeletonTestStorage";
 import { merge } from "@/utils/ui/mergeStyles";
 
@@ -158,6 +159,14 @@ export const DevTools = (): ReactElement => {
 						>
 							<Database className="mr-2 size-4" />
 							React Query Devtools
+						</ContextMenuItem>
+
+						<ContextMenuItem
+							onClick={() => queryClient.invalidateQueries()}
+							className="border border-transparent focus:bg-primary/10 focus:border focus:border-primary/20 focus:**:text-primary! focus:text-primary! focus:cursor-pointer"
+						>
+							<RefreshCw className="mr-2 size-4" />
+							Invalidar todas las queries
 						</ContextMenuItem>
 					</ContextMenuContent>
 				</ContextMenu>

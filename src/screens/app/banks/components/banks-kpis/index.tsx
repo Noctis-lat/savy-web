@@ -10,8 +10,9 @@ type BanksKpisProps = {
 };
 
 export const BanksKpis = ({ banksInfo, total }: BanksKpisProps): React.ReactElement => {
+	console.log("Bank neto:", banksInfo.netWorth);
 	return (
-		<div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+		<div className="grid grid-cols-1 gap-4 sm:grid-cols-4">
 			<ScaleFadeIn>
 				<KpiCard
 					label="Total bancos"
@@ -34,6 +35,7 @@ export const BanksKpis = ({ banksInfo, total }: BanksKpisProps): React.ReactElem
 					icon={CheckCircle2}
 				/>
 			</ScaleFadeIn>
+
 			<ScaleFadeIn>
 				<KpiCard
 					label="Patrimonio total"
