@@ -20,10 +20,6 @@ type BankInfo = {
 	netWorth: number;
 	liquidity: number;
 	debt: number;
-	balanceBreakdown: {
-		assets: number;
-		liabilities: number;
-	};
 };
 
 type BankCreditCard = {
@@ -65,7 +61,7 @@ type IncomeVsExpenses = {
 // ====================== SERVICE =========================
 
 type BankService = {
-	getBanks: (params?: BankParams) => Promise<Bank[]>;
+	getBanks: (params?: BankParams) => Promise<GetBanksResponse>;
 	getBank: (id: string, info?: boolean) => Promise<Bank>;
 	createBank: (payload: CreateBankPayload) => Promise<Bank>;
 	updateBank: (id: string, payload: UpdateBankPayload) => Promise<Bank>;
@@ -80,10 +76,22 @@ type BankService = {
 
 type BankParams = {
 	isActive?: boolean;
+	search?: string;
 	sortBy?: "name" | "createdAt";
 	order?: "asc" | "desc";
+	page?: number;
+	perPage?: number;
 	info?: boolean;
 };
+
+type GetBanksResponse = {
+	banks: Bank[];
+	info?: BankInfo;
+	page: number;
+	perPage: number;
+	total: number;
+	totalPages: number;
+}
 
 type CreateBankPayload = {
 	name: string;

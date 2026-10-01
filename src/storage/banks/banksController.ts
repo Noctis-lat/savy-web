@@ -2,27 +2,35 @@ import { create } from "zustand";
 
 type BanksController = {
 	banksFilters: BankParams;
-	searchQuery: string;
 
-	setSearchQuery: (query: string) => void;
+	setSearch: (search: string) => void;
 	setSortBy: (sortBy: "name" | "createdAt") => void;
 	setOrder: (order: "asc" | "desc") => void;
 	setActiveOnly: (activeOnly: boolean) => void;
 	resetFilters: () => void;
+	setPage: (page: number) => void;
+	setPerPage: (perPage: number) => void;
 };
 
 export const useBanksController = create<BanksController>()((set) => ({
 	banksFilters: {
 		isActive: true,
+		search: undefined,
 		sortBy: "name",
 		order: "asc",
+		page: 1,
+		perPage: 10,
 		info: true,
 	},
 
-	searchQuery: "",
-
-	setSearchQuery: (query) => {
-		set({ searchQuery: query });
+	setSearch: (search) => {
+		set((state) => ({
+			banksFilters: {
+				...state.banksFilters,
+				search: search || undefined,
+				page: 1,
+			},
+		}));
 	},
 
 	setSortBy: (sortBy) => {
@@ -52,13 +60,34 @@ export const useBanksController = create<BanksController>()((set) => ({
 		}));
 	},
 
+	setPage: (page) => {
+		set((state) => ({
+			banksFilters: {
+				...state.banksFilters,
+				page,
+			},
+		}));
+	},
+
+	setPerPage: (perPage) => {
+		set((state) => ({
+			banksFilters: {
+				...state.banksFilters,
+				perPage,
+				page: 1,
+			},
+		}));
+	},
+
 	resetFilters: () => {
 		set({
-			searchQuery: "",
 			banksFilters: {
 				isActive: true,
+				search: undefined,
 				sortBy: "name",
 				order: "asc",
+				page: 1,
+				perPage: 10,
 				info: true,
 			},
 		});
