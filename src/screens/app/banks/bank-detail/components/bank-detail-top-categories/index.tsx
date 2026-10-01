@@ -1,5 +1,6 @@
 import { PieChart } from "lucide-react";
 import type React from "react";
+import { ScaleFadeIn } from "@/components/design-system/patterns/animations/scale-fade-in";
 import { ProgressBar } from "@/components/design-system/patterns/data-display/progress-bar";
 import { Empty } from "@/components/design-system/patterns/feedback/empty";
 import { GlassCard } from "@/components/design-system/patterns/glass-card";
@@ -29,11 +30,15 @@ export const BankDetailTopCategories = ({
 
 	if (!categories || categories.length === 0) {
 		return (
-			<Empty
-				icon={PieChart}
-				title="Sin gastos"
-				description="No hay gastos registrados en este periodo."
-			/>
+			<ScaleFadeIn>
+				<GlassCard>
+					<Empty
+						icon={PieChart}
+						title="Sin gastos"
+						description="No hay gastos registrados en este periodo."
+					/>
+				</GlassCard>
+			</ScaleFadeIn>
 		);
 	}
 

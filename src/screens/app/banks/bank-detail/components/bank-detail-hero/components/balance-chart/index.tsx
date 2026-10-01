@@ -2,6 +2,7 @@ import { Scale } from "lucide-react";
 import type React from "react";
 import { ScaleFadeIn } from "@/components/design-system/patterns/animations/scale-fade-in";
 import { DonutChart } from "@/components/design-system/patterns/data-display/donut-chart";
+import { Empty } from "@/components/design-system/patterns/feedback/empty";
 import { GlassCard } from "@/components/design-system/patterns/glass-card";
 import { buildBalanceChartData } from "@/utils/banks/buildBalanceChartData";
 import { formatCurrency } from "@/utils/formatters/formatCurrency";
@@ -14,6 +15,22 @@ type BalanceChartProps = {
 
 export const BalanceChart = ({ bank, currency, locale }: BalanceChartProps): React.ReactElement => {
 	const info = bank.info;
+
+	if (!info || !info.balanceBreakdown) {
+		return (
+			<ScaleFadeIn>
+				<GlassCard className="flex flex-col gap-4 p-6">
+					<div className="flex items-center gap-2">
+						<Scale className="size-4 text-primary" />
+						<h3 className="text-sm font-semibold text-foreground">Balance general</h3>
+					</div>
+
+					<Empty />
+				</GlassCard>
+			</ScaleFadeIn>
+		);
+	}
+
 	const data = buildBalanceChartData(
 		info.balanceBreakdown.assets,
 		info.balanceBreakdown.liabilities,

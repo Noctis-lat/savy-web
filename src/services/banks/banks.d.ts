@@ -20,6 +20,10 @@ type BankInfo = {
 	netWorth: number;
 	liquidity: number;
 	debt: number;
+	balanceBreakdown: {
+		assets: number;
+		liabilities: number;
+	}
 };
 
 type BankCreditCard = {
