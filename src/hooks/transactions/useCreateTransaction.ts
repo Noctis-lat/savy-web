@@ -13,8 +13,11 @@ export const useCreateTransaction = () => {
 			queryClient.invalidateQueries({ queryKey: [transactionKeys.transactions] });
 			queryClient.invalidateQueries({ queryKey: [accountKeys.accounts] });
 			queryClient.invalidateQueries({ queryKey: [accountKeys.account, newTransaction.accountId] });
+			queryClient.invalidateQueries({ queryKey: [accountKeys.accountIncomesExpenses] });
 			queryClient.invalidateQueries({ queryKey: [accountKeys.accountTransactions] });
 			queryClient.invalidateQueries({ queryKey: [bankKeys.banks] });
+			queryClient.invalidateQueries({ queryKey: [bankKeys.bank] });
+			queryClient.invalidateQueries({ queryKey: [bankKeys.bankIncomeVsExpenses] });
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al crear la transacción");
