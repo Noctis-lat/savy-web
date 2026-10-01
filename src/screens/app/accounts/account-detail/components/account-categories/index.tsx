@@ -1,4 +1,4 @@
-import { PieChart, RefreshCw } from "lucide-react";
+import { CopySlash, PieChart, RefreshCw } from "lucide-react";
 import type React from "react";
 import { ScaleFadeIn } from "@/components/design-system/patterns/animations/scale-fade-in";
 import { ProgressBar } from "@/components/design-system/patterns/data-display/progress-bar";
@@ -19,14 +19,33 @@ export const AccountCategories = ({ account }: AccountCategoriesProps): React.Re
 		return <Skeleton />;
 	}
 
-	if (!categories || categories.length === 0) {
+	if (!categories) {
 		return (
-			<Empty
-				icon={RefreshCw}
-				title="No pudimos cargar las categorías"
-				description="Revisa tu conexión e inténtalo de nuevo."
-				className="py-8"
-			/>
+			<ScaleFadeIn className="flex-1">
+				<GlassCard>
+					<Empty
+						icon={RefreshCw}
+						title="No pudimos cargar las categorías"
+						description="Revisa tu conexión e inténtalo de nuevo."
+						className="py-8"
+					/>
+				</GlassCard>
+			</ScaleFadeIn>
+		);
+	}
+
+	if (categories.length === 0) {
+		return (
+			<ScaleFadeIn className="flex-1">
+				<GlassCard>
+					<Empty
+						icon={CopySlash}
+						title="Sin categorias"
+						description="Esta cuenta no tiene categorias asociadas a tus transacciones."
+						className="py-8"
+					/>
+				</GlassCard>
+			</ScaleFadeIn>
 		);
 	}
 
