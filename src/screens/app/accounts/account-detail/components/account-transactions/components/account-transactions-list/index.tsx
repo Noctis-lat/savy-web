@@ -45,7 +45,12 @@ export const AccountTransactionsList = ({
 						description="No hay movimientos que coincidan con los filtros."
 						icon={ArrowUpDown}
 						className="py-8"
-						action={<CreateTransaction size="sm" />}
+						action={
+							<CreateTransaction
+								size="sm"
+								accountId={account.id}
+							/>
+						}
 					/>
 				</GlassCard>
 			</ScaleFadeIn>
@@ -76,6 +81,7 @@ export const AccountTransactionsList = ({
 					<CreateTransaction
 						size="sm"
 						mode="icon"
+						accountId={account.id}
 					/>
 
 					<button
