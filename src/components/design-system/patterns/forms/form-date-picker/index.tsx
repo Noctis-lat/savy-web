@@ -140,7 +140,7 @@ export const FormDatePicker = <T extends FieldValues>({
 										disabled={disabled}
 									>
 										<span className={date ? "" : "text-muted-foreground"}>
-											{date ? formatDate(date) : "Select date"}
+											{date ? formatDate(date) : "Elige una fecha"}
 										</span>
 										<CalendarIcon className="ml-2 size-3.5 opacity-50" />
 									</Button>

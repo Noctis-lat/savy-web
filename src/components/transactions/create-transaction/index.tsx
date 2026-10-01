@@ -25,6 +25,8 @@ export const CreateTransaction = ({
 }: CreateTransactionProps): React.ReactElement => {
 	const [open, setOpen] = useState<boolean>(false);
 
+	const today = new Date();
+
 	const CREATE_TRANSACTION_DEFAULT_VALUES: CreateTransactionFormValues = {
 		accountId: accountId || "",
 		type: "EXPENSE",
@@ -33,7 +35,7 @@ export const CreateTransaction = ({
 		categoryId: undefined,
 		description: undefined,
 		note: undefined,
-		date: undefined,
+		date: today.toISOString().split("T")[0], // Format as YYYY-MM-DD
 	};
 
 	const createTransactionForm = useForm<CreateTransactionFormValues>({
