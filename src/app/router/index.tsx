@@ -106,8 +106,28 @@ export const router = createBrowserRouter([
 									import("@/screens/app/goals/new").then((m) => ({ Component: m.GoalNew })),
 							},
 							{
+								path: ROUTES.APP.SUBSCRIPTIONS.ROOT,
+								lazy: () =>
+									import("@/screens/app/subscriptions").then((m) => ({
+										Component: m.Subscriptions,
+									})),
+							},
+							{
+								path: ROUTES.APP.BILLS.ROOT,
+								lazy: () => import("@/screens/app/bills").then((m) => ({ Component: m.Bills })),
+							},
+							{
+								path: ROUTES.APP.PAYMENTS.ROOT,
+								lazy: () =>
+									import("@/screens/app/payments").then((m) => ({ Component: m.Payments })),
+							},
+							{
 								path: ROUTES.APP.CREDITS.ROOT,
 								lazy: () => import("@/screens/app/credits").then((m) => ({ Component: m.Credits })),
+							},
+							{
+								path: ROUTES.APP.LOANS.ROOT,
+								lazy: () => import("@/screens/app/loans").then((m) => ({ Component: m.Loans })),
 							},
 							{
 								path: ROUTES.APP.ANALYTICS,

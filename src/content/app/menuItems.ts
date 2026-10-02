@@ -47,16 +47,16 @@ export const menuItems: MenuGroup[] = [
 		children: [
 			{ label: "Presupuestos", href: ROUTES.APP.BUDGETS.ROOT, icon: PieChart },
 			{ label: "Metas", href: ROUTES.APP.GOALS.ROOT, icon: Target },
-			{ label: "Suscripciones", href: ROUTES.AUX.ROOT, icon: Repeat },
-			{ label: "Servicios", href: ROUTES.AUX.ROOT, icon: Receipt },
-			{ label: "Gastos recurrentes", href: ROUTES.AUX.ROOT, icon: CalendarClock },
+			{ label: "Suscripciones", href: ROUTES.APP.SUBSCRIPTIONS.ROOT, icon: Repeat },
+			{ label: "Servicios", href: ROUTES.APP.BILLS.ROOT, icon: Receipt },
+			{ label: "Gastos recurrentes", href: ROUTES.APP.PAYMENTS.ROOT, icon: CalendarClock },
 		],
 	},
 	{
 		groupLabel: "Compromisos",
 		children: [
 			{ label: "Créditos", href: ROUTES.APP.CREDITS.ROOT, icon: CreditCard },
-			{ label: "Préstamos", href: ROUTES.AUX.ROOT, icon: HandCoins },
+			{ label: "Préstamos", href: ROUTES.APP.LOANS.ROOT, icon: HandCoins },
 		],
 	},
 	{

@@ -34,9 +34,25 @@ export const ROUTES = {
 			ROOT: "/app/goals",
 			NEW: "/app/goals/new",
 		},
+		SUBSCRIPTIONS: {
+			ROOT: "/app/subscriptions",
+			DETAIL: "/app/subscriptions/:subscription_id",
+		},
+		BILLS: {
+			ROOT: "/app/bills",
+			DETAIL: "/app/bills/:bill_id",
+		},
+		PAYMENTS: {
+			ROOT: "/app/payments",
+			DETAIL: "/app/payments/:payment_id",
+		},
 		CREDITS: {
 			ROOT: "/app/credits",
 			DETAIL: "/app/credits/:credit_id",
+		},
+		LOANS: {
+			ROOT: "/app/loans",
+			DETAIL: "/app/loans/:loan_id",
 		},
 		ANALYTICS: "/app/analytics",
 		SETTINGS: {
