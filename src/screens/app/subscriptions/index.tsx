@@ -12,8 +12,8 @@ export const Subscriptions = (): React.ReactElement => {
 		>
 			<Empty
 				icon={Repeat}
-				title="Sin suscripciones"
-				description="Registra tus suscripciones para controlar los pagos recurrentes."
+				title="Próximamente"
+				description="Esta sección está en desarrollo."
 			/>
 		</Screen>
 	);

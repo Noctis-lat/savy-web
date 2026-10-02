@@ -12,8 +12,8 @@ export const Goals = (): React.ReactElement => {
 		>
 			<Empty
 				icon={Target}
-				title="Sin metas"
-				description="Define tu primera meta para empezar a ahorrar."
+				title="Próximamente"
+				description="Esta sección está en desarrollo."
 			/>
 		</Screen>
 	);

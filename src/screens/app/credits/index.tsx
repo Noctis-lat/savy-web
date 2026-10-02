@@ -12,8 +12,8 @@ export const Credits = (): React.ReactElement => {
 		>
 			<Empty
 				icon={CreditCard}
-				title="Sin créditos"
-				description="Agrega un crédito para hacer seguimiento de tus pagos."
+				title="Próximamente"
+				description="Esta sección está en desarrollo."
 			/>
 		</Screen>
 	);

@@ -12,8 +12,8 @@ export const Bills = (): React.ReactElement => {
 		>
 			<Empty
 				icon={Receipt}
-				title="Sin servicios"
-				description="Registra tus servicios para llevar control de tus recibos."
+				title="Próximamente"
+				description="Esta sección está en desarrollo."
 			/>
 		</Screen>
 	);

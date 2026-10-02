@@ -12,8 +12,8 @@ export const Analitycs = (): React.ReactElement => {
 		>
 			<Empty
 				icon={TrendingUp}
-				title="Sin estadísticas"
-				description="Aún no hay datos suficientes para mostrar análisis."
+				title="Próximamente"
+				description="Esta sección está en desarrollo."
 			/>
 		</Screen>
 	);

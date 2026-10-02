@@ -15,8 +15,8 @@ export const Payments = (): React.ReactElement => {
 		>
 			<Empty
 				icon={CalendarClock}
-				title="Sin gastos recurrentes"
-				description="Registra tus gastos recurrentes para anticipar tus pagos."
+				title="Próximamente"
+				description="Esta sección está en desarrollo."
 			/>
 		</Screen>
 	);

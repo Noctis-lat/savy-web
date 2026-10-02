@@ -12,8 +12,8 @@ export const Loans = (): React.ReactElement => {
 		>
 			<Empty
 				icon={HandCoins}
-				title="Sin préstamos"
-				description="Agrega un préstamo para hacer seguimiento de tus pagos."
+				title="Próximamente"
+				description="Esta sección está en desarrollo."
 			/>
 		</Screen>
 	);

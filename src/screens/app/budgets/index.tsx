@@ -12,8 +12,8 @@ export const Budgets = (): React.ReactElement => {
 		>
 			<Empty
 				icon={PieChart}
-				title="Sin presupuestos"
-				description="Crea tu primer presupuesto para controlar tus gastos."
+				title="Próximamente"
+				description="Esta sección está en desarrollo."
 			/>
 		</Screen>
 	);
