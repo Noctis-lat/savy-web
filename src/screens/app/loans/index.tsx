@@ -1,5 +1,20 @@
+import { HandCoins } from "lucide-react";
 import type React from "react";
+import { ROUTES } from "@/app/router/routes";
+import { Empty } from "@/components/design-system/patterns/feedback/empty";
+import { Screen } from "@/components/design-system/primitives/screen";
 
 export const Loans = (): React.ReactElement => {
-	return <div>Loans</div>;
+	return (
+		<Screen
+			backRoute={ROUTES.APP.ROOT}
+			breadcrumbsConfig={[{ label: "Inicio", href: ROUTES.APP.ROOT }, { label: "Préstamos" }]}
+		>
+			<Empty
+				icon={HandCoins}
+				title="Sin préstamos"
+				description="Agrega un préstamo para hacer seguimiento de tus pagos."
+			/>
+		</Screen>
+	);
 };
