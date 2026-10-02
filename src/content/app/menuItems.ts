@@ -45,8 +45,8 @@ export const menuItems: MenuGroup[] = [
 	{
 		groupLabel: "Organización",
 		children: [
-			{ label: "Presupuestos", href: ROUTES.APP.BUDGETS, icon: PieChart },
-			{ label: "Metas", href: ROUTES.APP.GOALS, icon: Target },
+			{ label: "Presupuestos", href: ROUTES.APP.BUDGETS.ROOT, icon: PieChart },
+			{ label: "Metas", href: ROUTES.APP.GOALS.ROOT, icon: Target },
 			{ label: "Suscripciones", href: ROUTES.AUX.ROOT, icon: Repeat },
 			{ label: "Servicios", href: ROUTES.AUX.ROOT, icon: Receipt },
 			{ label: "Gastos recurrentes", href: ROUTES.AUX.ROOT, icon: CalendarClock },
@@ -55,7 +55,7 @@ export const menuItems: MenuGroup[] = [
 	{
 		groupLabel: "Compromisos",
 		children: [
-			{ label: "Créditos", href: ROUTES.APP.CREDITS, icon: CreditCard },
+			{ label: "Créditos", href: ROUTES.APP.CREDITS.ROOT, icon: CreditCard },
 			{ label: "Préstamos", href: ROUTES.AUX.ROOT, icon: HandCoins },
 		],
 	},
@@ -65,6 +65,6 @@ export const menuItems: MenuGroup[] = [
 	},
 	{
 		groupLabel: "Sistema",
-		children: [{ label: "Configuración", href: ROUTES.APP.SETTINGS, icon: Settings }],
+		children: [{ label: "Configuración", href: ROUTES.APP.SETTINGS.ROOT, icon: Settings }],
 	},
 ];

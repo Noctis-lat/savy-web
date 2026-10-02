@@ -88,25 +88,25 @@ export const router = createBrowserRouter([
 									import("@/screens/app/transactions").then((m) => ({ Component: m.Transactions })),
 							},
 							{
-								path: ROUTES.APP.BUDGETS,
+								path: ROUTES.APP.BUDGETS.ROOT,
 								lazy: () => import("@/screens/app/budgets").then((m) => ({ Component: m.Budgets })),
 							},
 							{
-								path: ROUTES.APP.BUDGETS_NEW,
+								path: ROUTES.APP.BUDGETS.NEW,
 								lazy: () =>
 									import("@/screens/app/budgets/new").then((m) => ({ Component: m.BudgetNew })),
 							},
 							{
-								path: ROUTES.APP.GOALS,
+								path: ROUTES.APP.GOALS.ROOT,
 								lazy: () => import("@/screens/app/goals").then((m) => ({ Component: m.Goals })),
 							},
 							{
-								path: ROUTES.APP.GOALS_NEW,
+								path: ROUTES.APP.GOALS.NEW,
 								lazy: () =>
 									import("@/screens/app/goals/new").then((m) => ({ Component: m.GoalNew })),
 							},
 							{
-								path: ROUTES.APP.CREDITS,
+								path: ROUTES.APP.CREDITS.ROOT,
 								lazy: () => import("@/screens/app/credits").then((m) => ({ Component: m.Credits })),
 							},
 							{
@@ -115,7 +115,7 @@ export const router = createBrowserRouter([
 									import("@/screens/app/analitycs").then((m) => ({ Component: m.Analitycs })),
 							},
 							{
-								path: ROUTES.APP.SETTINGS,
+								path: ROUTES.APP.SETTINGS.ROOT,
 								lazy: () =>
 									import("@/screens/app/settings").then((m) => ({ Component: m.Settings })),
 							},

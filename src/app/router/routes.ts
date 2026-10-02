@@ -14,6 +14,7 @@ export const ROUTES = {
 	APP: {
 		ROOT: "/app",
 		DASHBOARD: "/app",
+		ONBOARDING: "/app/onboarding",
 		BANKS: {
 			ROOT: "/app/banks",
 			DETAIL: "/app/banks/:id",
@@ -25,15 +26,22 @@ export const ROUTES = {
 			EDIT: "/app/accounts/:account_id/edit",
 		},
 		TRANSACTIONS: "/app/transactions",
-		TRANSACTIONS_NEW: "/app/transactions/new",
-		BUDGETS: "/app/budgets",
-		BUDGETS_NEW: "/app/budgets/new",
-		GOALS: "/app/goals",
-		GOALS_NEW: "/app/goals/new",
-		CREDITS: "/app/credits",
+		BUDGETS: {
+			ROOT: "/app/budgets",
+			NEW: "/app/budgets/new",
+		},
+		GOALS: {
+			ROOT: "/app/goals",
+			NEW: "/app/goals/new",
+		},
+		CREDITS: {
+			ROOT: "/app/credits",
+			DETAIL: "/app/credits/:credit_id",
+		},
 		ANALYTICS: "/app/analytics",
-		SETTINGS: "/app/settings",
-		ONBOARDING: "/app/onboarding",
+		SETTINGS: {
+			ROOT: "/app/settings",
+		},
 	},
 	AUX: {
 		ROOT: "/aux",
