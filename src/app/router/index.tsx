@@ -121,23 +121,27 @@ export const router = createBrowserRouter([
 								children: [
 									{
 										index: true,
-										path: ROUTES.APP.SETTINGS.PROFILE,
 										lazy: () =>
 											import("@/screens/app/settings/profile").then((m) => ({
 												Component: m.Profile,
 											})),
 									},
 									{
-										index: true,
-										path: ROUTES.APP.SETTINGS.CATEGORIES,
+										path: "profile",
+										lazy: () =>
+											import("@/screens/app/settings/profile").then((m) => ({
+												Component: m.Profile,
+											})),
+									},
+									{
+										path: "categories",
 										lazy: () =>
 											import("@/screens/app/settings/categories").then((m) => ({
 												Component: m.Categories,
 											})),
 									},
 									{
-										index: true,
-										path: ROUTES.APP.SETTINGS.INCOME_SOURCES,
+										path: "income-sources",
 										lazy: () =>
 											import("@/screens/app/settings/incomes").then((m) => ({
 												Component: m.Incomes,
