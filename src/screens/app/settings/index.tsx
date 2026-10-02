@@ -1,4 +1,4 @@
-import { FolderOpen, Settings as SettingsIcon, User, Wallet } from "lucide-react";
+import { FolderOpen, User, Wallet } from "lucide-react";
 import type React from "react";
 import { ROUTES } from "@/app/router/routes";
 import { AppNavigationTabs } from "@/components/design-system/patterns/navigation/app-navigation-tabs";
@@ -18,12 +18,6 @@ export const Settings = (): React.ReactElement => {
 		<Screen
 			backRoute={ROUTES.APP.ROOT}
 			breadcrumbsConfig={breadcrumbsConfig}
-			action={
-				<div className="flex items-center gap-2 text-muted-foreground">
-					<SettingsIcon className="size-4" />
-					<span className="text-sm font-medium">Configuración</span>
-				</div>
-			}
 		>
 			<AppNavigationTabs
 				config={SETTINGS_TABS}
