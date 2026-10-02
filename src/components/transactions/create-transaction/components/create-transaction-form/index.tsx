@@ -136,6 +136,7 @@ export const CreateTransactionForm = ({
 						label="Categoría"
 						options={categoryOptions}
 						placeholder={categoryPlaceholder}
+						disabled={isLoadingCategories || categoryOptions.length === 0}
 						optional
 						searchable
 						searchPlaceholder="Buscar categoría..."
