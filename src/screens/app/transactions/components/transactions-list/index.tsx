@@ -6,6 +6,7 @@ import { Empty } from "@/components/design-system/patterns/feedback/empty";
 import { GlassCard } from "@/components/design-system/patterns/glass-card";
 import { TablePagination } from "@/components/design-system/patterns/navigation/table-pagination";
 import { TransactionRow } from "@/components/transactions/transaction-row";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useQueryTransactions } from "@/hooks/transactions/useQueryTransactions";
 import { useTransactionsController } from "@/storage/transactions/transactionsController";
 
@@ -27,7 +28,7 @@ export const TransactionsList = (): React.ReactElement => {
 		useQueryTransactions(transactionsFilters);
 
 	if (isLoading) {
-		return <div>loading...</div>;
+		return <Skeleton className="w-full h-80" />;
 	}
 
 	if (!transactions || transactions.length === 0) {
