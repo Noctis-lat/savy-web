@@ -9,7 +9,10 @@ export const useCreateCategory = () => {
 	return useMutation({
 		mutationFn: (payload: CreateCategoryPayload) => categoryService.createCategory(payload),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: [categoryKeys.categories] });
+			queryClient.invalidateQueries({
+				queryKey: [categoryKeys.categories],
+				refetchType: "all",
+			});
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al crear la categoria");

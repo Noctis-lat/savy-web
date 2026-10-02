@@ -1,11 +1,14 @@
+import { Plus } from "lucide-react";
 import type React from "react";
 import { useEffect, useState } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
+import { CreateCategory } from "@/components/categories/create-category";
 import { FormAsyncSelect } from "@/components/design-system/patterns/forms/form-async-select";
 import { FormDatePicker } from "@/components/design-system/patterns/forms/form-date-picker";
 import { FormField } from "@/components/design-system/patterns/forms/form-field";
 import { FormSelect } from "@/components/design-system/patterns/forms/form-select";
 import { FormTextarea } from "@/components/design-system/patterns/forms/form-textarea";
+import { Button } from "@/components/ui/button";
 import { TRANSACTION_TYPE_OPTIONS } from "@/content/transactions/transactionOptions";
 import { useQueryAccounts } from "@/hooks/accounts/useQueryAccounts";
 import { useQueryCategories } from "@/hooks/categories/useQueryCategories";
@@ -24,6 +27,7 @@ export const CreateTransactionForm = ({
 	const { control, setValue } = createTransactionForm;
 
 	const [accountSearch, setAccountSearch] = useState<string>("");
+	const [isCreatingCategory, setIsCreatingCategory] = useState<boolean>(false);
 
 	const { accounts, isLoading: isLoadingAccounts } = useQueryAccounts({
 		search: accountSearch || undefined,
@@ -37,7 +41,9 @@ export const CreateTransactionForm = ({
 	const selectedAccountId = useWatch({ control, name: "accountId" });
 
 	const categoryType = selectedType === "INCOME" ? "INCOME" : "EXPENSE";
-	const { categories } = useQueryCategories(selectedType === "TRANSFER" ? undefined : categoryType);
+	const { categories, isLoading: isLoadingCategories } = useQueryCategories(
+		selectedType === "TRANSFER" ? undefined : categoryType,
+	);
 
 	const showDestinationAccount = selectedType === "TRANSFER" || selectedType === "PAYMENT";
 
@@ -57,8 +63,14 @@ export const CreateTransactionForm = ({
 	const destinationAccountOptions = formatAccountOptions(accounts ?? [], selectedAccountId);
 	const categoryOptions = formatCategoryOptions(categories ?? []);
 
+	const categoryPlaceholder = isLoadingCategories
+		? "Cargando categorías..."
+		: categoryOptions.length === 0
+			? "Sin categorías"
+			: "Selecciona una categoría";
+
 	return (
-		<div className="flex flex-col gap-4">
+		<div className="flex flex-col gap-4 max-h-170 overflow-y-auto">
 			<FormSelect
 				name="type"
 				form={createTransactionForm}
@@ -105,18 +117,41 @@ export const CreateTransactionForm = ({
 				allowDecimals
 			/>
 
-			{selectedType !== "TRANSFER" && (
-				<FormSelect
-					name="categoryId"
-					form={createTransactionForm}
-					label="Categoría"
-					options={categoryOptions}
-					placeholder="Sin categoría"
-					optional
-					searchable
-					searchPlaceholder="Buscar categoría..."
-				/>
-			)}
+			{selectedType !== "TRANSFER" &&
+				(isCreatingCategory ? (
+					<CreateCategory
+						key={categoryType}
+						mode="embedded"
+						categoryType={categoryType}
+						onCreated={(category) => {
+							setValue("categoryId", category.id);
+							setIsCreatingCategory(false);
+						}}
+						onCancel={() => setIsCreatingCategory(false)}
+					/>
+				) : (
+					<FormSelect
+						name="categoryId"
+						form={createTransactionForm}
+						label="Categoría"
+						options={categoryOptions}
+						placeholder={categoryPlaceholder}
+						optional
+						searchable
+						searchPlaceholder="Buscar categoría..."
+						action={
+							<Button
+								variant="ghost"
+								size="icon-sm"
+								onClick={() => setIsCreatingCategory(true)}
+								aria-label="Crear categoría"
+								className="size-5 text-primary hover:bg-primary/10"
+							>
+								<Plus className="size-3.5" />
+							</Button>
+						}
+					/>
+				))}
 
 			<FormField
 				name="description"
