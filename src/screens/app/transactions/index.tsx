@@ -7,12 +7,13 @@ import { useQueryTransactions } from "@/hooks/transactions/useQueryTransactions"
 import { TransactionsActions } from "./components/transactions-actions";
 import { TransactionsHeader } from "./components/transactions-header";
 import { TransactionsList } from "./components/transactions-list";
+import { TransactionsSkeleton } from "./components/transactions-skeleton";
 
 export const Transactions = (): React.ReactElement => {
 	const { transactionsInfo, isLoading, total } = useQueryTransactions({ info: true });
 
 	if (isLoading) {
-		return <div>Loading...</div>;
+		return <TransactionsSkeleton />;
 	}
 
 	if (!transactionsInfo) {
