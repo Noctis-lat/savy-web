@@ -9,13 +9,14 @@ import { useBanksController } from "@/storage/banks/banksController";
 import { BanksFilters } from "./components/banks-filters";
 import { BanksKpis } from "./components/banks-kpis";
 import { BanksList } from "./components/banks-list";
+import { BanksSkeleton } from "./components/banks-skeleton";
 
 export const Banks = (): React.ReactElement => {
 	const banksFilters = useBanksController((state) => state.banksFilters);
 	const { banksInfo, isLoading, total } = useQueryBanks(banksFilters);
 
 	if (isLoading) {
-		return <div>Loading...</div>;
+		return <BanksSkeleton />;
 	}
 
 	if (!banksInfo) {
