@@ -41,6 +41,9 @@ export const ROUTES = {
 		ANALYTICS: "/app/analytics",
 		SETTINGS: {
 			ROOT: "/app/settings",
+			PROFILE: "/app/settings/profile",
+			CATEGORIES: "/app/settings/categories",
+			INCOME_SOURCES: "/app/settings/income-sources",
 		},
 	},
 	AUX: {

@@ -118,6 +118,32 @@ export const router = createBrowserRouter([
 								path: ROUTES.APP.SETTINGS.ROOT,
 								lazy: () =>
 									import("@/screens/app/settings").then((m) => ({ Component: m.Settings })),
+								children: [
+									{
+										index: true,
+										path: ROUTES.APP.SETTINGS.PROFILE,
+										lazy: () =>
+											import("@/screens/app/settings/profile").then((m) => ({
+												Component: m.Profile,
+											})),
+									},
+									{
+										index: true,
+										path: ROUTES.APP.SETTINGS.CATEGORIES,
+										lazy: () =>
+											import("@/screens/app/settings/categories").then((m) => ({
+												Component: m.Categories,
+											})),
+									},
+									{
+										index: true,
+										path: ROUTES.APP.SETTINGS.INCOME_SOURCES,
+										lazy: () =>
+											import("@/screens/app/settings/incomes").then((m) => ({
+												Component: m.Incomes,
+											})),
+									},
+								],
 							},
 						],
 					},
