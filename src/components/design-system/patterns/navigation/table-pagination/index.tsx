@@ -72,7 +72,7 @@ export const TablePagination = ({
 							))}
 						</SelectContent>
 					</Select>
-					<span className="text-xs text-muted-foreground">por página</span>
+					<span className="hidden sm:block text-xs text-muted-foreground">por página</span>
 				</div>
 			) : (
 				<div />
