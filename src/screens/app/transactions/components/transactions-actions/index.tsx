@@ -15,6 +15,7 @@ import {
 import { useQueryAccounts } from "@/hooks/accounts/useQueryAccounts";
 import { useQueryBanks } from "@/hooks/banks/useQueryBanks";
 import { useQueryCategories } from "@/hooks/categories/useQueryCategories";
+import { useIsMobile } from "@/hooks/useIsMobile";
 import { useTransactionsController } from "@/storage/transactions/transactionsController";
 import { formatAccountOptions } from "@/utils/accounts/formatAccountOptions";
 import { formatBankOptions } from "@/utils/banks/formatBankOptions";
@@ -35,8 +36,10 @@ export const TransactionsActions = (): React.ReactElement => {
 	const setPeriod = useTransactionsController((state) => state.setPeriod);
 	const resetFilters = useTransactionsController((state) => state.resetFilters);
 
+	const isMobile = useIsMobile();
+
 	const { categories, isLoading: isLoadingCategories } = useQueryCategories();
-	const { data: banks, isLoading: isLoadingBanks } = useQueryBanks();
+	const { banks, isLoading: isLoadingBanks } = useQueryBanks();
 	const { accounts, isLoading: isLoadingAccounts } = useQueryAccounts();
 
 	const categoryOptions = useMemo<Option[]>(
@@ -110,90 +113,97 @@ export const TransactionsActions = (): React.ReactElement => {
 			hasActiveFilters={hasActiveFilters}
 			clearFilters={resetFilters}
 		>
-			{({ trigger, clear, panel }) => (
-				<div className="flex flex-col gap-3">
-					<div className="flex items-center justify-between gap-3">
-						<SearchInput
-							value={transactionsFilters.search || undefined}
-							onCommit={handleSearchCommit}
-							placeholder="Buscar transacción..."
+			{({ trigger, clear, panel }) => {
+				const filtersPanel = panel(
+					<div className="flex flex-col gap-2 sm:flex-row justify-end flex-1">
+						<FilterSelect
+							options={TRANSACTION_TYPE_FILTER_OPTIONS}
+							value={transactionsFilters.type ?? "all"}
+							onChange={handleTypeChange}
+							placeholder="Tipo"
 						/>
+						<SearchFilterSelect
+							options={categoryOptions}
+							value={transactionsFilters.categoryId}
+							onChange={handleCategoryChange}
+							isLoading={isLoadingCategories}
+							placeholder="Categoría"
+							allLabel="Todas"
+						/>
+						<SearchFilterSelect
+							options={bankOptions}
+							value={transactionsFilters.bankId}
+							onChange={handleBankChange}
+							isLoading={isLoadingBanks}
+							placeholder="Banco"
+							allLabel="Todos"
+						/>
+						<SearchFilterSelect
+							options={accountOptions}
+							value={transactionsFilters.accountId}
+							onChange={handleAccountChange}
+							isLoading={isLoadingAccounts}
+							placeholder="Cuenta"
+							allLabel="Todas"
+						/>
+						<FilterDateRangePicker
+							dateFrom={transactionsFilters.from}
+							dateTo={transactionsFilters.to}
+							onChangeRange={handleDateRangeChange}
+						/>
+						<FilterSortSelect
+							options={TRANSACTION_SORT_OPTIONS}
+							sortValue={transactionsFilters.sortBy ?? "createdAt"}
+							order={(transactionsFilters.order as "asc" | "desc") ?? "desc"}
+							onSortChange={handleSortChange}
+							onOrderChange={handleOrderChange}
+						/>
+					</div>,
+				);
 
-						<div className="flex items-center gap-1.5">
-							<div className="flex flex-nowrap items-center gap-1.5 overflow-x-auto">
-								{TRANSACTIONS_PERIOD_OPTIONS.map((option) => {
-									const isSelected = transactionsFilters.period === option.value;
-									return (
-										<Button
-											key={option.value}
-											type="button"
-											variant={isSelected ? "default" : "outline"}
-											size="sm"
-											className={merge(
-												"h-8 px-3 text-xs whitespace-nowrap",
-												isSelected && "bg-primary text-primary-foreground",
-											)}
-											onClick={() => setPeriod(option.value)}
-										>
-											{option.shortLabel}
-										</Button>
-									);
-								})}
+				return (
+					<div className="flex flex-col gap-3">
+						<div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+							<div className="flex items-center gap-2">
+								<SearchInput
+									className="min-w-0 flex-1 sm:flex-initial"
+									value={transactionsFilters.search || undefined}
+									onCommit={handleSearchCommit}
+									placeholder="Buscar transacción..."
+								/>
+								{isMobile && filtersPanel}
 							</div>
 
-							{trigger}
-							{clear}
+							<div className="flex items-center gap-1.5">
+								<div className="flex flex-wrap items-center gap-1.5 sm:flex-nowrap sm:overflow-x-auto">
+									{TRANSACTIONS_PERIOD_OPTIONS.map((option) => {
+										const isSelected = transactionsFilters.period === option.value;
+										return (
+											<Button
+												key={option.value}
+												type="button"
+												variant={isSelected ? "default" : "outline"}
+												size="sm"
+												className={merge(
+													"h-8 px-3 text-xs whitespace-nowrap",
+													isSelected && "bg-primary text-primary-foreground",
+												)}
+												onClick={() => setPeriod(option.value)}
+											>
+												{option.shortLabel}
+											</Button>
+										);
+									})}
+								</div>
+								<div className="hidden sm:block">{trigger}</div>
+								{clear}
+							</div>
 						</div>
-					</div>
 
-					{panel(
-						<div className="flex flex-col gap-2 sm:flex-row justify-end flex-1">
-							<FilterSelect
-								options={TRANSACTION_TYPE_FILTER_OPTIONS}
-								value={transactionsFilters.type ?? "all"}
-								onChange={handleTypeChange}
-								placeholder="Tipo"
-							/>
-							<SearchFilterSelect
-								options={categoryOptions}
-								value={transactionsFilters.categoryId}
-								onChange={handleCategoryChange}
-								isLoading={isLoadingCategories}
-								placeholder="Categoría"
-								allLabel="Todas"
-							/>
-							<SearchFilterSelect
-								options={bankOptions}
-								value={transactionsFilters.bankId}
-								onChange={handleBankChange}
-								isLoading={isLoadingBanks}
-								placeholder="Banco"
-								allLabel="Todos"
-							/>
-							<SearchFilterSelect
-								options={accountOptions}
-								value={transactionsFilters.accountId}
-								onChange={handleAccountChange}
-								isLoading={isLoadingAccounts}
-								placeholder="Cuenta"
-								allLabel="Todas"
-							/>
-							<FilterDateRangePicker
-								dateFrom={transactionsFilters.from}
-								dateTo={transactionsFilters.to}
-								onChangeRange={handleDateRangeChange}
-							/>
-							<FilterSortSelect
-								options={TRANSACTION_SORT_OPTIONS}
-								sortValue={transactionsFilters.sortBy ?? "createdAt"}
-								order={(transactionsFilters.order as "asc" | "desc") ?? "desc"}
-								onSortChange={handleSortChange}
-								onOrderChange={handleOrderChange}
-							/>
-						</div>,
-					)}
-				</div>
-			)}
+						{!isMobile && filtersPanel}
+					</div>
+				);
+			}}
 		</FiltersWrapper>
 	);
 };
