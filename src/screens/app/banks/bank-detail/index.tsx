@@ -41,7 +41,7 @@ export const BankDetail = (): React.ReactElement => {
 	}
 
 	return (
-		<div className="flex flex-1 flex-col gap-6 p-6">
+		<div className="flex flex-1 flex-col gap-6 sm:p-6">
 			<BankDetailHeader bank={bank} />
 			<BankDetailHero bank={bank} />
 			<BankDetailTopCategories bankId={bankId} />

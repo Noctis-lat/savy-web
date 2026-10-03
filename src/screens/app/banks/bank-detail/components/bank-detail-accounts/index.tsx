@@ -30,7 +30,7 @@ export const BankDetailAccounts = ({ bankId }: BankDetailAccountsProps): React.R
 
 	if (isLoading) {
 		return (
-			<div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+			<div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
 				<Skeleton className="aspect-16/10ounded-xl" />
 				<Skeleton className="aspect-16/10 rounded-xl" />
 				<Skeleton className="aspect-16/10 rounded-xl" />
@@ -85,7 +85,7 @@ export const BankDetailAccounts = ({ bankId }: BankDetailAccountsProps): React.R
 	return (
 		<div className="flex flex-col gap-4">
 			<h3 className="text-sm font-semibold text-foreground">Cuentas ({nonLoanAccounts.length})</h3>
-			<div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+			<div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
 				{nonLoanAccounts.map((account) => {
 					const matchingCard = creditCards.find((card) => card.accountId === account.id);
 					return (

@@ -1,13 +1,13 @@
 import { httpClient, unwrap } from "../http-client";
 
 export const bankService: BankService = {
-	getBanks: async (params?: BankParams): Promise<Bank[]> => {
-		const response = await httpClient.get<APIResponse<Bank[]>>("/banks", {
+	getBanks: async (params?: BankParams): Promise<GetBanksResponse> => {
+		const response = await httpClient.get<APIResponse<GetBanksResponse>>("/banks", {
 			params: {
 				...params,
 			},
 		});
-		return unwrap<Bank[]>(response);
+		return unwrap<GetBanksResponse>(response);
 	},
 
 	getBank: async (id: string, info = false): Promise<Bank> => {

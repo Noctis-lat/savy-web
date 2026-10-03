@@ -13,7 +13,7 @@ import type { CreateAccountFormValues } from "@/schemas/accounts/createAccountSc
 export const CreateAccountForm = (): React.ReactElement => {
 	const createAccountForm = useFormContext<CreateAccountFormValues>();
 	const { control, setValue } = createAccountForm;
-	const { data: banks } = useQueryBanks({ isActive: true, sortBy: "name", order: "asc" });
+	const { banks } = useQueryBanks({ isActive: true, sortBy: "name", order: "asc" });
 
 	const selectedBankId = useWatch({ control, name: "bankId" });
 

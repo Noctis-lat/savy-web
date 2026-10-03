@@ -2,15 +2,13 @@ import { RefreshCw } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
 import { Empty } from "@/components/design-system/patterns/feedback/empty";
-import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { PERIOD_OPTIONS } from "@/content/banks/bankContent";
 import { useQueryBankIncomeVsExpenses } from "@/hooks/banks/useQueryBankIncomeVsExpenses";
 import { useProfileStorage } from "@/storage/profile/profileStorage";
-import { merge } from "@/utils/ui/mergeStyles";
 import { BalanceChart } from "./components/balance-chart";
 import { BankHero } from "./components/bank-hero";
 import { IncomeExpensesChart } from "./components/income-expenses-chart";
+import { PeriodSelector } from "./components/period-selector";
 
 const DEFAULT_CURRENCY = "MXN";
 const DEFAULT_LOCALE = "es-MX";
@@ -40,26 +38,11 @@ export const BankDetailHero = ({ bank }: BankDetailHeroProps): React.ReactElemen
 			/>
 
 			<div className="flex flex-col gap-4">
-				<div className="flex flex-nowrap items-center justify-end gap-1.5 overflow-x-auto">
-					{PERIOD_OPTIONS.map((option) => {
-						const isSelected = period === option.value;
-						return (
-							<Button
-								key={option.value}
-								type="button"
-								variant={isSelected ? "default" : "outline"}
-								size="sm"
-								className={merge(
-									"h-9 px-4 text-sm whitespace-nowrap",
-									isSelected && "bg-primary text-primary-foreground",
-								)}
-								onClick={() => setPeriod(option.value)}
-							>
-								{option.shortLabel}
-							</Button>
-						);
-					})}
-				</div>
+				<PeriodSelector
+					value={period}
+					onChange={setPeriod}
+					className="hidden flex-nowrap justify-end overflow-x-auto sm:flex"
+				/>
 
 				<div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
 					<BalanceChart
@@ -68,21 +51,31 @@ export const BankDetailHero = ({ bank }: BankDetailHeroProps): React.ReactElemen
 						locale={locale}
 					/>
 
-					{isIncomeLoading ? (
-						<Skeleton className="h-64 rounded-xl" />
-					) : !income ? (
-						<Empty
-							icon={RefreshCw}
-							title="No pudimos cargar ingresos vs gastos"
-							description="Revisa tu conexión e inténtalo de nuevo."
+					<div className="flex flex-col gap-3">
+						{/* Mobile only: selector sits right above the chart it controls */}
+						<PeriodSelector
+							value={period}
+							onChange={setPeriod}
+							compact
+							className="flex-wrap sm:hidden"
 						/>
-					) : (
-						<IncomeExpensesChart
-							incomeVsExpenses={income}
-							currency={currency}
-							locale={locale}
-						/>
-					)}
+
+						{isIncomeLoading ? (
+							<Skeleton className="h-64 rounded-xl" />
+						) : !income ? (
+							<Empty
+								icon={RefreshCw}
+								title="No pudimos cargar ingresos vs gastos"
+								description="Revisa tu conexión e inténtalo de nuevo."
+							/>
+						) : (
+							<IncomeExpensesChart
+								incomeVsExpenses={income}
+								currency={currency}
+								locale={locale}
+							/>
+						)}
+					</div>
 				</div>
 			</div>
 		</div>

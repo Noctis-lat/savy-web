@@ -12,7 +12,7 @@ import type { UpdateAccountFormValues } from "@/schemas/accounts/updateAccountSc
 export const AccountEditForm = (): React.ReactElement => {
 	const accountEditForm = useFormContext<UpdateAccountFormValues>();
 	const { control, setValue } = accountEditForm;
-	const { data: banks } = useQueryBanks({ isActive: true, sortBy: "name", order: "asc" });
+	const { banks } = useQueryBanks({ isActive: true, sortBy: "name", order: "asc" });
 
 	const selectedBankId = useWatch({ control, name: "bankId" });
 

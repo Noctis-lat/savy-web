@@ -43,16 +43,20 @@ export const StepBanks = (): React.ReactElement => {
 	// If the user already created banks/accounts in a previous session but
 	// the controller was reset (e.g. page reload), hydrate from the API.
 	useEffect(() => {
-		if (createdBanks.length === 0 && queryBanks.data && queryBanks.data.length > 0) {
-			useOnboardingController.getState().setCreatedBanks(queryBanks.data);
+		if (createdBanks.length === 0 && queryBanks.banks && queryBanks.banks.length > 0) {
+			useOnboardingController.getState().setCreatedBanks(queryBanks.banks);
 		}
-	}, [createdBanks.length, queryBanks.data]);
+	}, [createdBanks.length, queryBanks.banks]);
 
 	useEffect(() => {
-		if (createdAccounts.length === 0 && queryAccounts.data && queryAccounts.data.length > 0) {
-			useOnboardingController.getState().setCreatedAccounts(queryAccounts.data);
+		if (
+			createdAccounts.length === 0 &&
+			queryAccounts.accounts &&
+			queryAccounts.accounts.length > 0
+		) {
+			useOnboardingController.getState().setCreatedAccounts(queryAccounts.accounts);
 		}
-	}, [createdAccounts.length, queryAccounts.data]);
+	}, [createdAccounts.length, queryAccounts.accounts]);
 
 	const isPending =
 		createBank.isPending ||
