@@ -16,12 +16,14 @@ type CreateTransactionProps = {
 	mode?: "button" | "icon" | "card";
 	size?: "default" | "icon" | "xs" | "sm" | "lg" | "icon-xs" | "icon-sm" | "icon-lg";
 	accountId?: string;
+	className?: string;
 };
 
 export const CreateTransaction = ({
 	mode = "button",
 	size = "default",
 	accountId,
+	className,
 }: CreateTransactionProps): React.ReactElement => {
 	const [open, setOpen] = useState<boolean>(false);
 
@@ -86,6 +88,7 @@ export const CreateTransaction = ({
 					<Button
 						onClick={() => setOpen(true)}
 						size={size}
+						className={className}
 					>
 						<ArrowRightLeft />
 						Nueva transacción

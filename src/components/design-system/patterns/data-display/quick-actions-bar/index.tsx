@@ -46,8 +46,10 @@ export const QuickActionsBar = ({ className }: QuickActionsBarProps): React.Reac
 	};
 
 	return (
-		<div className="hidden md:flex flex-row items-center justify-between ">
-			<div className={merge("flex w-full gap-2 overflow-x-auto md:flex-nowrap", className)}>
+		<div className="flex flex-row items-center justify-between ">
+			<div
+				className={merge("hidden sm:flex w-full gap-2 overflow-x-auto md:flex-nowrap", className)}
+			>
 				{ACTIONS.map((action) => (
 					<Button
 						key={action.label}
@@ -61,7 +63,10 @@ export const QuickActionsBar = ({ className }: QuickActionsBarProps): React.Reac
 					</Button>
 				))}
 			</div>
-			<CreateTransaction size="sm" />
+			<CreateTransaction
+				size="sm"
+				className="w-full"
+			/>
 		</div>
 	);
 };

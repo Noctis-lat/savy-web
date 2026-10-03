@@ -72,7 +72,7 @@ export const Modal = ({
 
 			<DialogContent
 				showCloseButton={showClose}
-				className={merge("max-w-lg! p-0 overflow-hidden gap-0", className)}
+				className={merge("sm:max-w-lg! p-0 overflow-hidden gap-0", className)}
 			>
 				<DialogHeader className="px-6 py-4 pb-3">
 					<div className="flex items-center gap-2.5">
@@ -88,7 +88,9 @@ export const Modal = ({
 						)}
 						<DialogTitle className="text-base font-semibold text-gray-900">{title}</DialogTitle>
 					</div>
-					<DialogDescription className="text-sm text-gray-500">{description}</DialogDescription>
+					<DialogDescription className="text-sm text-gray-500 text-left">
+						{description}
+					</DialogDescription>
 				</DialogHeader>
 
 				<Separator />
