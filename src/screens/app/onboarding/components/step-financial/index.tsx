@@ -130,8 +130,8 @@ export const StepFinancial = (): React.ReactElement => {
 							<li key={source.id}>
 								<InfoItem
 									icon={HandCoins}
-									title={source.name}
-									description={`${formatCurrency(source.amount)} · ${getFrequencyLabel(source.frequency)} · ${formatPaydays(source.paydays)} → ${accountNameById.get(source.destinationAccountId) ?? "Cuenta no encontrada"}`}
+									label={source.name}
+									value={`${formatCurrency(source.amount)} · ${getFrequencyLabel(source.frequency)} · ${formatPaydays(source.paydays)} → ${accountNameById.get(source.destinationAccountId) ?? "Cuenta no encontrada"}`}
 								/>
 							</li>
 						))}

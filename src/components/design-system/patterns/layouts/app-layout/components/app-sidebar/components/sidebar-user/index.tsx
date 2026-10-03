@@ -70,7 +70,7 @@ export const SidebarUser = (): React.ReactElement => {
 						</div>
 					</DropdownMenuLabel>
 					<DropdownMenuSeparator />
-					<DropdownMenuItem onClick={() => navigate(ROUTES.APP.SETTINGS)}>
+					<DropdownMenuItem onClick={() => navigate(ROUTES.APP.SETTINGS.ROOT)}>
 						<Settings className="size-4" />
 						Configuración
 					</DropdownMenuItem>

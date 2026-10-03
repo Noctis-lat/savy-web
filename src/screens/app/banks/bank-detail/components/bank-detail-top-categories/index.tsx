@@ -22,13 +22,13 @@ export const BankDetailTopCategories = ({
 	const currency = profile?.currency ?? DEFAULT_CURRENCY;
 	const locale = profile?.locale ?? DEFAULT_LOCALE;
 
-	const { totalExpenses, categories, isLoading } = useQueryTopCategoriesByBank(bankId);
+	const { topCategories, isLoading } = useQueryTopCategoriesByBank(bankId);
 
 	if (isLoading) {
 		return <Skeleton className="h-48 w-full rounded-xl" />;
 	}
 
-	if (!categories || categories.length === 0) {
+	if (!topCategories || topCategories.length === 0) {
 		return (
 			<ScaleFadeIn>
 				<GlassCard>
@@ -49,12 +49,12 @@ export const BankDetailTopCategories = ({
 				<h3 className="text-sm font-semibold text-foreground">Top categorías de gasto</h3>
 			</div>
 			<div className="flex flex-col gap-3">
-				{categories.map((category) => (
+				{topCategories.map((category) => (
 					<ProgressBar
-						key={category.id}
-						label={category.name}
-						current={category.amount ?? 0}
-						total={totalExpenses ?? 0}
+						key={category.categoryId}
+						label={category.categoryName}
+						current={category.amount}
+						total={topCategories.reduce((sum, cat) => sum + cat.amount, 0)}
 						currency={currency}
 						locale={locale}
 					/>

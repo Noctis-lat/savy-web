@@ -115,7 +115,7 @@ type AccountTransactionsResponse = {
 
 type AccountIncomesExpensesParams = {
 	accountId: string;
-	period: string;
+	period: PeriodType;
 }
 
 type AccountIncomesExpensesResponse = {

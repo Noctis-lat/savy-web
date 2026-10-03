@@ -174,24 +174,24 @@ export const StepBanks = (): React.ReactElement => {
 						<ul className="flex flex-col gap-2">
 							{createdBanks.map((bank) => (
 								<li key={bank.id}>
-									<InfoItem
-										icon={Building2}
-										title={bank.name}
-										description={bank.color ?? undefined}
-										action={
-											<Button
-												type="button"
-												variant="ghost"
-												size="icon-xs"
-												className="text-muted-foreground hover:text-destructive"
-												onClick={() => handleRemoveBank(bank.id)}
-												disabled={isBusy}
-												aria-label={`Eliminar ${bank.name}`}
-											>
-												<Trash2 className="size-3.5" />
-											</Button>
-										}
-									/>
+									<div className="flex items-center gap-2">
+										<InfoItem
+											icon={Building2}
+											label={bank.name}
+											value={bank.color ?? undefined}
+										/>
+										<Button
+											type="button"
+											variant="ghost"
+											size="icon-xs"
+											className="text-muted-foreground hover:text-destructive"
+											onClick={() => handleRemoveBank(bank.id)}
+											disabled={isBusy}
+											aria-label={`Eliminar ${bank.name}`}
+										>
+											<Trash2 className="size-3.5" />
+										</Button>
+									</div>
 								</li>
 							))}
 						</ul>
@@ -207,24 +207,24 @@ export const StepBanks = (): React.ReactElement => {
 								const bank = createdBanks.find((bank) => bank.id === account.bankId);
 								return (
 									<li key={account.id}>
-										<InfoItem
-											icon={Wallet}
-											title={account.name}
-											description={`${account.currency} · ${bank?.name ?? "Efectivo"}`}
-											action={
-												<Button
-													type="button"
-													variant="ghost"
-													size="icon-xs"
-													className="text-muted-foreground hover:text-destructive"
-													onClick={() => handleRemoveAccount(account.id)}
-													disabled={isBusy}
-													aria-label={`Eliminar ${account.name}`}
-												>
-													<Trash2 className="size-3.5" />
-												</Button>
-											}
-										/>
+										<div className="flex items-center gap-2">
+											<InfoItem
+												icon={Wallet}
+												label={account.name}
+												value={`${account.currency} · ${bank?.name ?? "Efectivo"}`}
+											/>
+											<Button
+												type="button"
+												variant="ghost"
+												size="icon-xs"
+												className="text-muted-foreground hover:text-destructive"
+												onClick={() => handleRemoveAccount(account.id)}
+												disabled={isBusy}
+												aria-label={`Eliminar ${account.name}`}
+											>
+												<Trash2 className="size-3.5" />
+											</Button>
+										</div>
 									</li>
 								);
 							})}

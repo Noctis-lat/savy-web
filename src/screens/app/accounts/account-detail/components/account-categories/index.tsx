@@ -6,20 +6,19 @@ import { Empty } from "@/components/design-system/patterns/feedback/empty";
 import { GlassCard } from "@/components/design-system/patterns/glass-card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useQueryTopCategoriesByAccount } from "@/hooks/categories/useQueryTopCategoriesByAccount";
-import { formatCurrency } from "@/utils/formatters/formatCurrency";
 
 type AccountCategoriesProps = {
 	account: Account;
 };
 
 export const AccountCategories = ({ account }: AccountCategoriesProps): React.ReactElement => {
-	const { categories, totalExpenses, isLoading } = useQueryTopCategoriesByAccount(account.id);
+	const { topCategories, isLoading } = useQueryTopCategoriesByAccount(account.id);
 
 	if (isLoading) {
 		return <Skeleton />;
 	}
 
-	if (!categories) {
+	if (!topCategories) {
 		return (
 			<ScaleFadeIn className="flex-1">
 				<GlassCard>
@@ -34,7 +33,7 @@ export const AccountCategories = ({ account }: AccountCategoriesProps): React.Re
 		);
 	}
 
-	if (categories.length === 0) {
+	if (topCategories.length === 0) {
 		return (
 			<ScaleFadeIn className="flex-1">
 				<GlassCard>
@@ -58,18 +57,15 @@ export const AccountCategories = ({ account }: AccountCategoriesProps): React.Re
 				</div>
 
 				<div className="flex flex-col gap-3">
-					{categories.map((category) => (
+					{topCategories.map((category) => (
 						<ProgressBar
-							key={category.id}
-							label={category.name}
-							current={category.amount ?? 0}
-							total={totalExpenses ?? 0}
+							key={category.categoryId}
+							label={category.categoryName}
+							current={category.amount}
+							total={topCategories.reduce((sum, cat) => sum + cat.amount, 0)}
 							currency={account.currency}
 						/>
 					))}
-					<span className="text-xs text-muted-foreground">
-						Total de gastos: {formatCurrency(totalExpenses ?? 0, account.currency)}
-					</span>
 				</div>
 			</GlassCard>
 		</ScaleFadeIn>

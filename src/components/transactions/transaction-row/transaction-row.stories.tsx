@@ -11,21 +11,25 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const CURRENCY = "MXN";
 const LOCALE = "es-MX";
+
+const baseTransaction: Transaction = {
+	id: "t1",
+	accountId: "acc-1",
+	destinationAccountId: undefined,
+	categoryId: "cat-1",
+	type: "INCOME",
+	amount: 50000,
+	description: "Salario",
+	note: undefined,
+	date: "2026-07-29",
+	createdAt: "2026-07-29T12:00:00.000Z",
+	updatedAt: "2026-07-29T12:00:00.000Z",
+};
 
 export const Income: Story = {
 	args: {
-		transaction: {
-			id: "t1",
-			type: "INCOME",
-			amount: 50000,
-			description: "Salario",
-			date: "2026-07-29",
-			accountName: "Cuenta débito",
-			categoryName: "Ingresos",
-		},
-		currency: CURRENCY,
+		transaction: baseTransaction,
 		locale: LOCALE,
 	},
 	render: (args) => (
@@ -38,15 +42,13 @@ export const Income: Story = {
 export const Expense: Story = {
 	args: {
 		transaction: {
+			...baseTransaction,
 			id: "t2",
 			type: "EXPENSE",
 			amount: 12500,
 			description: "Groceries",
 			date: "2026-07-28",
-			accountName: "Tarjeta de crédito",
-			categoryName: "Comida",
 		},
-		currency: CURRENCY,
 		locale: LOCALE,
 	},
 	render: (args) => (
@@ -59,15 +61,14 @@ export const Expense: Story = {
 export const Transfer: Story = {
 	args: {
 		transaction: {
+			...baseTransaction,
 			id: "t3",
 			type: "TRANSFER",
 			amount: 30000,
-			description: null,
+			description: undefined,
 			date: "2026-07-27",
-			accountName: "Cuenta ahorro",
-			categoryName: null,
+			categoryId: undefined,
 		},
-		currency: CURRENCY,
 		locale: LOCALE,
 	},
 	render: (args) => (
@@ -77,26 +78,22 @@ export const Transfer: Story = {
 	),
 };
 
-export const WithOnClick: Story = {
+export const Editable: Story = {
 	args: {
 		transaction: {
+			...baseTransaction,
 			id: "t4",
 			type: "EXPENSE",
 			amount: 8900,
 			description: "Café",
 			date: "2026-07-26",
-			accountName: "Cuenta débito",
-			categoryName: "Café",
 		},
-		currency: CURRENCY,
 		locale: LOCALE,
+		editable: true,
 	},
 	render: (args) => (
 		<div className="w-96 rounded-lg border border-border p-2">
-			<TransactionRow
-				{...args}
-				onClick={() => console.log("Transaction clicked")}
-			/>
+			<TransactionRow {...args} />
 		</div>
 	),
 };

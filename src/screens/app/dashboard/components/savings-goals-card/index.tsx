@@ -31,8 +31,8 @@ export const SavingsGoalsCard = ({
 			title="Metas de ahorro"
 			icon={Target}
 			actionLabel="Ver todo"
-			onAction={() => navigate(ROUTES.APP.GOALS)}
-			onCreate={() => navigate(ROUTES.APP.GOALS_NEW)}
+			onAction={() => navigate(ROUTES.APP.GOALS.ROOT)}
+			onCreate={() => navigate(ROUTES.APP.GOALS.ROOT)}
 			className={className}
 		>
 			{isEmpty ? (
@@ -41,7 +41,7 @@ export const SavingsGoalsCard = ({
 					description="Define una meta para empezar a ahorrar."
 					action={{
 						label: "Crear meta",
-						onClick: () => navigate(ROUTES.APP.GOALS_NEW),
+						onClick: () => navigate(ROUTES.APP.GOALS.ROOT),
 					}}
 				/>
 			) : (
@@ -50,7 +50,7 @@ export const SavingsGoalsCard = ({
 						<button
 							key={goal.id}
 							type="button"
-							onClick={() => navigate(ROUTES.APP.GOALS)}
+							onClick={() => navigate(ROUTES.APP.GOALS.ROOT)}
 							className="flex flex-col items-center gap-2 rounded-lg p-2 transition-colors hover:bg-accent/40"
 						>
 							<MiniGauge

@@ -37,25 +37,25 @@ export const DraftList = ({
 				const draftKey = `${draft.name}-${draft.amount}-${draft.paydays.join("-")}-${index}`;
 				return (
 					<li key={draftKey}>
-						<InfoItem
-							icon={HandCoins}
-							title={draft.name}
-							description={`${formatCurrency(draft.amount)} · ${getFrequencyLabel(draft.frequency)} · ${formatPaydays(draft.paydays)} → ${accountNameById.get(draft.destinationAccountId) ?? "Cuenta"}`}
-							action={
-								!readOnly ? (
-									<Button
-										type="button"
-										variant="ghost"
-										size="icon-xs"
-										className="text-muted-foreground hover:text-destructive"
-										onClick={() => removeDraft(index)}
-										aria-label={`Eliminar ${draft.name}`}
-									>
-										<Trash2 className="size-3.5" />
-									</Button>
-								) : undefined
-							}
-						/>
+						<div className="flex items-center gap-2">
+							<InfoItem
+								icon={HandCoins}
+								label={draft.name}
+								value={`${formatCurrency(draft.amount)} · ${getFrequencyLabel(draft.frequency)} · ${formatPaydays(draft.paydays)} → ${accountNameById.get(draft.destinationAccountId) ?? "Cuenta"}`}
+							/>
+							{!readOnly && (
+								<Button
+									type="button"
+									variant="ghost"
+									size="icon-xs"
+									className="text-muted-foreground hover:text-destructive"
+									onClick={() => removeDraft(index)}
+									aria-label={`Eliminar ${draft.name}`}
+								>
+									<Trash2 className="size-3.5" />
+								</Button>
+							)}
+						</div>
 					</li>
 				);
 			})}

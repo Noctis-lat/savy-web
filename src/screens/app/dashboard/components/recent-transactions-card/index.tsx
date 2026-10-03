@@ -39,7 +39,7 @@ export const RecentTransactionsCard = ({
 					description="Aún no registras movimientos."
 					action={{
 						label: "Agregar transacción",
-						onClick: () => navigate(ROUTES.APP.TRANSACTIONS_NEW),
+						onClick: () => navigate(ROUTES.APP.TRANSACTIONS),
 					}}
 				/>
 			) : (

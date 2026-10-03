@@ -1,14 +1,11 @@
 import { httpClient, unwrap } from "../http-client";
 
 export const transactionService: TransactionService = {
-	getTransactions: async (params?: TransactionParams): Promise<PaginatedResponse<Transaction>> => {
-		const response = await httpClient.get<APIResponse<PaginatedResponse<Transaction>>>(
-			"/transactions",
-			{
-				params,
-			},
-		);
-		return unwrap<PaginatedResponse<Transaction>>(response);
+	getTransactions: async (params?: TransactionParams): Promise<GetTransactionsResponse> => {
+		const response = await httpClient.get<APIResponse<GetTransactionsResponse>>("/transactions", {
+			params,
+		});
+		return unwrap<GetTransactionsResponse>(response);
 	},
 
 	getTransaction: async (id: string): Promise<Transaction> => {
