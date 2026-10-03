@@ -16,7 +16,12 @@ export const ScreenHeader = ({
 	action,
 }: ScreenHeaderProps): React.ReactElement => {
 	return (
-		<div className={merge("flex items-center justify-between", className)}>
+		<div
+			className={merge(
+				"flex flex-col sm:flex-row gap-2 sm:items-center justify-between",
+				className,
+			)}
+		>
 			<AppBreadcrumbs
 				backRoute={backRoute}
 				config={breadcrumbsConfig}
