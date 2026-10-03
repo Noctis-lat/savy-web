@@ -27,7 +27,7 @@ export const SearchInput = ({
 			<Input
 				value={localValue}
 				onChange={(event) => onChange(event.target.value)}
-				className="min-w-sm bg-white pl-8"
+				className="sm:min-w-sm bg-white pl-8"
 				placeholder={placeholder}
 			/>
 			<Search className="absolute top-2 left-2 h-4 w-4 text-gray-400" />
