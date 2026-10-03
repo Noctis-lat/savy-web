@@ -12,9 +12,13 @@ import { AccountsDistributionCard } from "./components/accounts-distribution-car
 import { ActiveBudgetsCard } from "./components/active-budgets-card";
 import { BanksCard } from "./components/banks-card";
 import { CreditOverviewCard } from "./components/credit-overview-card";
+import { IncomeSourcesCard } from "./components/income-sources-card";
 import { NetWorthCard } from "./components/net-worth-card";
 import { RecentTransactionsCard } from "./components/recent-transactions-card";
 import { SavingsGoalsCard } from "./components/savings-goals-card";
+import { ServicesCard } from "./components/services-card";
+import { SubscriptionsCard } from "./components/subscriptions-card";
+import { UnclassifiedExpensesCard } from "./components/unclassified-expenses-card";
 
 const DEFAULT_CURRENCY = "MXN";
 const DEFAULT_LOCALE = "es-MX";
@@ -62,7 +66,7 @@ export const Dashboard = (): React.ReactElement => {
 	}
 
 	return (
-		<div className="flex flex-1 flex-col gap-6 p-6">
+		<div className="flex flex-1 flex-col gap-6 p-0 sm:p-6">
 			<DashboardGreeting
 				greeting={greeting}
 				date={today}
@@ -82,6 +86,14 @@ export const Dashboard = (): React.ReactElement => {
 					<ScaleFadeIn className="lg:col-span-1">
 						<CreditOverviewCard
 							creditOverview={data.creditOverview}
+							currency={currency}
+							locale={locale}
+						/>
+					</ScaleFadeIn>
+
+					<ScaleFadeIn className="lg:col-span-1">
+						<IncomeSourcesCard
+							incomeSources={data.incomeSources}
 							currency={currency}
 							locale={locale}
 						/>
@@ -111,6 +123,14 @@ export const Dashboard = (): React.ReactElement => {
 							locale={locale}
 						/>
 					</ScaleFadeIn>
+
+					<ScaleFadeIn className="lg:col-span-1">
+						<SubscriptionsCard
+							recurringExpenses={data.recurringExpenses}
+							currency={currency}
+							locale={locale}
+						/>
+					</ScaleFadeIn>
 				</div>
 
 				<div className="flex flex-col gap-4 flex-1">
@@ -125,6 +145,22 @@ export const Dashboard = (): React.ReactElement => {
 					<ScaleFadeIn className="lg:col-span-1">
 						<ActiveBudgetsCard
 							budgets={data.activeBudgets}
+							currency={currency}
+							locale={locale}
+						/>
+					</ScaleFadeIn>
+
+					<ScaleFadeIn className="lg:col-span-1">
+						<ServicesCard
+							recurringExpenses={data.recurringExpenses}
+							currency={currency}
+							locale={locale}
+						/>
+					</ScaleFadeIn>
+
+					<ScaleFadeIn className="lg:col-span-1">
+						<UnclassifiedExpensesCard
+							recurringExpenses={data.recurringExpenses}
 							currency={currency}
 							locale={locale}
 						/>
@@ -155,6 +191,10 @@ const SKELETON_SLOTS = [
 	"dashboard-skeleton-goals",
 	"dashboard-skeleton-credit",
 	"dashboard-skeleton-banks",
+	"dashboard-skeleton-income-sources",
+	"dashboard-skeleton-subscriptions",
+	"dashboard-skeleton-services",
+	"dashboard-skeleton-unclassified",
 ] as const;
 
 const DashboardSkeleton = (): React.ReactElement => (

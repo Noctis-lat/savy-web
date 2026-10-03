@@ -63,6 +63,40 @@ type DashboardBank = {
 	accountCount: number;
 };
 
+// ====================== INCOME SOURCES =========================
+
+type DashboardIncomeSource = {
+	id: string;
+	name: string;
+	amount: number;
+	frequency: "WEEKLY" | "BIWEEKLY" | "MONTHLY";
+	destinationAccountId: string;
+};
+
+type DashboardIncomeSourcesSummary = {
+	sources: DashboardIncomeSource[];
+	estimatedMonthlyTotal: number;
+};
+
+// ====================== RECURRING EXPENSES =========================
+
+type DashboardRecurringExpense = {
+	id: string;
+	name: string;
+	amount: number;
+	frequency: "WEEKLY" | "BIWEEKLY" | "MONTHLY" | "YEARLY";
+	type: "SUBSCRIPTION" | "SERVICE" | "UNCLASSIFIED";
+	accountId: string;
+	url: string | null;
+};
+
+type DashboardRecurringExpensesSummary = {
+	expenses: DashboardRecurringExpense[];
+	estimatedMonthlyTotal: number;
+};
+
+// ====================== SUMMARY =========================
+
 type DashboardSummary = {
 	netWorth: DashboardNetWorth;
 	accountsDistribution: DashboardAccountDistribution[];
@@ -71,6 +105,8 @@ type DashboardSummary = {
 	savingsGoals: DashboardSavingsGoal[];
 	creditOverview: DashboardCreditOverview;
 	banks: DashboardBank[];
+	incomeSources: DashboardIncomeSourcesSummary;
+	recurringExpenses: DashboardRecurringExpensesSummary;
 	generatedAt: string;
 };
 

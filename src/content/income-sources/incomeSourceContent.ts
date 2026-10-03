@@ -8,6 +8,7 @@ export const FREQUENCY_LABELS: Record<string, string> = {
 	WEEKLY: "Semanal",
 	BIWEEKLY: "Quincenal",
 	MONTHLY: "Mensual",
+	YEARLY: "Anual",
 };
 
 export const WEEKDAY_OPTIONS: { value: number; label: string }[] = [

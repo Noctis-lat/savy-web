@@ -183,7 +183,7 @@ function Sidebar({
 					data-sidebar="sidebar"
 					data-slot="sidebar"
 					data-mobile="true"
-					className="w-(--sidebar-width) bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
+					className="w-(--sidebar-width) max-w-[85vw] border-r border-sidebar-border bg-background/95 p-0 text-sidebar-foreground shadow-2xl backdrop-blur-xl [&>button]:hidden"
 					style={
 						{
 							"--sidebar-width": SIDEBAR_WIDTH_MOBILE,

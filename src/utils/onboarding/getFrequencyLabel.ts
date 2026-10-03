@@ -1,4 +1,6 @@
 import { FREQUENCY_LABELS } from "@/content/income-sources/incomeSourceContent";
 
-export const getFrequencyLabel = (frequency: IncomeSourceFrequency): string =>
+type Frequency = "WEEKLY" | "BIWEEKLY" | "MONTHLY" | "YEARLY";
+
+export const getFrequencyLabel = (frequency: Frequency): string =>
 	FREQUENCY_LABELS[frequency] ?? frequency;

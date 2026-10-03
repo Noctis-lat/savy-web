@@ -28,9 +28,9 @@ const ACTIONS: QuickAction[] = [
 	{ label: "Transacciones", icon: ArrowLeftRight, path: ROUTES.APP.TRANSACTIONS },
 	{ label: "Ingresos", icon: ArrowUpRight, path: `${ROUTES.APP.TRANSACTIONS}?type=INCOME` },
 	{ label: "Gastos", icon: ArrowDownRight, path: `${ROUTES.APP.TRANSACTIONS}?type=EXPENSE` },
-	{ label: "Presupuestos", icon: PiggyBank, path: ROUTES.APP.BUDGETS },
-	{ label: "Metas", icon: Target, path: ROUTES.APP.GOALS },
-	{ label: "Créditos", icon: CreditCard, path: ROUTES.APP.CREDITS },
+	{ label: "Presupuestos", icon: PiggyBank, path: ROUTES.APP.BUDGETS.ROOT },
+	{ label: "Metas", icon: Target, path: ROUTES.APP.GOALS.ROOT },
+	{ label: "Créditos", icon: CreditCard, path: ROUTES.APP.CREDITS.ROOT },
 	{ label: "Estadísticas", icon: BarChart3, path: ROUTES.APP.ANALYTICS },
 ];
 
@@ -46,7 +46,7 @@ export const QuickActionsBar = ({ className }: QuickActionsBarProps): React.Reac
 	};
 
 	return (
-		<div className="flex flex-row items-center justify-between">
+		<div className="hidden md:flex flex-row items-center justify-between ">
 			<div className={merge("flex w-full gap-2 overflow-x-auto md:flex-nowrap", className)}>
 				{ACTIONS.map((action) => (
 					<Button
