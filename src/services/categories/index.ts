@@ -27,23 +27,29 @@ export const categoryService: CategoryService = {
 		await httpClient.delete(`/categories/${id}`);
 	},
 
-	getTopCategoriesByBank: async (bankId: string, limit = 5): Promise<TopCategory[]> => {
-		const response = await httpClient.get<APIResponse<TopCategory[]>>(
+	getTopCategoriesByBank: async (
+		bankId: string,
+		limit = 5,
+	): Promise<TopCategoriesByBankResponse> => {
+		const response = await httpClient.get<APIResponse<TopCategoriesByBankResponse>>(
 			`/categories/top/banks/${bankId}`,
 			{
 				params: { limit },
 			},
 		);
-		return unwrap<TopCategory[]>(response);
+		return unwrap<TopCategoriesByBankResponse>(response);
 	},
 
-	getTopCategoriesByAccount: async (accountId: string, limit = 5): Promise<TopCategory[]> => {
-		const response = await httpClient.get<APIResponse<TopCategory[]>>(
+	getTopCategoriesByAccount: async (
+		accountId: string,
+		limit = 5,
+	): Promise<TopCategoriesByAccountResponse> => {
+		const response = await httpClient.get<APIResponse<TopCategoriesByAccountResponse>>(
 			`/categories/top/accounts/${accountId}`,
 			{
 				params: { limit },
 			},
 		);
-		return unwrap<TopCategory[]>(response);
+		return unwrap<TopCategoriesByAccountResponse>(response);
 	},
 };

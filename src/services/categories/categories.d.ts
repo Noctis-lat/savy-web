@@ -31,8 +31,8 @@ type CategoryService = {
 	createCategory: (payload: CreateCategoryPayload) => Promise<Category>;
 	updateCategory: (id: string, payload: UpdateCategoryPayload) => Promise<Category>;
 	deleteCategory: (id: string) => Promise<void>;
-	getTopCategoriesByBank: (bankId: string, limit?: number) => Promise<TopCategory[]>;
-	getTopCategoriesByAccount: (accountId: string, limit?: number) => Promise<TopCategory[]>;
+	getTopCategoriesByBank: (bankId: string, limit?: number) => Promise<TopCategoriesByBankResponse>;
+	getTopCategoriesByAccount: (accountId: string, limit?: number) => Promise<TopCategoriesByAccountResponse>;
 };
 
 // ====================== METHOD TYPES =========================
@@ -54,4 +54,14 @@ type UpdateCategoryPayload = {
 	name?: string;
 	color?: string;
 	icon?: string;
+};
+
+type TopCategoriesByBankResponse = {
+	totalExpenses: number;
+	categories: TopCategory[];
+};
+
+type TopCategoriesByAccountResponse = {
+	totalExpenses: number;
+	categories: TopCategory[];
 };

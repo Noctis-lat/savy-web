@@ -12,13 +12,13 @@ type AccountCategoriesProps = {
 };
 
 export const AccountCategories = ({ account }: AccountCategoriesProps): React.ReactElement => {
-	const { topCategories, isLoading } = useQueryTopCategoriesByAccount(account.id);
+	const { categories, totalExpenses, isLoading } = useQueryTopCategoriesByAccount(account.id);
 
 	if (isLoading) {
 		return <Skeleton />;
 	}
 
-	if (!topCategories) {
+	if (!categories) {
 		return (
 			<ScaleFadeIn className="flex-1">
 				<GlassCard>
@@ -33,7 +33,7 @@ export const AccountCategories = ({ account }: AccountCategoriesProps): React.Re
 		);
 	}
 
-	if (topCategories.length === 0) {
+	if (categories.length === 0) {
 		return (
 			<ScaleFadeIn className="flex-1">
 				<GlassCard>
@@ -57,12 +57,12 @@ export const AccountCategories = ({ account }: AccountCategoriesProps): React.Re
 				</div>
 
 				<div className="flex flex-col gap-3">
-					{topCategories.map((category) => (
+					{categories.map((category) => (
 						<ProgressBar
 							key={category.categoryId}
 							label={category.categoryName}
 							current={category.amount}
-							total={topCategories.reduce((sum, cat) => sum + cat.amount, 0)}
+							total={totalExpenses ?? 0}
 							currency={account.currency}
 						/>
 					))}

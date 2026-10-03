@@ -3,7 +3,8 @@ import { categoryKeys } from "@/content/services";
 import { categoryService } from "@/services/categories";
 
 type UseQueryTopCategoriesByAccountReturn = {
-	topCategories: TopCategory[] | undefined;
+	totalExpenses: number | undefined;
+	categories: TopCategory[] | undefined;
 	isLoading: boolean;
 };
 
@@ -20,7 +21,8 @@ export const useQueryTopCategoriesByAccount = (
 	});
 
 	return {
-		topCategories: topAccountCategoriesQuery.data,
+		totalExpenses: topAccountCategoriesQuery.data?.totalExpenses,
+		categories: topAccountCategoriesQuery.data?.categories,
 		isLoading: topAccountCategoriesQuery.isLoading,
 	};
 };
