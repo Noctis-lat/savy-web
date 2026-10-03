@@ -44,7 +44,7 @@ export const AccountDetail = (): React.ReactElement => {
 				account={account}
 				bank={bank}
 			/>
-			<div className="flex flex-row gap-4">
+			<div className="flex flex-col sm:flex-row gap-4">
 				<AccountExpenses account={account} />
 				<AccountCategories account={account} />
 			</div>
