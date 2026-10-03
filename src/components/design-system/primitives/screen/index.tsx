@@ -20,7 +20,7 @@ export const Screen = ({
 	action,
 }: ScreenProps): React.ReactElement => {
 	return (
-		<div className={merge("flex flex-1 flex-col gap-6 p-6", className)}>
+		<div className={merge("flex flex-1 flex-col gap-6 p-0 sm:p-6", className)}>
 			<ScreenHeader
 				className={headerClassName}
 				backRoute={backRoute}
