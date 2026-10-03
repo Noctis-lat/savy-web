@@ -65,7 +65,7 @@ export const QuickActionsBar = ({ className }: QuickActionsBarProps): React.Reac
 			</div>
 			<CreateTransaction
 				size="sm"
-				className="w-full"
+				className="w-full sm:w-auto"
 			/>
 		</div>
 	);
