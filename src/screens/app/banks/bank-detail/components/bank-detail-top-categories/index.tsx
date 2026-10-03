@@ -51,8 +51,8 @@ export const BankDetailTopCategories = ({
 			<div className="flex flex-col gap-3">
 				{categories.map((category) => (
 					<ProgressBar
-						key={category.categoryId}
-						label={category.categoryName}
+						key={category.id}
+						label={category.name}
 						current={category.amount}
 						total={totalExpenses ?? 0}
 						currency={currency}

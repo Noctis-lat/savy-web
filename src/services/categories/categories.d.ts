@@ -17,8 +17,13 @@ type Category = {
 };
 
 type TopCategory = {
-	categoryId: string;
-	categoryName: string;
+	id: string;
+	profileId: string;
+	name: string;
+	type: CategoryType;
+	color: string | null;
+	icon: string | null;
+	createdAt: string;
 	amount: number;
 	percentage: number;
 };
