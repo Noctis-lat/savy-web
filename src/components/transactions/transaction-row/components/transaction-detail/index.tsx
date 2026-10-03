@@ -24,7 +24,7 @@ export const TransactionDetail = ({ transaction }: TransactionDetailProps): Reac
 
 	return (
 		<div className="grid grid-cols-2 gap-4">
-			<div className="flex flex-row items-center gap-6">
+			<div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-6">
 				<div className="flex flex-col gap-1">
 					<p className="text-sm text-muted-foreground">Monto</p>
 					<p className="text-lg font-semibold tabular-nums">{formatCurrency(transaction.amount)}</p>
