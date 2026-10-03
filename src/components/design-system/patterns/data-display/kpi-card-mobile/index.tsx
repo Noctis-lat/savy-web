@@ -49,7 +49,7 @@ export const KpiCardMobile = ({
 					<span className="text-sm text-muted-foreground">Patrimonio neto</span>
 					<span
 						className={merge(
-							"truncate text-3xl font-bold tracking-tight tabular-nums",
+							"truncate text-xl font-bold tracking-tight tabular-nums",
 							isNegativeNetWorth ? "text-destructive" : "text-foreground",
 						)}
 					>
