@@ -5,7 +5,13 @@ import { Controller, type FieldPath, type FieldValues, type UseFormReturn } from
 import { InfoCard } from "@/components/design-system/patterns/data-display/info-card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+	PERCENTAGE_DEFAULT_MAX,
+	PERCENTAGE_FRACTION_DIGITS,
+	PERCENTAGE_NUMBER_OPTIONS,
+} from "@/content/forms/percentageFieldOptions";
 import { formatCurrency } from "@/utils/formatters/formatCurrency";
+import { limitFractionDigits } from "@/utils/formatters/limitFractionDigits";
 import { merge } from "@/utils/ui/mergeStyles";
 import { Optional } from "../optional";
 import {
@@ -31,9 +37,12 @@ type FormFieldProps<T extends FieldValues> = {
 	className?: string;
 	info?: string;
 	optional?: boolean;
-	/** Only for type="number": minimum allowed value (visual + RHF validation) */
+	/** For type="number" and type="percentage": minimum allowed value (visual + RHF validation) */
 	min?: number;
-	/** Only for type="number": maximum allowed value (visual + RHF validation) */
+	/**
+	 * For type="number" and type="percentage": maximum allowed value (visual + RHF validation).
+	 * Defaults to 100 for type="percentage".
+	 */
 	max?: number;
 	/** Only for type="number": allows decimal values. Default: false */
 	allowDecimals?: boolean;
@@ -78,11 +87,31 @@ export const FormField = <T extends FieldValues>({
 
 	const error = form.formState.errors[name];
 
-	const getNumberRangeError = (value: number | null): string | null => {
-		if (value === null) return null;
+	const isNumeric = isNumber || isPercentage;
+	const rangeMax = max ?? (isPercentage ? PERCENTAGE_DEFAULT_MAX : undefined);
+
+	const getNumberRangeError = (value: number | undefined): string | undefined => {
+		if (value === undefined) return undefined;
 		if (min !== undefined && value < min) return `El valor mínimo es ${min}`;
-		if (max !== undefined && value > max) return `El valor máximo es ${max}`;
-		return null;
+		if (rangeMax !== undefined && value > rangeMax) return `El valor máximo es ${rangeMax}`;
+		return undefined;
+	};
+
+	const applyRangeValidation = (value: number | undefined): void => {
+		const rangeError = getNumberRangeError(value);
+
+		if (rangeError) {
+			form.setError(name, {
+				type: min !== undefined && value !== undefined && value < min ? "min" : "max",
+				message: rangeError,
+			});
+			return;
+		}
+
+		const currentError = form.formState.errors[name];
+		if (currentError?.type === "min" || currentError?.type === "max") {
+			form.clearErrors(name);
+		}
 	};
 
 	return (
@@ -109,12 +138,13 @@ export const FormField = <T extends FieldValues>({
 				render={({ field }) => {
 					const numberOptions = { allowDecimals, allowNegative };
 
-					if (isNumber && field.value != null && rawRef.current === "") {
-						rawRef.current = String(field.value);
-					}
-
-					if (isPercentage && field.value != null && rawRef.current === "") {
-						rawRef.current = String(field.value / 100);
+					if (isNumeric) {
+						// Keep the raw text in sync when the value changes externally (reset/setValue).
+						const fieldNumber: number | undefined = field.value ?? undefined;
+						const rawNumber = parseDisplayToNumber(rawRef.current) ?? undefined;
+						if (fieldNumber !== rawNumber) {
+							rawRef.current = fieldNumber === undefined ? "" : String(fieldNumber);
+						}
 					}
 
 					const formatPhoneDisplay = (value: string): string => {
@@ -141,9 +171,10 @@ export const FormField = <T extends FieldValues>({
 									? formatPhoneDisplay(field.value ?? "")
 									: (field.value ?? "");
 
-					const currentNumericValue =
-						isNumber && field.value != null ? (field.value as number) : null;
-					const rangeError = isNumber ? getNumberRangeError(currentNumericValue) : null;
+					const currentNumericValue: number | undefined = isNumeric
+						? (field.value ?? undefined)
+						: undefined;
+					const rangeError = isNumeric ? getNumberRangeError(currentNumericValue) : undefined;
 
 					return (
 						<div className="flex flex-col gap-1">
@@ -158,10 +189,26 @@ export const FormField = <T extends FieldValues>({
 											const cents = parseToCents(e.target.value);
 											field.onChange(cents);
 										} else if (isPercentage) {
-											const raw = e.target.value.replace(/[^\d]/g, "");
+											const input = e.target;
+											const cleaned = cleanNumberInput(input.value, PERCENTAGE_NUMBER_OPTIONS);
+											// Backspace right after the "%" suffix removes the suffix only — drop the last char instead.
+											const removedSuffix =
+												!input.value.endsWith("%") &&
+												rawRef.current !== "" &&
+												cleaned === rawRef.current;
+											const raw = limitFractionDigits(
+												removedSuffix ? cleaned.slice(0, -1) : cleaned,
+												PERCENTAGE_FRACTION_DIGITS,
+											);
 											rawRef.current = raw;
-											const num = raw === "" ? null : Number(raw);
-											field.onChange(num === null ? null : num * 100);
+
+											const parsed = parseDisplayToNumber(raw) ?? undefined;
+											field.onChange(parsed);
+											applyRangeValidation(parsed);
+
+											requestAnimationFrame(() => {
+												input.setSelectionRange(raw.length, raw.length);
+											});
 										} else if (isNumber) {
 											const input = e.target;
 											const cursorBefore = input.selectionStart ?? 0;
@@ -172,32 +219,9 @@ export const FormField = <T extends FieldValues>({
 											const formatted = formatNumberString(raw);
 											const newCursor = getNewCursorPosition(raw, formatted, cursorBefore);
 
-											const parsed = parseDisplayToNumber(raw);
+											const parsed = parseDisplayToNumber(raw) ?? undefined;
 											field.onChange(parsed);
-
-											if (parsed !== null) {
-												if (min !== undefined && parsed < min) {
-													form.setError(name, {
-														type: "min",
-														message: `El valor mínimo es ${min}`,
-													});
-												} else if (max !== undefined && parsed > max) {
-													form.setError(name, {
-														type: "max",
-														message: `El valor máximo es ${max}`,
-													});
-												} else {
-													const currentError = form.formState.errors[name];
-													if (currentError?.type === "min" || currentError?.type === "max") {
-														form.clearErrors(name);
-													}
-												}
-											} else {
-												const currentError = form.formState.errors[name];
-												if (currentError?.type === "min" || currentError?.type === "max") {
-													form.clearErrors(name);
-												}
-											}
+											applyRangeValidation(parsed);
 
 											requestAnimationFrame(() => {
 												input.setSelectionRange(newCursor, newCursor);
@@ -210,33 +234,18 @@ export const FormField = <T extends FieldValues>({
 										}
 									}}
 									onBlur={() => {
-										if (isPercentage) {
-											rawRef.current = field.value != null ? String(field.value / 100) : "";
-											field.onBlur();
-											return;
-										}
-										if (isNumber) {
-											rawRef.current = field.value != null ? String(field.value) : "";
-
-											const value = field.value as number | null;
-											if (value !== null && value !== undefined) {
-												if (min !== undefined && value < min) {
-													form.setError(name, {
-														type: "min",
-														message: `El valor mínimo es ${min}`,
-													});
-												} else if (max !== undefined && value > max) {
-													form.setError(name, {
-														type: "max",
-														message: `El valor máximo es ${max}`,
-													});
-												}
-											}
+										if (isNumeric) {
+											const value: number | undefined = field.value ?? undefined;
+											rawRef.current = value === undefined ? "" : String(value);
+											if (value !== undefined) applyRangeValidation(value);
 										}
 										field.onBlur();
 									}}
 									onKeyDown={(e) => {
-										if (!isNumber) return;
+										if (!isNumeric) return;
+
+										const keyAllowsDecimals = isPercentage || allowDecimals;
+										const keyAllowsNegative = isNumber && allowNegative;
 
 										const allowed = new Set([
 											"Backspace",
@@ -260,17 +269,17 @@ export const FormField = <T extends FieldValues>({
 										const isMinus = e.key === "-";
 										const isDigit = /^\d$/.test(e.key);
 
-										if (isDot && !allowDecimals) {
+										if (isDot && !keyAllowsDecimals) {
 											e.preventDefault();
 											return;
 										}
 
-										if (isMinus && !allowNegative) {
+										if (isMinus && !keyAllowsNegative) {
 											e.preventDefault();
 											return;
 										}
 
-										if (isMinus && allowNegative) {
+										if (isMinus && keyAllowsNegative) {
 											const input = e.currentTarget;
 											if (input.selectionStart !== 0) {
 												e.preventDefault();
@@ -278,7 +287,7 @@ export const FormField = <T extends FieldValues>({
 											return;
 										}
 
-										if (isDot && allowDecimals) {
+										if (isDot && keyAllowsDecimals) {
 											if (rawRef.current.includes(".")) {
 												e.preventDefault();
 											}

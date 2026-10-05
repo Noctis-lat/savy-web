@@ -5,6 +5,7 @@ import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { Modal } from "@/components/design-system/primitives/modal";
 import { Button } from "@/components/ui/button";
+import { CREATE_ACCOUNT_DEFAULT_VALUES } from "@/content/accounts/createAccountValues";
 import {
 	type CreateAccountFormValues,
 	createAccountSchema,
@@ -25,26 +26,21 @@ export const CreateAccount = ({
 }: CreateAccountProps): React.ReactElement => {
 	const [open, setOpen] = useState<boolean>(false);
 
-	const CREATE_ACCOUNT_DEFAULT_VALUES: CreateAccountFormValues = {
-		name: "",
-		type: "DEBIT",
+	const createAccountDefaultValues: CreateAccountFormValues = {
+		...CREATE_ACCOUNT_DEFAULT_VALUES,
 		bankId: bankId || undefined,
-		balance: 0,
-		currency: "MXN",
-		color: undefined,
-		icon: undefined,
 	};
 
 	const createAccountForm = useForm<CreateAccountFormValues>({
 		resolver: zodResolver(createAccountSchema),
 		mode: "onChange",
-		defaultValues: CREATE_ACCOUNT_DEFAULT_VALUES,
+		defaultValues: createAccountDefaultValues,
 	});
 
 	const handleOpenChange = (next: boolean): void => {
 		setOpen(next);
 		if (!next) {
-			createAccountForm.reset(CREATE_ACCOUNT_DEFAULT_VALUES);
+			createAccountForm.reset(createAccountDefaultValues);
 		}
 	};
 
