@@ -5,9 +5,12 @@ import { profileService } from "@/services/profile";
 import { useAuthStorage } from "@/storage/authStorage";
 import { useProfileStorage } from "@/storage/profile/profileStorage";
 
-const PROFILE_STALE_TIME = 1000 * 60 * 15;
+type UseQueryProfileReturn = {
+	profile: Profile | undefined;
+	isLoading: boolean;
+};
 
-export const useQueryProfile = () => {
+export const useQueryProfile = (): UseQueryProfileReturn => {
 	const isAuthenticated = useAuthStorage((state) => state.isAuthenticated);
 	const setProfile = useProfileStorage((state) => state.setProfile);
 	const queryClient = useQueryClient();
@@ -17,7 +20,7 @@ export const useQueryProfile = () => {
 		queryFn: () => profileService.getProfile(),
 		enabled: isAuthenticated,
 		retry: false,
-		staleTime: PROFILE_STALE_TIME,
+		staleTime: 1000 * 60 * 15,
 		gcTime: 1000 * 60 * 20,
 		meta: { suppressToast: true },
 	});
@@ -32,13 +35,13 @@ export const useQueryProfile = () => {
 	// Clear profile from storage on error so the guard does not show stale data.
 	useEffect(() => {
 		if (query.isError) {
-			setProfile(null);
-			queryClient.setQueryData([profileKeys.profile], null);
+			setProfile(undefined);
+			queryClient.setQueryData([profileKeys.profile], undefined);
 		}
 	}, [query.isError, setProfile, queryClient]);
 
 	// undefined while loading, Profile | null otherwise
-	const profile = query.status === "pending" ? undefined : (query.data ?? null);
+	const profile = query.status === "pending" ? undefined : (query.data ?? undefined);
 
-	return { profile, isLoading: query.status === "pending" };
+	return { profile: profile, isLoading: query.status === "pending" };
 };

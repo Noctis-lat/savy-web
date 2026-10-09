@@ -2,22 +2,22 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 type ProfileStorage = {
-	profile: Profile | null;
-	setProfile: (profile: Profile | null) => void;
+	profile: Profile | undefined;
+	setProfile: (profile: Profile | undefined) => void;
 	clearProfile: () => void;
 };
 
 export const useProfileStorage = create<ProfileStorage>()(
 	persist(
 		(set) => ({
-			profile: null,
+			profile: undefined,
 
-			setProfile: (profile: Profile | null): void => {
+			setProfile: (profile: Profile | undefined): void => {
 				set({ profile });
 			},
 
 			clearProfile: (): void => {
-				set({ profile: null });
+				set({ profile: undefined });
 				useProfileStorage.persist.clearStorage();
 			},
 		}),
