@@ -19,7 +19,6 @@ export const createAccountSchema = z
 		creditLimit: z.number().optional(),
 		cutDay: z.number().optional(),
 		paymentDay: z.number().optional(),
-		noInterestMonths: z.number().optional(),
 		// LOAN only — money amounts in cents, startDate as yyyy-MM-dd
 		principal: z.number().optional(),
 		termMonths: z.number().optional(),
@@ -93,17 +92,6 @@ export const createAccountSchema = z
 						message: "Debe ser un día entre 1 y 31",
 					});
 				}
-			}
-
-			if (
-				data.noInterestMonths !== undefined &&
-				(!Number.isInteger(data.noInterestMonths) || data.noInterestMonths < 0)
-			) {
-				ctx.addIssue({
-					code: "custom",
-					path: ["noInterestMonths"],
-					message: "Debe ser un número entero mayor o igual a 0",
-				});
 			}
 		}
 

@@ -60,7 +60,6 @@ export const Filled: Story = {
 					cutDay: 15,
 					paymentDay: 25,
 					interestRate: 36.5,
-					noInterestMonths: 6,
 				}}
 			>
 				<Story />

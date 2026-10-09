@@ -1,5 +1,5 @@
 import { Eye, EyeOff } from "lucide-react";
-import { useRef, useState } from "react";
+import { useReducer, useRef, useState } from "react";
 import { Controller, type FieldPath, type FieldValues, type UseFormReturn } from "react-hook-form";
 
 import { InfoCard } from "@/components/design-system/patterns/data-display/info-card";
@@ -70,6 +70,9 @@ export const FormField = <T extends FieldValues>({
 }: FormFieldProps<T>): React.ReactElement => {
 	const [showPassword, setShowPassword] = useState<boolean>(false);
 	const rawRef = useRef<string>("");
+	// Raw text like "5." parses to the same number as "5", so field.onChange alone may not re-render
+	// and React would restore the stale controlled value — force a render whenever the raw text changes.
+	const [, forceRender] = useReducer((renderCount: number) => renderCount + 1, 0);
 
 	const isPassword = type === "password";
 	const isCurrency = type === "currency";
@@ -171,6 +174,24 @@ export const FormField = <T extends FieldValues>({
 									? formatPhoneDisplay(field.value ?? "")
 									: (field.value ?? "");
 
+					// Stores the raw percentage text, syncs the field value and keeps the caret before "%".
+					const commitPercentageRaw = (
+						input: HTMLInputElement,
+						raw: string,
+						caret: number,
+					): void => {
+						rawRef.current = raw;
+						forceRender();
+
+						const parsed = parseDisplayToNumber(raw) ?? undefined;
+						field.onChange(parsed);
+						applyRangeValidation(parsed);
+
+						requestAnimationFrame(() => {
+							input.setSelectionRange(caret, caret);
+						});
+					};
+
 					const currentNumericValue: number | undefined = isNumeric
 						? (field.value ?? undefined)
 						: undefined;
@@ -190,31 +211,19 @@ export const FormField = <T extends FieldValues>({
 											field.onChange(cents);
 										} else if (isPercentage) {
 											const input = e.target;
-											const cleaned = cleanNumberInput(input.value, PERCENTAGE_NUMBER_OPTIONS);
-											// Backspace right after the "%" suffix removes the suffix only — drop the last char instead.
-											const removedSuffix =
-												!input.value.endsWith("%") &&
-												rawRef.current !== "" &&
-												cleaned === rawRef.current;
 											const raw = limitFractionDigits(
-												removedSuffix ? cleaned.slice(0, -1) : cleaned,
+												cleanNumberInput(input.value, PERCENTAGE_NUMBER_OPTIONS),
 												PERCENTAGE_FRACTION_DIGITS,
 											);
-											rawRef.current = raw;
-
-											const parsed = parseDisplayToNumber(raw) ?? undefined;
-											field.onChange(parsed);
-											applyRangeValidation(parsed);
-
-											requestAnimationFrame(() => {
-												input.setSelectionRange(raw.length, raw.length);
-											});
+											const caret = Math.min(input.selectionStart ?? raw.length, raw.length);
+											commitPercentageRaw(input, raw, caret);
 										} else if (isNumber) {
 											const input = e.target;
 											const cursorBefore = input.selectionStart ?? 0;
 
 											const raw = cleanNumberInput(input.value, numberOptions);
 											rawRef.current = raw;
+											forceRender();
 
 											const formatted = formatNumberString(raw);
 											const newCursor = getNewCursorPosition(raw, formatted, cursorBefore);
@@ -243,6 +252,22 @@ export const FormField = <T extends FieldValues>({
 									}}
 									onKeyDown={(e) => {
 										if (!isNumeric) return;
+
+										if (isPercentage && e.key === "Backspace") {
+											const input = e.currentTarget;
+											const hasSelection = input.selectionStart !== input.selectionEnd;
+											const caretAfterSuffix =
+												input.selectionStart === input.value.length && input.value.endsWith("%");
+
+											// Native Backspace here would only delete the "%" suffix (which is re-rendered),
+											// so remove the last digit of the raw value instead.
+											if (!hasSelection && caretAfterSuffix) {
+												e.preventDefault();
+												const raw = rawRef.current.slice(0, -1);
+												commitPercentageRaw(input, raw, raw.length);
+											}
+											return;
+										}
 
 										const keyAllowsDecimals = isPercentage || allowDecimals;
 										const keyAllowsNegative = isNumber && allowNegative;

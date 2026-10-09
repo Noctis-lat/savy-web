@@ -61,11 +61,6 @@ describe("createAccountSchema", () => {
 			expect(getIssuePaths({ ...validCredit, interestRate: 100.5 })).toEqual(["interestRate"]);
 			expect(getIssuePaths({ ...validCredit, interestRate: -1 })).toEqual(["interestRate"]);
 		});
-
-		it("validates optional noInterestMonths as a non-negative integer", () => {
-			expect(getIssuePaths({ ...validCredit, noInterestMonths: 6 })).toEqual([]);
-			expect(getIssuePaths({ ...validCredit, noInterestMonths: -1 })).toEqual(["noInterestMonths"]);
-		});
 	});
 
 	describe("LOAN", () => {

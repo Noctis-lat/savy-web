@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { render, screen, waitFor } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type React from "react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -298,6 +298,67 @@ describe("CreateAccountSubmit", () => {
 		await waitFor(() =>
 			expect(screen.getByRole("button", { name: /guardar cuenta/i })).toBeEnabled(),
 		);
+	});
+
+	it("re-enables the button and calls no entity mutation when createAccount fails", async () => {
+		createAccountMutate.mockImplementation(
+			(_payload: CreateAccountPayload, options: MutateOptions<Account>) =>
+				options.onError?.(new Error("boom")),
+		);
+		const onSuccess = vi.fn();
+
+		renderSubmit(onSuccess);
+		await clickSubmit();
+
+		await waitFor(() =>
+			expect(screen.getByRole("button", { name: /guardar cuenta/i })).toBeEnabled(),
+		);
+		expect(createCreditCardMutate).not.toHaveBeenCalled();
+		expect(createLoanMutate).not.toHaveBeenCalled();
+		expect(createSavingsGoalMutate).not.toHaveBeenCalled();
+		expect(deleteAccountMutate).not.toHaveBeenCalled();
+		expect(onSuccess).not.toHaveBeenCalled();
+	});
+
+	it("reports pending to the parent while the chain runs and clears it when it settles", async () => {
+		let pendingOptions: MutateOptions<Account> | undefined;
+		createAccountMutate.mockImplementation(
+			(_payload: CreateAccountPayload, options: MutateOptions<Account>) => {
+				pendingOptions = options;
+			},
+		);
+		const onPendingChange = vi.fn();
+
+		render(
+			<FormWrapper defaultValues={CREDIT_VALUES}>
+				<CreateAccountSubmit onPendingChange={onPendingChange} />
+			</FormWrapper>,
+		);
+		await clickSubmit();
+
+		await waitFor(() => expect(onPendingChange).toHaveBeenLastCalledWith(true));
+		expect(screen.getByRole("button", { name: /guardando/i })).toBeDisabled();
+
+		act(() => pendingOptions?.onError?.(new Error("boom")));
+
+		await waitFor(() => expect(onPendingChange).toHaveBeenLastCalledWith(false));
+	});
+
+	it("clears the parent pending flag when unmounted mid-chain", async () => {
+		createAccountMutate.mockImplementation(() => undefined);
+		const onPendingChange = vi.fn();
+
+		const { unmount } = render(
+			<FormWrapper defaultValues={CREDIT_VALUES}>
+				<CreateAccountSubmit onPendingChange={onPendingChange} />
+			</FormWrapper>,
+		);
+		await clickSubmit();
+		await waitFor(() => expect(onPendingChange).toHaveBeenLastCalledWith(true));
+
+		unmount();
+
+		expect(onPendingChange).toHaveBeenLastCalledWith(false);
 	});
 
 	describe("SAVINGS", () => {

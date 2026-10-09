@@ -25,6 +25,7 @@ export const CreateAccount = ({
 	bankId,
 }: CreateAccountProps): React.ReactElement => {
 	const [open, setOpen] = useState<boolean>(false);
+	const [isSaving, setIsSaving] = useState<boolean>(false);
 
 	const createAccountDefaultValues: CreateAccountFormValues = {
 		...CREATE_ACCOUNT_DEFAULT_VALUES,
@@ -37,11 +38,21 @@ export const CreateAccount = ({
 		defaultValues: createAccountDefaultValues,
 	});
 
+	const closeModal = (): void => {
+		setOpen(false);
+		setIsSaving(false);
+		createAccountForm.reset(createAccountDefaultValues);
+	};
+
+	// User close requests are ignored while saving; success closes through `closeModal` directly
+	// because `isSaving` may still be true in the same tick the chain completes.
 	const handleOpenChange = (next: boolean): void => {
-		setOpen(next);
-		if (!next) {
-			createAccountForm.reset(createAccountDefaultValues);
+		if (next) {
+			setOpen(true);
+			return;
 		}
+		if (isSaving) return;
+		closeModal();
 	};
 
 	return (
@@ -53,8 +64,14 @@ export const CreateAccount = ({
 				openModal={open}
 				setOpenModal={handleOpenChange}
 				content={<CreateAccountForm />}
-				actions={<CreateAccountSubmit onSuccess={() => handleOpenChange(false)} />}
+				actions={
+					<CreateAccountSubmit
+						onSuccess={closeModal}
+						onPendingChange={setIsSaving}
+					/>
+				}
 				showCancel
+				closeDisabled={isSaving}
 			>
 				{mode === "icon" ? (
 					<Button

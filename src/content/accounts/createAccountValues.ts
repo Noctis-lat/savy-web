@@ -12,7 +12,6 @@ export const CREATE_ACCOUNT_DEFAULT_VALUES: CreateAccountFormValues = {
 	creditLimit: undefined,
 	cutDay: undefined,
 	paymentDay: undefined,
-	noInterestMonths: undefined,
 	principal: undefined,
 	termMonths: undefined,
 	monthlyPayment: undefined,
@@ -27,7 +26,6 @@ export const CREDIT_CARD_FIELDS = [
 	"creditLimit",
 	"cutDay",
 	"paymentDay",
-	"noInterestMonths",
 ] as const satisfies ReadonlyArray<keyof CreateAccountFormValues>;
 
 export const LOAN_FIELDS = [

@@ -1,6 +1,6 @@
 import { Save } from "lucide-react";
 import type React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { toast } from "sonner";
 import { Spinner } from "@/components/design-system/primitives/spinner";
@@ -18,10 +18,13 @@ import { buildSavingsGoalPayload } from "@/utils/accounts/buildSavingsGoalPayloa
 
 type CreateAccountSubmitProps = {
 	onSuccess?: () => void;
+	/** Reports whether the create chain is in progress. Pass a stable callback (e.g. a state setter). */
+	onPendingChange?: (isPending: boolean) => void;
 };
 
 export const CreateAccountSubmit = ({
 	onSuccess,
+	onPendingChange,
 }: CreateAccountSubmitProps): React.ReactElement => {
 	const createAccountForm = useFormContext<CreateAccountFormValues>();
 	const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -42,6 +45,13 @@ export const CreateAccountSubmit = ({
 		isCreatingLoan ||
 		isCreatingSavingsGoal ||
 		isRollingBack;
+
+	useEffect(() => {
+		onPendingChange?.(isPending);
+	}, [isPending, onPendingChange]);
+
+	// Never leave the parent stuck in "saving" if this component unmounts mid-chain.
+	useEffect(() => () => onPendingChange?.(false), [onPendingChange]);
 
 	const completeSubmit = (): void => {
 		setIsSubmitting(false);

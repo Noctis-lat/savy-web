@@ -45,29 +45,16 @@ export const CreditCardFields = (): React.ReactElement => {
 				/>
 			</div>
 
-			<div className="flex flex-row gap-3">
-				<FormField
-					name="interestRate"
-					form={createAccountForm}
-					type="percentage"
-					label="Tasa anual"
-					placeholder="36.5"
-					min={0}
-					max={100}
-					required
-					className="flex-1"
-				/>
-				<FormField
-					name="noInterestMonths"
-					form={createAccountForm}
-					type="number"
-					label="Meses sin intereses"
-					placeholder="0"
-					min={0}
-					optional
-					className="flex-1"
-				/>
-			</div>
+			<FormField
+				name="interestRate"
+				form={createAccountForm}
+				type="percentage"
+				label="Tasa anual"
+				placeholder="36.5"
+				min={0}
+				max={100}
+				required
+			/>
 		</div>
 	);
 };

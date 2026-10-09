@@ -30,6 +30,11 @@ type ModalProps = {
 	content: React.ReactElement;
 	actions?: React.ReactElement;
 	showCancel?: boolean;
+	/**
+	 * Blocks every close path (X button, Cancel, Escape, outside click) — e.g. while saving.
+	 * The parent can still close the modal programmatically through `openModal`.
+	 */
+	closeDisabled?: boolean;
 };
 
 const ICON_VARIANTS = {
@@ -53,25 +58,35 @@ export const Modal = ({
 	content,
 	actions,
 	showCancel = false,
+	closeDisabled = false,
 }: ModalProps): React.ReactElement => {
 	const [open, setOpen] = useState<boolean>(false);
 
 	const isControlled = openModal !== undefined && setOpenModal !== undefined;
 
-	const handleClose = () => {
-		if (isControlled) setOpenModal?.(false);
-		else setOpen(false);
+	const handleOpenChange = (next: boolean): void => {
+		if (!next && closeDisabled) return;
+		if (isControlled) setOpenModal?.(next);
+		else setOpen(next);
+	};
+
+	const handleClose = (): void => handleOpenChange(false);
+
+	const preventCloseWhenDisabled = (event: Event): void => {
+		if (closeDisabled) event.preventDefault();
 	};
 
 	return (
 		<Dialog
 			open={isControlled ? openModal : open}
-			onOpenChange={isControlled ? setOpenModal : setOpen}
+			onOpenChange={handleOpenChange}
 		>
 			{children && <DialogTrigger asChild>{children}</DialogTrigger>}
 
 			<DialogContent
-				showCloseButton={showClose}
+				showCloseButton={showClose && !closeDisabled}
+				onEscapeKeyDown={preventCloseWhenDisabled}
+				onInteractOutside={preventCloseWhenDisabled}
 				className={merge("sm:max-w-lg! p-0 overflow-hidden gap-0", className)}
 			>
 				<DialogHeader className="px-6 py-4 pb-3">
@@ -105,6 +120,7 @@ export const Modal = ({
 							<Button
 								variant="outline"
 								onClick={handleClose}
+								disabled={closeDisabled}
 							>
 								<Ban />
 								Cancelar
