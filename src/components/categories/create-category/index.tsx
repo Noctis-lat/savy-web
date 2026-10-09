@@ -9,6 +9,7 @@ import {
 	type CreateCategoryFormValues,
 	createCategorySchema,
 } from "@/schemas/categories/createCategorySchema";
+import { merge } from "@/utils/ui/mergeStyles";
 import { CreateCategoryForm } from "./components/create-category-form";
 import { CreateCategorySubmit } from "./components/create-category-submit";
 
@@ -16,6 +17,7 @@ type CreateCategoryProps = {
 	mode?: "button" | "icon" | "card" | "embedded";
 	size?: "default" | "icon" | "xs" | "sm" | "lg" | "icon-xs" | "icon-sm" | "icon-lg";
 	categoryType?: CategoryType;
+	className?: string;
 	onCreated?: (category: Category) => void;
 	onCancel?: () => void;
 };
@@ -26,6 +28,7 @@ export const CreateCategory = ({
 	categoryType,
 	onCreated,
 	onCancel,
+	className,
 }: CreateCategoryProps): React.ReactElement => {
 	const [open, setOpen] = useState<boolean>(false);
 
@@ -94,7 +97,7 @@ export const CreateCategory = ({
 						size="icon-sm"
 						onClick={() => setOpen(true)}
 						aria-label="Crear categoría"
-						className="text-primary hover:bg-primary/10"
+						className={merge("text-primary hover:bg-primary/10", className)}
 					>
 						<Plus className="size-4" />
 					</Button>
@@ -102,7 +105,10 @@ export const CreateCategory = ({
 					<button
 						type="button"
 						onClick={() => setOpen(true)}
-						className="flex aspect-16/10 w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-border/50 text-muted-foreground transition-colors hover:border-primary/30 hover:text-primary hover:bg-emerald-50/30"
+						className={merge(
+							"flex aspect-16/10 w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-border/50 text-muted-foreground transition-colors hover:border-primary/30 hover:text-primary hover:bg-emerald-50/30",
+							className,
+						)}
 					>
 						<FolderPlus className="size-6" />
 						<span className="text-sm">Agregar categoría</span>
@@ -111,6 +117,7 @@ export const CreateCategory = ({
 					<Button
 						onClick={() => setOpen(true)}
 						size={size}
+						className={merge("", className)}
 					>
 						<FolderPlus />
 						Crear categoría

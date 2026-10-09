@@ -119,7 +119,10 @@ export const FormField = <T extends FieldValues>({
 
 	return (
 		<div className={merge("flex flex-col gap-2", className)}>
-			<Label className="flex items-center justify-between px-1 pr-1">
+			<Label
+				htmlFor={name}
+				className="flex items-center justify-between px-1 pr-1"
+			>
 				<div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
 					<div className="flex items-center gap-2 min-w-0">
 						<span className="wrap-break-word">{label}</span>

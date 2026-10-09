@@ -39,7 +39,7 @@ type ProfileService = {
 type UpdateProfilePayload = {
 	firstName?: string;
 	lastName?: string;
-	secondLastName?: string;
+	secondLastName?: string | null;
 	avatarUrl?: string | null;
 	phone?: string | null;
 	currency?: string;

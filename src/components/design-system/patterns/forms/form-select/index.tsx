@@ -53,7 +53,10 @@ export const FormSelect = <T extends FieldValues>({
 
 	return (
 		<div className={merge("flex flex-col gap-2 w-full", className)}>
-			<Label className="flex items-center justify-between px-1 pr-1">
+			<Label
+				htmlFor={name}
+				className="flex items-center justify-between px-1 pr-1"
+			>
 				<div className="flex items-center flex-wrap gap-2">
 					{label}
 					{required && <span className="text-primary">*</span>}
@@ -82,7 +85,10 @@ export const FormSelect = <T extends FieldValues>({
 							if (!open) setSearch("");
 						}}
 					>
-						<SelectTrigger className="w-full bg-white h-8!">
+						<SelectTrigger
+							id={name}
+							className="w-full bg-white h-8!"
+						>
 							<SelectValue
 								className="bg-white"
 								placeholder={placeholder}

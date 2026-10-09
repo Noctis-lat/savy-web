@@ -1,9 +1,8 @@
-import { User } from "lucide-react";
 import type React from "react";
 import { useEffect } from "react";
 import { ROUTES } from "@/app/router/routes";
-import { Empty } from "@/components/design-system/patterns/feedback/empty";
 import { useRoutesController } from "@/storage/settings/routesController";
+import { ProfileContent } from "./components/profile-content";
 
 export const Profile = (): React.ReactElement => {
 	const { setBreadcrumbsConfig } = useRoutesController();
@@ -16,11 +15,5 @@ export const Profile = (): React.ReactElement => {
 		]);
 	}, [setBreadcrumbsConfig]);
 
-	return (
-		<Empty
-			icon={User}
-			title="Próximamente"
-			description="Esta sección está en desarrollo."
-		/>
-	);
+	return <ProfileContent />;
 };
