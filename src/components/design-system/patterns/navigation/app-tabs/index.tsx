@@ -51,9 +51,9 @@ export const AppTabs = <TData,>({
 						key={tab.value}
 						value={tab.value}
 						className={merge(
-							"",
+							"cursor-pointer!",
 							variant === "line" &&
-								"text-sm text-gray-400 data-[state=active]:text-primary data-[state=active]:shadow-none pb-5 after:bg-primary!",
+								"text-sm text-gray-400 data-[state=active]:text-primary data-[state=active]:shadow-none pb-5 after:bg-primary! cursor-pointer!",
 						)}
 					>
 						{Icon && <Icon />}
