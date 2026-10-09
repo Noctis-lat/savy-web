@@ -3,6 +3,7 @@ import type React from "react";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { CrossFade } from "@/components/design-system/patterns/animations/cross-fade";
+import { ScaleFadeIn } from "@/components/design-system/patterns/animations/scale-fade-in";
 import { GlassCard } from "@/components/design-system/patterns/glass-card";
 import { CardHeading } from "@/components/design-system/patterns/layouts/card-heading";
 import { PROFILE_SECTIONS } from "@/content/profile/profileSections";
@@ -53,35 +54,37 @@ export const ProfilePersonal = ({
 	};
 
 	return (
-		<div className="flex w-full flex-col gap-3">
-			<CardHeading
-				icon={PROFILE_SECTIONS.personal.icon}
-				title={PROFILE_SECTIONS.personal.title}
-				description={PROFILE_SECTIONS.personal.description}
-			/>
-			<GlassCard className="gap-6 p-6 md:p-8">
-				<CrossFade activeKey={isEditing ? "edit" : "view"}>
-					{isEditing ? (
-						<FormProvider {...profilePersonalForm}>
-							<form
-								noValidate
-								aria-label={`Editar ${PROFILE_SECTIONS.personal.title.toLowerCase()}`}
-								className="flex flex-col gap-6"
-								onSubmit={(event) => event.preventDefault()}
-								onKeyDown={handleKeyDown}
-							>
-								<ProfilePersonalForm />
-								<ProfilePersonalActions
-									onSuccess={onStopEditing}
-									onCancel={handleCancel}
-								/>
-							</form>
-						</FormProvider>
-					) : (
-						<ProfilePersonalView profile={profile} />
-					)}
-				</CrossFade>
-			</GlassCard>
-		</div>
+		<ScaleFadeIn>
+			<div className="flex w-full flex-col gap-3">
+				<CardHeading
+					icon={PROFILE_SECTIONS.personal.icon}
+					title={PROFILE_SECTIONS.personal.title}
+					description={PROFILE_SECTIONS.personal.description}
+				/>
+				<GlassCard className="gap-6 p-6 md:p-8">
+					<CrossFade activeKey={isEditing ? "edit" : "view"}>
+						{isEditing ? (
+							<FormProvider {...profilePersonalForm}>
+								<form
+									noValidate
+									aria-label={`Editar ${PROFILE_SECTIONS.personal.title.toLowerCase()}`}
+									className="flex flex-col gap-6"
+									onSubmit={(event) => event.preventDefault()}
+									onKeyDown={handleKeyDown}
+								>
+									<ProfilePersonalForm />
+									<ProfilePersonalActions
+										onSuccess={onStopEditing}
+										onCancel={handleCancel}
+									/>
+								</form>
+							</FormProvider>
+						) : (
+							<ProfilePersonalView profile={profile} />
+						)}
+					</CrossFade>
+				</GlassCard>
+			</div>
+		</ScaleFadeIn>
 	);
 };
