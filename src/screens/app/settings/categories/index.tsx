@@ -49,7 +49,7 @@ export const Categories = (): React.ReactElement => {
 					onClick={() => setIsEditing(!isEditing)}
 				>
 					<PenLine />
-					Editar
+					{isEditing ? "Dejar de editar" : "Editar categorías"}
 				</Button>
 			</div>
 			<div className="grid grid-cols-4 gap-4">

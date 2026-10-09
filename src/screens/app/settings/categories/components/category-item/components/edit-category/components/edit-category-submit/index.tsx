@@ -4,20 +4,23 @@ import { useFormContext } from "react-hook-form";
 import { toast } from "sonner";
 import { Spinner } from "@/components/design-system/primitives/spinner";
 import { Button } from "@/components/ui/button";
-import { useUpdateCategory } from "@/hooks/categories/useUpdateCategory";
+import type { useUpdateCategory } from "@/hooks/categories/useUpdateCategory";
 import type { UpdateCategoryFormValues } from "@/schemas/categories/updateCategorySchema";
 
 type EditCategorySubmitProps = {
 	categoryId: string;
+	updateCategory: ReturnType<typeof useUpdateCategory>["mutate"];
+	isPending: boolean;
 	onSuccess?: () => void;
 };
 
 export const EditCategorySubmit = ({
 	categoryId,
+	updateCategory,
+	isPending,
 	onSuccess,
 }: EditCategorySubmitProps): React.ReactElement => {
 	const editCategoryForm = useFormContext<UpdateCategoryFormValues>();
-	const { mutate: updateCategory, isPending } = useUpdateCategory();
 
 	const onSubmit = (values: UpdateCategoryFormValues): void => {
 		updateCategory(

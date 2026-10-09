@@ -11,14 +11,11 @@ type RemoveCategoryProps = {
 };
 
 export const RemoveCategory = ({ category }: RemoveCategoryProps): React.ReactElement => {
-	const { mutate: deleteCategory, isPending } = useDeleteCategory();
+	const { mutateAsync: deleteCategory, isPending } = useDeleteCategory();
 
-	const handleConfirm = (): void => {
-		deleteCategory(category.id, {
-			onSuccess: () => {
-				toast.success("Categoría eliminada");
-			},
-		});
+	const handleConfirm = async (): Promise<void> => {
+		await deleteCategory(category.id);
+		toast.success("Categoría eliminada");
 	};
 
 	return (

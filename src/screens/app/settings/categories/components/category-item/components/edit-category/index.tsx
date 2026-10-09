@@ -6,6 +6,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { ScaleFadeIn } from "@/components/design-system/patterns/animations/scale-fade-in";
 import { Modal } from "@/components/design-system/primitives/modal";
 import { Button } from "@/components/ui/button";
+import { useUpdateCategory } from "@/hooks/categories/useUpdateCategory";
 import {
 	type UpdateCategoryFormValues,
 	updateCategorySchema,
@@ -19,6 +20,7 @@ type EditCategoryProps = {
 
 export const EditCategory = ({ category }: EditCategoryProps): React.ReactElement => {
 	const [open, setOpen] = useState<boolean>(false);
+	const { mutate: updateCategory, isPending } = useUpdateCategory();
 
 	const editCategoryForm = useForm<UpdateCategoryFormValues>({
 		resolver: zodResolver(updateCategorySchema),
@@ -31,6 +33,7 @@ export const EditCategory = ({ category }: EditCategoryProps): React.ReactElemen
 	});
 
 	const handleOpenChange = (next: boolean): void => {
+		if (isPending && !next) return;
 		setOpen(next);
 		if (!next) {
 			editCategoryForm.reset({
@@ -49,10 +52,13 @@ export const EditCategory = ({ category }: EditCategoryProps): React.ReactElemen
 				description="Modifica la información de tu categoría."
 				openModal={open}
 				setOpenModal={handleOpenChange}
+				closeDisabled={isPending}
 				content={<EditCategoryForm />}
 				actions={
 					<EditCategorySubmit
 						categoryId={category.id}
+						updateCategory={updateCategory}
+						isPending={isPending}
 						onSuccess={() => handleOpenChange(false)}
 					/>
 				}

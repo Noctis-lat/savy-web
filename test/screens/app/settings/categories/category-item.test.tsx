@@ -19,12 +19,14 @@ type MutateOptions<TData> = {
 
 const updateCategoryMutate = vi.fn();
 const deleteCategoryMutate = vi.fn();
+const deleteCategoryMutateAsync = vi.fn();
 
 const mockMutationHook = <THook extends (...args: never[]) => unknown>(
 	hook: THook,
 	mutate: ReturnType<typeof vi.fn>,
+	extras?: Record<string, unknown>,
 ): void => {
-	vi.mocked(hook).mockReturnValue({ mutate, isPending: false } as ReturnType<THook>);
+	vi.mocked(hook).mockReturnValue({ mutate, isPending: false, ...extras } as ReturnType<THook>);
 };
 
 describe("CategoryItem", () => {
@@ -42,9 +44,12 @@ describe("CategoryItem", () => {
 		deleteCategoryMutate.mockImplementation((_id: string, options: MutateOptions<void>) =>
 			options.onSuccess?.(undefined),
 		);
+		deleteCategoryMutateAsync.mockResolvedValue(undefined);
 
 		mockMutationHook(useUpdateCategory, updateCategoryMutate);
-		mockMutationHook(useDeleteCategory, deleteCategoryMutate);
+		mockMutationHook(useDeleteCategory, deleteCategoryMutate, {
+			mutateAsync: deleteCategoryMutateAsync,
+		});
 	});
 
 	it("renders the category name and type badge", () => {
@@ -115,8 +120,8 @@ describe("CategoryItem", () => {
 		const confirmButton = await screen.findByRole("button", { name: /^eliminar$/i });
 		await userEvent.click(confirmButton);
 
-		await waitFor(() => expect(deleteCategoryMutate).toHaveBeenCalledTimes(1));
-		expect(deleteCategoryMutate.mock.calls[0][0]).toBe("category-1");
+		await waitFor(() => expect(deleteCategoryMutateAsync).toHaveBeenCalledTimes(1));
+		expect(deleteCategoryMutateAsync.mock.calls[0][0]).toBe("category-1");
 		expect(toast.success).toHaveBeenCalledWith("Categoría eliminada");
 	});
 
