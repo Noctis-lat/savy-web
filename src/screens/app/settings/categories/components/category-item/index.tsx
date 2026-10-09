@@ -18,7 +18,7 @@ export const CategoryItem = ({ category, isEditing }: CategoryItemProps): React.
 				<div className="flex flex-row items-center gap-2 p-4">
 					<DynamicIcon
 						name={(category.icon as IconName) || "copy"}
-						className="h-5 w-5 text-emerald-600"
+						className="h-5 w-5 text-primary"
 					/>
 					<h3 className="text-sm font-medium text-foreground select-none">{category.name}</h3>
 				</div>
@@ -32,8 +32,8 @@ export const CategoryItem = ({ category, isEditing }: CategoryItemProps): React.
 
 				{isEditing && (
 					<>
-						<EditCategory />
-						<RemoveCategory />
+						<EditCategory category={category} />
+						<RemoveCategory category={category} />
 					</>
 				)}
 			</GlassCard>

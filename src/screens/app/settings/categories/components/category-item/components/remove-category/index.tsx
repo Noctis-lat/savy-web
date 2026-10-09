@@ -1,18 +1,45 @@
 import { Trash2 } from "lucide-react";
 import type React from "react";
+import { toast } from "sonner";
 import { ScaleFadeIn } from "@/components/design-system/patterns/animations/scale-fade-in";
+import { ConfirmDialog } from "@/components/design-system/primitives/confirm-dialog";
 import { Button } from "@/components/ui/button";
+import { useDeleteCategory } from "@/hooks/categories/useDeleteCategory";
 
-export const RemoveCategory = (): React.ReactElement => {
+type RemoveCategoryProps = {
+	category: Category;
+};
+
+export const RemoveCategory = ({ category }: RemoveCategoryProps): React.ReactElement => {
+	const { mutate: deleteCategory, isPending } = useDeleteCategory();
+
+	const handleConfirm = (): void => {
+		deleteCategory(category.id, {
+			onSuccess: () => {
+				toast.success("Categoría eliminada");
+			},
+		});
+	};
+
 	return (
-		<ScaleFadeIn className="absolute -top-3 right-3 ">
-			<Button
-				className="rounded-full"
+		<ScaleFadeIn className="absolute -top-3 right-3">
+			<ConfirmDialog
+				title="Eliminar categoría"
+				description={`¿Seguro que quieres eliminar "${category.name}"? Esta acción no se puede deshacer.`}
+				confirmText="Eliminar"
 				variant="destructive"
-				size="icon-sm"
+				onConfirm={handleConfirm}
+				loading={isPending}
 			>
-				<Trash2 />
-			</Button>
+				<Button
+					className="rounded-full"
+					variant="destructive"
+					size="icon-sm"
+					aria-label="Eliminar categoría"
+				>
+					<Trash2 />
+				</Button>
+			</ConfirmDialog>
 		</ScaleFadeIn>
 	);
 };
