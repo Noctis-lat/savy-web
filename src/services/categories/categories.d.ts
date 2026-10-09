@@ -12,8 +12,6 @@ type Category = {
 	color: string | null;
 	icon: string | null;
 	createdAt: string;
-	amount?: number;
-	percentage?: number;
 };
 
 type TopCategory = {

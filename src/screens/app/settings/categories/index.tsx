@@ -1,15 +1,17 @@
-import { FolderOpen } from "lucide-react";
+import { FolderOpen, PenLine } from "lucide-react";
 import type React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ROUTES } from "@/app/router/routes";
 import { CreateCategory } from "@/components/categories/create-category";
 import { Empty } from "@/components/design-system/patterns/feedback/empty";
+import { Button } from "@/components/ui/button";
 import { useQueryCategories } from "@/hooks/categories/useQueryCategories";
 import { useRoutesController } from "@/storage/settings/routesController";
 import { CategoriesHeader } from "./components/categories-header";
 import { CategoryItem } from "./components/category-item";
 
 export const Categories = (): React.ReactElement => {
+	const [isEditing, setIsEditing] = useState<boolean>(false);
 	const { setBreadcrumbsConfig } = useRoutesController();
 
 	useEffect(() => {
@@ -40,19 +42,29 @@ export const Categories = (): React.ReactElement => {
 		<div className="flex flex-col gap-4 py-4">
 			<div className="flex flex-row items-center justify-between">
 				<CategoriesHeader categoriesLength={categories.length} />
+
+				<Button
+					variant="outline"
+					size="sm"
+					onClick={() => setIsEditing(!isEditing)}
+				>
+					<PenLine />
+					Editar
+				</Button>
 			</div>
 			<div className="grid grid-cols-4 gap-4">
 				{categories.map((category) => {
 					return (
 						<CategoryItem
 							category={category}
+							isEditing={isEditing}
 							key={category.id}
 						/>
 					);
 				})}
 				<CreateCategory
 					mode="card"
-					className="h-30"
+					className="h-20 flex-row"
 				/>
 			</div>
 		</div>
