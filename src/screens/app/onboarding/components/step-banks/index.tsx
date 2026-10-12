@@ -10,8 +10,6 @@ import { useQueryAccounts } from "@/hooks/accounts/useQueryAccounts";
 import { useCreateBank } from "@/hooks/banks/useCreateBank";
 import { useDeleteBank } from "@/hooks/banks/useDeleteBank";
 import { useQueryBanks } from "@/hooks/banks/useQueryBanks";
-import { useCreateCreditCard } from "@/hooks/credit-cards/useCreateCreditCard";
-import { useCreateLoan } from "@/hooks/loans/useCreateLoan";
 import type { AccountFormValues } from "@/schemas/onboarding/accountSchema";
 import type { BankFormValues } from "@/schemas/onboarding/bankSchema";
 import { useOnboardingController } from "@/storage/onboarding/onboardingController";
@@ -32,8 +30,6 @@ export const StepBanks = (): React.ReactElement => {
 
 	const createBank = useCreateBank();
 	const createAccount = useCreateAccount();
-	const createCreditCard = useCreateCreditCard();
-	const createLoan = useCreateLoan();
 	const deleteBank = useDeleteBank();
 	const deleteAccount = useDeleteAccount();
 
@@ -58,11 +54,7 @@ export const StepBanks = (): React.ReactElement => {
 		}
 	}, [createdAccounts.length, queryAccounts.accounts]);
 
-	const isPending =
-		createBank.isPending ||
-		createAccount.isPending ||
-		createCreditCard.isPending ||
-		createLoan.isPending;
+	const isPending = createBank.isPending || createAccount.isPending;
 	const isDeleting = deleteBank.isPending || deleteAccount.isPending;
 	const isBusy = isPending || isDeleting;
 
@@ -116,29 +108,6 @@ export const StepBanks = (): React.ReactElement => {
 		try {
 			const account = await createAccount.mutateAsync(values);
 			useOnboardingController.getState().addCreatedAccount(account);
-
-			// Create the associated financial entity for CREDIT/LOAN accounts.
-			if (values.type === "CREDIT" && values.creditLimit !== undefined) {
-				await createCreditCard.mutateAsync({
-					accountId: account.id,
-					creditLimit: values.creditLimit,
-					cutDay: values.cutDay ?? 1,
-					paymentDay: values.paymentDay ?? 1,
-					interestRate: values.interestRate ?? 0,
-				});
-			}
-
-			if (values.type === "LOAN" && values.principal !== undefined) {
-				await createLoan.mutateAsync({
-					accountId: account.id,
-					principal: values.principal,
-					interestRate: values.interestRate ?? 0,
-					termMonths: values.termMonths ?? 1,
-					startDate: new Date().toISOString(),
-					monthlyPayment: values.monthlyPayment ?? 0,
-				});
-			}
-
 			setShowForm(false);
 		} catch {
 			// onError in the mutation already toasts the error.

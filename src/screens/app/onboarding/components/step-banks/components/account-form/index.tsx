@@ -8,6 +8,10 @@ import { Button } from "@/components/ui/button";
 import { ACCOUNT_TYPE_OPTIONS } from "@/content/banks/bankContent";
 import { type AccountFormValues, accountSchema } from "@/schemas/onboarding/accountSchema";
 
+const ONBOARDING_ACCOUNT_TYPE_OPTIONS = ACCOUNT_TYPE_OPTIONS.filter(
+	(option) => option.value === "DEBIT" || option.value === "CASH",
+);
+
 type AccountFormProps = {
 	onSave: (values: AccountFormValues) => void | Promise<void>;
 	onCancel: () => void;
@@ -35,8 +39,6 @@ export const AccountForm = ({
 
 	const accountType = form.watch("type");
 	const isCash = accountType === "CASH";
-	const isCredit = accountType === "CREDIT";
-	const isLoan = accountType === "LOAN";
 
 	const handleSave = form.handleSubmit(async (values) => {
 		const payload: AccountFormValues = isCash ? { ...values, bankId: null } : values;
@@ -65,7 +67,7 @@ export const AccountForm = ({
 				name="type"
 				form={form}
 				label="Tipo de cuenta"
-				options={ACCOUNT_TYPE_OPTIONS}
+				options={ONBOARDING_ACCOUNT_TYPE_OPTIONS}
 				required
 			/>
 
@@ -92,111 +94,10 @@ export const AccountForm = ({
 				name="balance"
 				form={form}
 				type="currency"
-				label={isLoan ? "Saldo restante" : "Saldo inicial"}
+				label="Saldo inicial"
 				placeholder="0"
-				helperText={
-					isLoan
-						? "Monto restante del préstamo."
-						: isCredit
-							? "Deuda actual de la tarjeta."
-							: "Saldo actual de la cuenta."
-				}
+				helperText="Saldo actual de la cuenta."
 			/>
-
-			{/* Credit card fields */}
-			{isCredit && (
-				<>
-					<div className="flex flex-col gap-1">
-						<p className="text-xs font-medium text-muted-foreground">Datos de la tarjeta</p>
-					</div>
-					<FormField
-						name="creditLimit"
-						form={form}
-						type="currency"
-						label="Límite de crédito"
-						placeholder="0"
-						required
-						helperText="Monto máximo disponible en la tarjeta."
-					/>
-					<div className="flex flex-row gap-3">
-						<FormField
-							name="cutDay"
-							form={form}
-							type="number"
-							label="Día de corte"
-							placeholder="15"
-							min={1}
-							max={31}
-							required
-						/>
-						<FormField
-							name="paymentDay"
-							form={form}
-							type="number"
-							label="Día de pago"
-							placeholder="25"
-							min={1}
-							max={31}
-							required
-						/>
-					</div>
-					<FormField
-						name="interestRate"
-						form={form}
-						type="percentage"
-						label="Tasa de interés anual"
-						placeholder="36"
-						required
-						helperText="Tasa de interés anual (ej. 36%)."
-					/>
-				</>
-			)}
-
-			{/* Loan fields */}
-			{isLoan && (
-				<>
-					<div className="flex flex-col gap-1">
-						<p className="text-xs font-medium text-muted-foreground">Datos del préstamo</p>
-					</div>
-					<FormField
-						name="principal"
-						form={form}
-						type="currency"
-						label="Monto del préstamo"
-						placeholder="0"
-						required
-						helperText="Monto original del préstamo."
-					/>
-					<div className="flex flex-row gap-3">
-						<FormField
-							name="termMonths"
-							form={form}
-							type="number"
-							label="Plazo (meses)"
-							placeholder="36"
-							min={1}
-							required
-						/>
-						<FormField
-							name="monthlyPayment"
-							form={form}
-							type="currency"
-							label="Pago mensual"
-							placeholder="0"
-							required
-						/>
-					</div>
-					<FormField
-						name="interestRate"
-						form={form}
-						type="percentage"
-						label="Tasa de interés anual"
-						placeholder="15"
-						required
-						helperText="Tasa de interés anual (ej. 15%)."
-					/>
-				</>
-			)}
 
 			<div className="flex flex-row gap-2">
 				<Button
