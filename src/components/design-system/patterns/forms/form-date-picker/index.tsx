@@ -136,7 +136,7 @@ export const FormDatePicker = <T extends FieldValues>({
 								<PopoverTrigger asChild>
 									<Button
 										variant="outline"
-										className="justify-between w-full h-8 text-xs/relaxed font-normal"
+										className="justify-between w-full h-9 text-xs/relaxed font-normal"
 										disabled={disabled}
 									>
 										<span className={date ? "" : "text-muted-foreground"}>

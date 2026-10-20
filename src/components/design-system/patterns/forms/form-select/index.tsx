@@ -87,7 +87,7 @@ export const FormSelect = <T extends FieldValues>({
 					>
 						<SelectTrigger
 							id={name}
-							className="w-full bg-white h-8!"
+							className="w-full bg-white h-9! border border-gray-200!"
 						>
 							<SelectValue
 								className="bg-white"

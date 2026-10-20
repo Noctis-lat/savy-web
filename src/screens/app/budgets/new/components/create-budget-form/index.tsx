@@ -2,6 +2,7 @@ import { Info, Tags, Wallet } from "lucide-react";
 import type React from "react";
 import { useEffect, useMemo } from "react";
 import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
+import { SectionCard } from "@/components/design-system/patterns/data-display/section-card";
 import { FormDatePicker } from "@/components/design-system/patterns/forms/form-date-picker";
 import { FormField } from "@/components/design-system/patterns/forms/form-field";
 import { FormSelect } from "@/components/design-system/patterns/forms/form-select";
@@ -65,76 +66,72 @@ export const CreateBudgetForm = (): React.ReactElement => {
 	};
 
 	return (
-		<div className="flex flex-col gap-10">
-			<section
-				id="general"
-				className="flex flex-col gap-4"
+		<div className="flex flex-col gap-4">
+			<SectionCard
+				title="Información general"
+				description="Define el nombre, tipo y periodo de tu presupuesto"
+				icon={Info}
+				className="border border-gray-200"
 			>
-				<div className="flex items-center gap-2">
-					<Info className="size-4 text-primary" />
-					<h2 className="text-sm font-semibold text-foreground">Información general</h2>
-				</div>
-
-				<FormField
-					name="name"
-					form={createBudgetForm}
-					label="Nombre del presupuesto"
-					placeholder="Ej. Gastos del mes, Viaje de vacaciones..."
-					required
-				/>
-
-				<div className="flex flex-row gap-4">
-					<FormSelect
-						name="kind"
+				<div className="flex flex-col gap-4 pb-2">
+					<FormField
+						name="name"
 						form={createBudgetForm}
-						label="Tipo de presupuesto"
-						options={BUDGET_KIND_FORM_OPTIONS}
-						placeholder="Selecciona un tipo"
-						required
-						className="flex-1"
-					/>
-				</div>
-
-				{isRecurring && (
-					<FormSelect
-						name="period"
-						form={createBudgetForm}
-						label="Periodo"
-						options={BUDGET_PERIOD_FORM_OPTIONS}
-						placeholder="Selecciona un periodo"
+						label="Nombre del presupuesto"
+						placeholder="Ej. Gastos del mes, Viaje de vacaciones..."
 						required
 					/>
-				)}
 
-				<FormDatePicker
-					mode="single"
-					name="startDate"
-					form={createBudgetForm}
-					label="Fecha de inicio"
-					required
-				/>
+					<div className="flex flex-row gap-4">
+						<FormSelect
+							name="kind"
+							form={createBudgetForm}
+							label="Tipo de presupuesto"
+							options={BUDGET_KIND_FORM_OPTIONS}
+							placeholder="Selecciona un tipo"
+							required
+							className="flex-1"
+						/>
+					</div>
 
-				{isOneTime && (
+					{isRecurring && (
+						<FormSelect
+							name="period"
+							form={createBudgetForm}
+							label="Periodo"
+							options={BUDGET_PERIOD_FORM_OPTIONS}
+							placeholder="Selecciona un periodo"
+							required
+						/>
+					)}
+
 					<FormDatePicker
 						mode="single"
-						name="endDate"
+						name="startDate"
 						form={createBudgetForm}
-						label="Fecha de fin"
+						label="Fecha de inicio"
 						required
-						helperText="Debe ser posterior a la fecha de inicio"
 					/>
-				)}
-			</section>
 
-			<section
-				id="items"
-				className="flex flex-col gap-4"
-			>
-				<div className="flex items-center gap-2">
-					<Tags className="size-4 text-primary" />
-					<h2 className="text-sm font-semibold text-foreground">Categorías y montos</h2>
+					{isOneTime && (
+						<FormDatePicker
+							mode="single"
+							name="endDate"
+							form={createBudgetForm}
+							label="Fecha de fin"
+							required
+							helperText="Debe ser posterior a la fecha de inicio"
+						/>
+					)}
 				</div>
+			</SectionCard>
 
+			<SectionCard
+				title="Categorías y montos"
+				description="Selecciona las categorías que deseas incluir en tu presupuesto y define los montos"
+				icon={Tags}
+				className="border border-gray-200"
+			>
 				<div className="rounded-lg border border-border/60 p-4">
 					<div className="mb-3 flex items-center gap-2">
 						<Wallet className="size-4 text-muted-foreground" />
@@ -153,7 +150,7 @@ export const CreateBudgetForm = (): React.ReactElement => {
 					onRemoveItem={handleRemoveItem}
 					categoriesById={categoriesById}
 				/>
-			</section>
+			</SectionCard>
 		</div>
 	);
 };

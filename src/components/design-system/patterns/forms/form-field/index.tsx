@@ -205,6 +205,7 @@ export const FormField = <T extends FieldValues>({
 							<div className="relative">
 								<Input
 									id={name}
+									className="border border-gray-200!"
 									type={inputType}
 									placeholder={placeholder}
 									value={displayValue}
