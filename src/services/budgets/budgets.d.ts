@@ -10,9 +10,9 @@ type Budget = {
 	profileId: string;
 	name: string;
 	kind: BudgetKind;
-	period: BudgetPeriod;
+	period: BudgetPeriod | null;
 	startDate: string;
-	endDate: string;
+	endDate: string | null;
 	isActive: boolean;
 	items: BudgetItem[];
 	createdAt: string;
@@ -27,39 +27,115 @@ type BudgetItem = {
 	category: Pick<Category, "id" | "name" | "type">;
 	createdAt: string;
 	updatedAt: string;
-}
+};
 
 type BudgetsInfo = {
 	totalExpenses: number;
 	totalIncomes: number;
-}
+};
 
 //* ====================== SERVICE =========================
 
 type BudgetService = {
-	getBudgets: (params?: getBudgetsParams) => Promise<getBudgetsResponse>;
+	getBudgets: (params?: BudgetParams) => Promise<GetBudgetsResponse>;
 	getBudget: (id: string) => Promise<Budget>;
 	createBudget: (payload: CreateBudgetPayload) => Promise<Budget>;
 	updateBudget: (id: string, payload: UpdateBudgetPayload) => Promise<Budget>;
 	deleteBudget: (id: string) => Promise<void>;
 	getBudgetProgress: (id: string) => Promise<BudgetProgress>;
+	getBudgetHistory: (id: string) => Promise<BudgetHistory[]>;
 };
 
 //* ====================== GET BUDGETS =========================
 
-type getBudgetsParams = {
+type BudgetParams = {
 	isActive?: boolean;
 	kind?: BudgetKind;
 	period?: BudgetPeriod;
 	sortBy?: "name" | "startDate" | "createdAt";
 	order?: "asc" | "desc";
-}
+	page?: number;
+	perPage?: number;
+};
 
-type getBudgetsResponse = {
+type GetBudgetsResponse = {
 	budgets: Budget[];
 	info: BudgetsInfo;
 	page: number;
 	perPage: number;
 	total: number;
 	totalPages: number;
-}
+};
+
+//* ====================== CREATE BUDGET =========================
+
+type BudgetItemPayload = {
+	categoryId: string;
+	amount: number;
+};
+
+type CreateBudgetPayload = {
+	name: string;
+	kind: BudgetKind;
+	period?: BudgetPeriod;
+	startDate: string;
+	endDate?: string;
+	items: BudgetItemPayload[];
+};
+
+//* ====================== UPDATE BUDGET =========================
+
+type UpdateBudgetPayload = {
+	name?: string;
+	kind?: BudgetKind;
+	period?: BudgetPeriod | null;
+	startDate?: string;
+	endDate?: string | null;
+	isActive?: boolean;
+	items?: BudgetItemPayload[];
+};
+
+//* ====================== GET BUDGET PROGRESS =========================
+
+type BudgetProgress = {
+	id: string;
+	name: string;
+	kind: BudgetKind;
+	period: BudgetPeriod | null;
+	periodStart: string;
+	periodEnd: string;
+	totalPlanned: number;
+	totalSpent: number;
+	totalRemaining: number;
+	totalPercentage: number;
+	items: BudgetItemProgress[];
+};
+
+type BudgetItemProgress = {
+	categoryId: string;
+	categoryName: string;
+	categoryType: CategoryType;
+	plannedAmount: number;
+	spentAmount: number;
+	remaining: number;
+	percentage: number;
+};
+
+//* ====================== GET BUDGET HISTORY =========================
+
+type BudgetHistory = {
+	id: string;
+	periodStart: string;
+	periodEnd: string;
+	totalPlanned: number;
+	totalSpent: number;
+	items: BudgetHistoryItem[];
+	createdAt: string;
+};
+
+type BudgetHistoryItem = {
+	budgetItemId: string;
+	categoryId: string;
+	plannedAmount: number;
+	spentAmount: number;
+};

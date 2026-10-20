@@ -1,10 +1,39 @@
 import { httpClient, unwrap } from "../http-client";
 
 export const budgetService: BudgetService = {
-	getBudgets: async (params?: getBudgetsParams): Promise<getBudgetsResponse> => {
-		const response = await httpClient.get<APIResponse<getBudgetsResponse>>("/budgets", {
+	getBudgets: async (params?: BudgetParams): Promise<GetBudgetsResponse> => {
+		const response = await httpClient.get<APIResponse<GetBudgetsResponse>>("/budgets", {
 			params,
 		});
-		return unwrap<getBudgetsResponse>(response);
+		return unwrap<GetBudgetsResponse>(response);
+	},
+
+	getBudget: async (id: string): Promise<Budget> => {
+		const response = await httpClient.get<APIResponse<Budget>>(`/budgets/${id}`);
+		return unwrap<Budget>(response);
+	},
+
+	createBudget: async (payload: CreateBudgetPayload): Promise<Budget> => {
+		const response = await httpClient.post<APIResponse<Budget>>("/budgets", payload);
+		return unwrap<Budget>(response);
+	},
+
+	updateBudget: async (id: string, payload: UpdateBudgetPayload): Promise<Budget> => {
+		const response = await httpClient.patch<APIResponse<Budget>>(`/budgets/${id}`, payload);
+		return unwrap<Budget>(response);
+	},
+
+	deleteBudget: async (id: string): Promise<void> => {
+		await httpClient.delete(`/budgets/${id}`);
+	},
+
+	getBudgetProgress: async (id: string): Promise<BudgetProgress> => {
+		const response = await httpClient.get<APIResponse<BudgetProgress>>(`/budgets/${id}/progress`);
+		return unwrap<BudgetProgress>(response);
+	},
+
+	getBudgetHistory: async (id: string): Promise<BudgetHistory[]> => {
+		const response = await httpClient.get<APIResponse<BudgetHistory[]>>(`/budgets/${id}/history`);
+		return unwrap<BudgetHistory[]>(response);
 	},
 };
