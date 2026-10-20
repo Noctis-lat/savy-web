@@ -12,6 +12,8 @@ type IncomeSource = {
 	frequency: IncomeSourceFrequency;
 	paydays: number[];
 	destinationAccountId: string;
+	categoryId?: string;
+	category: Pick<Category, "id" | "name" | "type"> | undefined;
 	isActive: boolean;
 	createdAt: string;
 	updatedAt: string;
@@ -48,6 +50,7 @@ type CreateIncomeSourcePayload = {
 	frequency: IncomeSourceFrequency;
 	paydays: number[];
 	destinationAccountId: string;
+	categoryId?: string;
 };
 
 type UpdateIncomeSourcePayload = Partial<CreateIncomeSourcePayload>;
