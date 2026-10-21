@@ -15,8 +15,7 @@ import { useBudgetsController } from "@/storage/budgets/budgetsController";
 
 export const BudgetsFilters = (): React.ReactElement => {
 	const budgetsFilters = useBudgetsController((state) => state.budgetsFilters);
-	const searchQuery = useBudgetsController((state) => state.searchQuery);
-	const setSearchQuery = useBudgetsController((state) => state.setSearchQuery);
+	const setSearch = useBudgetsController((state) => state.setSearch);
 	const setIsActive = useBudgetsController((state) => state.setIsActive);
 	const setKind = useBudgetsController((state) => state.setKind);
 	const setPeriod = useBudgetsController((state) => state.setPeriod);
@@ -25,6 +24,7 @@ export const BudgetsFilters = (): React.ReactElement => {
 	const resetFilters = useBudgetsController((state) => state.resetFilters);
 
 	const activeOnly = budgetsFilters.isActive === true;
+	const search = budgetsFilters.search ?? undefined;
 	const showingAll = !activeOnly;
 	const hasKindFilter = budgetsFilters.kind !== undefined;
 	const hasPeriodFilter = budgetsFilters.period !== undefined;
@@ -38,9 +38,9 @@ export const BudgetsFilters = (): React.ReactElement => {
 
 	const handleSearchCommit = useCallback(
 		(value: string | undefined): void => {
-			setSearchQuery(value ?? "");
+			setSearch(value ?? "");
 		},
-		[setSearchQuery],
+		[setSearch],
 	);
 
 	const handleKindChange = (value: string): void => {
@@ -62,7 +62,7 @@ export const BudgetsFilters = (): React.ReactElement => {
 	return (
 		<div className="flex items-center justify-between gap-3">
 			<SearchInput
-				value={searchQuery || undefined}
+				value={search || undefined}
 				onCommit={handleSearchCommit}
 				placeholder="Buscar presupuesto..."
 			/>

@@ -2,9 +2,8 @@ import { create } from "zustand";
 
 type BudgetsController = {
 	budgetsFilters: BudgetParams;
-	searchQuery: string;
 
-	setSearchQuery: (query: string) => void;
+	setSearch: (searchValue: string) => void;
 	setIsActive: (activeOnly: boolean) => void;
 	setKind: (kind: BudgetKind | undefined) => void;
 	setPeriod: (period: BudgetPeriod | undefined) => void;
@@ -19,6 +18,7 @@ const DEFAULT_FILTERS: BudgetParams = {
 	isActive: true,
 	kind: undefined,
 	period: undefined,
+	search: undefined,
 	sortBy: "name",
 	order: "asc",
 	page: 1,
@@ -27,10 +27,15 @@ const DEFAULT_FILTERS: BudgetParams = {
 
 export const useBudgetsController = create<BudgetsController>()((set) => ({
 	budgetsFilters: { ...DEFAULT_FILTERS },
-	searchQuery: "",
 
-	setSearchQuery: (query) => {
-		set({ searchQuery: query });
+	setSearch: (searchValue) => {
+		set((state) => ({
+			budgetsFilters: {
+				...state.budgetsFilters,
+				search: searchValue || undefined,
+				page: 1,
+			},
+		}));
 	},
 
 	setIsActive: (activeOnly) => {
@@ -103,6 +108,6 @@ export const useBudgetsController = create<BudgetsController>()((set) => ({
 	},
 
 	resetFilters: () => {
-		set({ budgetsFilters: { ...DEFAULT_FILTERS }, searchQuery: "" });
+		set({ budgetsFilters: { ...DEFAULT_FILTERS } });
 	},
 }));
