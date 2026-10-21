@@ -61,6 +61,7 @@ type BudgetParams = {
 	order?: "asc" | "desc";
 	page?: number;
 	perPage?: number;
+	search?: string;
 };
 
 type GetBudgetsResponse = {
