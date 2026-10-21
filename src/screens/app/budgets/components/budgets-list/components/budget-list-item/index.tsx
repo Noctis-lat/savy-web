@@ -1,9 +1,10 @@
-import { Dot } from "lucide-react";
+import { ChevronRight, Dot } from "lucide-react";
 import { DynamicIcon, type IconName } from "lucide-react/dynamic";
 import type React from "react";
 import { useNavigate } from "react-router";
 import { ROUTES } from "@/app/router/routes";
 import { Progress } from "@/components/ui/progress";
+import { PRIMARY_FALLBACK } from "@/content/app/common";
 import { getBudgetKindLabel } from "@/utils/budgets/getBudgetKindLabel";
 import { getBudgetPeriodLabel } from "@/utils/budgets/getBudgetPeriodLabel";
 import { getBudgetUsageVariant } from "@/utils/budgets/getBudgetUsageVariant";
@@ -15,8 +16,6 @@ import { merge } from "@/utils/ui/mergeStyles";
 type BudgetListItemProps = {
 	budget: Budget;
 };
-
-const PRIMARY_FALLBACK = "oklch(0.511 0.096 186.391)";
 
 export const BudgetListItem = ({ budget }: BudgetListItemProps): React.ReactElement => {
 	const navigate = useNavigate();
@@ -39,7 +38,7 @@ export const BudgetListItem = ({ budget }: BudgetListItemProps): React.ReactElem
 			type="button"
 			onClick={() => navigate(detailRoute)}
 			className={merge(
-				"relative flex w-full items-center gap-3 overflow-hidden border-b border-border/30 px-4 py-3 text-left transition-all last:border-b-0 cursor-pointer",
+				"relative flex w-full items-center gap-3 overflow-hidden border-b border-border/30 px-4 py-3 text-left transition-all last:border-b-0 cursor-pointer hover:brightness-115",
 				!budget.isActive && "opacity-60",
 			)}
 			style={gradientStyle}
@@ -116,6 +115,7 @@ export const BudgetListItem = ({ budget }: BudgetListItemProps): React.ReactElem
 					</span>
 				)}
 			</div>
+			<ChevronRight className="size-4 shrink-0 text-muted-foreground" />
 		</button>
 	);
 };

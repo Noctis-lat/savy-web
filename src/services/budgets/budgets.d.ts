@@ -2,6 +2,7 @@
 
 type BudgetPeriod = "WEEKLY" | "BIWEEKLY" | "MONTHLY" | "YEARLY";
 type BudgetKind = "RECURRING" | "ONE_TIME";
+type BudgetTransactionsSortBy = "date" | "amount" | "createdAt";
 
 //* ====================== ENTITY =========================
 
@@ -49,6 +50,10 @@ type BudgetService = {
 	deleteBudget: (id: string) => Promise<void>;
 	getBudgetProgress: (id: string) => Promise<BudgetProgress>;
 	getBudgetHistory: (id: string) => Promise<BudgetHistory[]>;
+	getBudgetTransactions: (
+		id: string,
+		params?: BudgetTransactionsParams,
+	) => Promise<GetBudgetTransactionsResponse>;
 };
 
 //* ====================== GET BUDGETS =========================
@@ -144,4 +149,26 @@ type BudgetHistoryItem = {
 	categoryId: string;
 	plannedAmount: number;
 	spentAmount: number;
+};
+
+//* ====================== GET BUDGET TRANSACTIONS =========================
+
+type BudgetTransactionsParams = {
+	type?: TransactionType;
+	categoryId?: string;
+	search?: string;
+	from?: string;
+	to?: string;
+	page?: number;
+	limit?: number;
+	sortBy?: BudgetTransactionsSortBy;
+	order?: "asc" | "desc";
+};
+
+type GetBudgetTransactionsResponse = {
+	data: Transaction[];
+	page: number;
+	limit: number;
+	total: number;
+	totalPages: number;
 };

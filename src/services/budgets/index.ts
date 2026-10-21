@@ -36,4 +36,15 @@ export const budgetService: BudgetService = {
 		const response = await httpClient.get<APIResponse<BudgetHistory[]>>(`/budgets/${id}/history`);
 		return unwrap<BudgetHistory[]>(response);
 	},
+
+	getBudgetTransactions: async (
+		id: string,
+		params?: BudgetTransactionsParams,
+	): Promise<GetBudgetTransactionsResponse> => {
+		const response = await httpClient.get<APIResponse<GetBudgetTransactionsResponse>>(
+			`/budgets/${id}/transactions`,
+			{ params },
+		);
+		return unwrap<GetBudgetTransactionsResponse>(response);
+	},
 };
