@@ -27,7 +27,7 @@ export const BudgetItemsList = ({
 
 	if (fields.length === 0) {
 		return (
-			<div className="flex flex-col items-center gap-2 rounded-lg border border-dashed border-border/50 py-10 text-center">
+			<div className="flex flex-col flex-1 items-center gap-2 rounded-lg border border-dashed border-border/50 py-10 text-center">
 				<Plus className="size-6 text-muted-foreground" />
 				<p className="text-sm text-muted-foreground">Agrega categorías para presupuestar</p>
 			</div>
@@ -35,7 +35,7 @@ export const BudgetItemsList = ({
 	}
 
 	return (
-		<div className="flex flex-col gap-3">
+		<div className="flex flex-col gap-3 flex-1">
 			<div className="flex flex-col gap-2">
 				{fields.map((field, index) => {
 					const category = categoriesById.get(field.categoryId);

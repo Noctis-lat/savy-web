@@ -33,12 +33,12 @@ export const BudgetCategoryPicker = ({
 	return (
 		<div className="flex flex-col gap-3">
 			<div className="relative">
-				<Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+				<Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-gray-600" />
 				<Input
 					value={search}
 					onChange={(event) => setSearch(event.target.value)}
 					placeholder="Buscar categoría..."
-					className="h-9 pl-9"
+					className="h-9 pl-9 border border-gray-200!"
 					aria-label="Buscar categoría"
 				/>
 			</div>
@@ -48,14 +48,14 @@ export const BudgetCategoryPicker = ({
 					<Spinner size={20} />
 				</div>
 			) : grouped.income.length === 0 && grouped.expense.length === 0 ? (
-				<div className="flex flex-col items-center gap-2 py-8 text-center">
-					<Tag className="size-6 text-muted-foreground" />
+				<div className="flex flex-row items-center justify-center gap-2 py-8 text-center">
+					<Tag className="size-4 text-muted-foreground" />
 					<p className="text-sm text-muted-foreground">
 						{search ? "Sin resultados" : "No hay categorías disponibles"}
 					</p>
 				</div>
 			) : (
-				<div className="flex max-h-72 flex-col gap-4 overflow-y-auto">
+				<div className="flex h-72 flex-col gap-4 overflow-y-auto">
 					{grouped.income.length > 0 && (
 						<CategoryGroup
 							label="Ingresos"

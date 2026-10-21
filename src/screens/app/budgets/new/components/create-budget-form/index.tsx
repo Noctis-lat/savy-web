@@ -2,6 +2,7 @@ import { Info, Tags, Wallet } from "lucide-react";
 import type React from "react";
 import { useEffect, useMemo } from "react";
 import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
+import { CreateCategory } from "@/components/categories/create-category";
 import { SectionCard } from "@/components/design-system/patterns/data-display/section-card";
 import { FormDatePicker } from "@/components/design-system/patterns/forms/form-date-picker";
 import { FormField } from "@/components/design-system/patterns/forms/form-field";
@@ -131,25 +132,29 @@ export const CreateBudgetForm = (): React.ReactElement => {
 				description="Selecciona las categorías que deseas incluir en tu presupuesto y define los montos"
 				icon={Tags}
 				className="border border-gray-200"
+				action={<CreateCategory mode="icon" />}
 			>
-				<div className="rounded-lg border border-border/60 p-4">
-					<div className="mb-3 flex items-center gap-2">
-						<Wallet className="size-4 text-muted-foreground" />
-						<span className="text-sm font-medium text-foreground">Selecciona categorías</span>
+				<div className="flex flex-row gap-4 flex-1">
+					<div className="rounded-lg border border-gray-300/70 p-4 w-sm">
+						<div className="mb-2 flex items-center gap-2">
+							<Wallet className="size-4 text-primary" />
+							<span className="text-sm font-medium text-foreground">Selecciona categorías</span>
+						</div>
+
+						<BudgetCategoryPicker
+							categories={categories}
+							isLoading={isLoading}
+							selectedCategoryIds={selectedCategoryIds}
+							onAddCategory={handleAddCategory}
+						/>
 					</div>
-					<BudgetCategoryPicker
-						categories={categories}
-						isLoading={isLoading}
-						selectedCategoryIds={selectedCategoryIds}
-						onAddCategory={handleAddCategory}
+
+					<BudgetItemsList
+						fields={fields}
+						onRemoveItem={handleRemoveItem}
+						categoriesById={categoriesById}
 					/>
 				</div>
-
-				<BudgetItemsList
-					fields={fields}
-					onRemoveItem={handleRemoveItem}
-					categoriesById={categoriesById}
-				/>
 			</SectionCard>
 		</div>
 	);
