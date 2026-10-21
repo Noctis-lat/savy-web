@@ -1,12 +1,15 @@
 import { Dot } from "lucide-react";
 import { DynamicIcon, type IconName } from "lucide-react/dynamic";
 import type React from "react";
+import { useNavigate } from "react-router";
+import { ROUTES } from "@/app/router/routes";
 import { Progress } from "@/components/ui/progress";
 import { getBudgetKindLabel } from "@/utils/budgets/getBudgetKindLabel";
 import { getBudgetPeriodLabel } from "@/utils/budgets/getBudgetPeriodLabel";
 import { getBudgetUsageVariant } from "@/utils/budgets/getBudgetUsageVariant";
 import { formatCurrency } from "@/utils/formatters/formatCurrency";
 import { formatDateRange } from "@/utils/formatters/formatDate";
+import { buildRoute } from "@/utils/routing/buildRoute";
 import { merge } from "@/utils/ui/mergeStyles";
 
 type BudgetListItemProps = {
@@ -16,6 +19,7 @@ type BudgetListItemProps = {
 const PRIMARY_FALLBACK = "oklch(0.511 0.096 186.391)";
 
 export const BudgetListItem = ({ budget }: BudgetListItemProps): React.ReactElement => {
+	const navigate = useNavigate();
 	const budgetColor = budget.color || PRIMARY_FALLBACK;
 	const periodLabel = getBudgetPeriodLabel(budget.period);
 	const itemsCount = budget.items.length;
@@ -28,10 +32,14 @@ export const BudgetListItem = ({ budget }: BudgetListItemProps): React.ReactElem
 		background: `linear-gradient(135deg, color-mix(in oklch, ${budgetColor} 12%, transparent) 0%, color-mix(in oklch, ${budgetColor} 5%, transparent) 60%, transparent 100%)`,
 	};
 
+	const detailRoute = buildRoute(ROUTES.APP.BUDGETS.DETAIL, { budget_id: budget.id });
+
 	return (
-		<div
+		<button
+			type="button"
+			onClick={() => navigate(detailRoute)}
 			className={merge(
-				"relative flex w-full items-center gap-3 overflow-hidden border-b border-border/30 px-4 py-3 text-left transition-all last:border-b-0",
+				"relative flex w-full items-center gap-3 overflow-hidden border-b border-border/30 px-4 py-3 text-left transition-all last:border-b-0 cursor-pointer",
 				!budget.isActive && "opacity-60",
 			)}
 			style={gradientStyle}
@@ -108,6 +116,6 @@ export const BudgetListItem = ({ budget }: BudgetListItemProps): React.ReactElem
 					</span>
 				)}
 			</div>
-		</div>
+		</button>
 	);
 };

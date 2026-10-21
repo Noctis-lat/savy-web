@@ -28,10 +28,12 @@ export const ROUTES = {
 		TRANSACTIONS: "/app/transactions",
 		BUDGETS: {
 			ROOT: "/app/budgets",
+			DETAIL: "/app/budgets/:budget_id",
 			NEW: "/app/budgets/new",
 		},
 		GOALS: {
 			ROOT: "/app/goals",
+			DETAIL: "/app/goals/:goal_id",
 			NEW: "/app/goals/new",
 		},
 		SUBSCRIPTIONS: {
