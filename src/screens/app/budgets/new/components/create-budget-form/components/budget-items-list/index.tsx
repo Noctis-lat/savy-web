@@ -1,7 +1,9 @@
 import { Plus, Trash2 } from "lucide-react";
 import { DynamicIcon, type IconName } from "lucide-react/dynamic";
 import type React from "react";
-import { Controller, useFormContext } from "react-hook-form";
+import { useMemo } from "react";
+import { Controller, useFormContext, useWatch } from "react-hook-form";
+import { Alert } from "@/components/design-system/primitives/alert";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import type { CreateBudgetFormValues } from "@/schemas/budgets/createBudgetSchema";
@@ -22,8 +24,30 @@ export const BudgetItemsList = ({
 	const createBudgetForm = useFormContext<CreateBudgetFormValues>();
 	const { control } = createBudgetForm;
 
+	const watchedItems = useWatch({ control, name: "items" });
 	const itemsError = createBudgetForm.formState.errors.items;
-	const total = fields.reduce((sum, field) => sum + (field.amount ?? 0), 0);
+
+	const { totalExpense, totalIncome, balance } = useMemo(() => {
+		let income = 0;
+		let expense = 0;
+
+		for (let index = 0; index < fields.length; index++) {
+			const amount = watchedItems?.[index]?.amount ?? fields[index]?.amount ?? 0;
+			const category = categoriesById.get(fields[index]?.categoryId);
+
+			if (category?.type === "INCOME") {
+				income += amount;
+			} else {
+				expense += amount;
+			}
+		}
+
+		return {
+			totalExpense: expense,
+			totalIncome: income,
+			balance: income - expense,
+		};
+	}, [watchedItems, fields, categoriesById]);
 
 	if (fields.length === 0) {
 		return (
@@ -35,8 +59,8 @@ export const BudgetItemsList = ({
 	}
 
 	return (
-		<div className="flex flex-col gap-3 flex-1">
-			<div className="flex flex-col gap-2">
+		<div className="flex flex-col justify-between gap-3 flex-1 border border-gray-300/70 rounded-lg">
+			<div className="flex flex-col gap-2 h-82 overflow-y-auto p-3">
 				{fields.map((field, index) => {
 					const category = categoriesById.get(field.categoryId);
 					const itemError = createBudgetForm.formState.errors.items?.[index]?.amount;
@@ -92,14 +116,14 @@ export const BudgetItemsList = ({
 										/>
 									)}
 								/>
-								{itemError && (
+								{itemError?.message ? (
 									<span
 										role="alert"
 										className="text-xs text-red-500"
 									>
 										{String(itemError.message)}
 									</span>
-								)}
+								) : null}
 							</div>
 
 							<button
@@ -115,18 +139,55 @@ export const BudgetItemsList = ({
 				})}
 			</div>
 
-			{itemsError && (
+			{itemsError?.message ? (
 				<span
 					role="alert"
 					className="text-sm text-red-500"
 				>
 					{String(itemsError.message)}
 				</span>
-			)}
+			) : null}
 
-			<div className="flex flex-row items-center justify-between rounded-lg bg-muted/50 px-4 py-3">
-				<span className="text-sm font-medium text-muted-foreground">Total presupuestado</span>
-				<span className="text-sm font-semibold text-foreground">{formatCurrency(total)}</span>
+			<div className="grid grid-cols-3 gap-4 border-t border-gray-300/70 p-3">
+				{totalIncome > 0 && (
+					<Alert
+						variant="success"
+						title="Total de ingresos"
+					>
+						{formatCurrency(totalIncome)}
+					</Alert>
+				)}
+
+				{totalExpense > 0 && (
+					<Alert
+						variant="destructive"
+						title="Total de gastos"
+					>
+						{formatCurrency(totalExpense)}
+					</Alert>
+				)}
+
+				<Alert
+					variant={balance > 0 ? "success" : balance < 0 ? "destructive" : "default"}
+					title={
+						balance > 0
+							? "Dinero libre"
+							: balance < 0
+								? "Por encima de tus ingresos"
+								: "Presupuesto equilibrado"
+					}
+					className={
+						totalExpense === 0 && totalIncome === 0
+							? "col-span-3"
+							: totalExpense > 0 && totalIncome > 0
+								? "col-span-1"
+								: "col-span-2"
+					}
+				>
+					{balance >= 0
+						? `${formatCurrency(balance)} después de gastos`
+						: `${formatCurrency(Math.abs(balance))} por encima de tus ingresos`}
+				</Alert>
 			</div>
 		</div>
 	);

@@ -11,8 +11,32 @@ function toValidDate(value: DateInput): Date | null {
 	return isValid(date) ? date : null;
 }
 
+/**
+ * Parses an ISO date string as a local date, ignoring the UTC timezone offset.
+ * Use this for date-only fields (startDate, endDate) where the API sends
+ * "2026-10-01T00:00:00.000Z" but we want to display October 1st regardless
+ * of the user's timezone.
+ */
+function parseDateAsLocal(value: string): Date | null {
+	const [datePart] = value.split("T");
+	if (!datePart) return null;
+
+	const [year, month, day] = datePart.split("-").map(Number);
+	if (!year || !month || !day) return null;
+
+	const date = new Date(year, month - 1, day);
+	return isValid(date) ? date : null;
+}
+
+function toValidLocalDate(value: DateInput): Date | null {
+	if (!value) return null;
+	if (value instanceof Date) return isValid(value) ? value : null;
+
+	return parseDateAsLocal(value);
+}
+
 export function formatDate(value: DateInput): string {
-	const parsed = toValidDate(value);
+	const parsed = toValidLocalDate(value);
 
 	if (!parsed) return "-";
 
@@ -20,7 +44,7 @@ export function formatDate(value: DateInput): string {
 }
 
 export function toDateOnly(value: DateInput): string {
-	const parsed = toValidDate(value);
+	const parsed = toValidLocalDate(value);
 
 	if (!parsed) return "";
 
@@ -57,7 +81,7 @@ export function formatTime(value: DateInput): string {
 }
 
 export function formatShortDate(value: string): string {
-	const date = parseISO(value);
-	if (!isValid(date)) return "-";
-	return format(date, "d MMM", { locale: es });
+	const parsed = toValidLocalDate(value);
+	if (!parsed) return "-";
+	return format(parsed, "d MMM", { locale: es });
 }
