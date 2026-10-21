@@ -30,6 +30,7 @@ export const ROUTES = {
 			ROOT: "/app/budgets",
 			DETAIL: "/app/budgets/:budget_id",
 			NEW: "/app/budgets/new",
+			EDIT: "/app/budgets/:budget_id/edit",
 		},
 		GOALS: {
 			ROOT: "/app/goals",

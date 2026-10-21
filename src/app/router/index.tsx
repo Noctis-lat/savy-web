@@ -104,6 +104,13 @@ export const router = createBrowserRouter([
 									})),
 							},
 							{
+								path: ROUTES.APP.BUDGETS.EDIT,
+								lazy: () =>
+									import("@/screens/app/budgets/edit").then((m) => ({
+										Component: m.BudgetEdit,
+									})),
+							},
+							{
 								path: ROUTES.APP.GOALS.ROOT,
 								lazy: () => import("@/screens/app/goals").then((m) => ({ Component: m.Goals })),
 							},
