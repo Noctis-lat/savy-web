@@ -14,9 +14,14 @@ type Budget = {
 	startDate: string;
 	endDate: string | null;
 	isActive: boolean;
-	items: BudgetItem[];
 	createdAt: string;
 	updatedAt: string;
+	items: BudgetItem[];
+	totalExpenses: number;
+	periodExpenses: number;
+	percentage: number;
+	icon: string;
+	color: string;
 };
 
 type BudgetItem = {
