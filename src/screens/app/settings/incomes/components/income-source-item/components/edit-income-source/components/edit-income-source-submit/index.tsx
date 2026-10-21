@@ -6,6 +6,7 @@ import { Spinner } from "@/components/design-system/primitives/spinner";
 import { Button } from "@/components/ui/button";
 import type { useUpdateIncomeSource } from "@/hooks/income-sources/useUpdateIncomeSource";
 import type { UpdateIncomeSourceFormValues } from "@/schemas/income-sources/updateIncomeSourceSchema";
+import { buildIncomeSourcePayload } from "@/utils/income-sources/buildIncomeSourcePayload";
 
 type EditIncomeSourceSubmitProps = {
 	incomeSourceId: string;
@@ -24,7 +25,7 @@ export const EditIncomeSourceSubmit = ({
 
 	const onSubmit = (values: UpdateIncomeSourceFormValues): void => {
 		updateIncomeSource(
-			{ id: incomeSourceId, payload: values },
+			{ id: incomeSourceId, payload: buildIncomeSourcePayload(values) },
 			{
 				onSuccess: () => {
 					toast.success("Fuente de ingreso actualizada");

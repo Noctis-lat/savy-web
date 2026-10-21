@@ -13,6 +13,7 @@ export const updateIncomeSourceSchema = z
 		}),
 		paydays: z.array(z.number().int()),
 		destinationAccountId: z.string().min(1, "Selecciona una cuenta"),
+		categoryId: z.string().optional(),
 	})
 	.superRefine((values, context) => {
 		const paydaysError = getPaydaysError(values.frequency, values.paydays);

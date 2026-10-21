@@ -1,4 +1,4 @@
-import { CalendarDays, Landmark } from "lucide-react";
+import { CalendarDays, Landmark, Tag } from "lucide-react";
 import type React from "react";
 import { ScaleFadeIn } from "@/components/design-system/patterns/animations/scale-fade-in";
 import { GlassCard } from "@/components/design-system/patterns/glass-card";
@@ -70,6 +70,12 @@ export const IncomeSourceItem = ({
 						<Landmark className="size-3.5 shrink-0" />
 						{destinationAccountName}
 					</span>
+					{incomeSource.category && (
+						<span className="flex flex-row items-center gap-1.5">
+							<Tag className="size-3.5 shrink-0" />
+							{incomeSource.category.name}
+						</span>
+					)}
 				</div>
 
 				{isEditing && (

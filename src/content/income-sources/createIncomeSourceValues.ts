@@ -6,4 +6,5 @@ export const CREATE_INCOME_SOURCE_DEFAULT_VALUES: CreateIncomeSourceFormValues =
 	frequency: "MONTHLY",
 	paydays: [],
 	destinationAccountId: "",
+	categoryId: undefined,
 };

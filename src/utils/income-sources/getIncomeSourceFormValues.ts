@@ -9,4 +9,5 @@ export const getIncomeSourceFormValues = (
 	frequency: incomeSource.frequency,
 	paydays: [...incomeSource.paydays].sort((prev, next) => prev - next),
 	destinationAccountId: incomeSource.destinationAccountId,
+	categoryId: incomeSource.categoryId ?? incomeSource.category?.id ?? undefined,
 });

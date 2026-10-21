@@ -6,6 +6,7 @@ import { Spinner } from "@/components/design-system/primitives/spinner";
 import { Button } from "@/components/ui/button";
 import type { useCreateIncomeSource } from "@/hooks/income-sources/useCreateIncomeSource";
 import type { CreateIncomeSourceFormValues } from "@/schemas/income-sources/createIncomeSourceSchema";
+import { buildIncomeSourcePayload } from "@/utils/income-sources/buildIncomeSourcePayload";
 
 type CreateIncomeSourceSubmitProps = {
 	createIncomeSource: ReturnType<typeof useCreateIncomeSource>["mutate"];
@@ -21,7 +22,7 @@ export const CreateIncomeSourceSubmit = ({
 	const createIncomeSourceForm = useFormContext<CreateIncomeSourceFormValues>();
 
 	const onSubmit = (values: CreateIncomeSourceFormValues): void => {
-		createIncomeSource(values, {
+		createIncomeSource(buildIncomeSourcePayload(values), {
 			onSuccess: (createdIncomeSource) => {
 				toast.success("Fuente de ingreso creada");
 				onCreated?.(createdIncomeSource);
