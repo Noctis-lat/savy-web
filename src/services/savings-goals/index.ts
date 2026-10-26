@@ -1,11 +1,11 @@
 import { httpClient, unwrap } from "../http-client";
 
 export const savingsGoalService: SavingsGoalService = {
-	getSavingsGoals: async (params?: SavingsGoalParams): Promise<SavingsGoal[]> => {
-		const response = await httpClient.get<APIResponse<SavingsGoal[]>>("/savings-goals", {
+	getSavingsGoals: async (params?: SavingsGoalParams): Promise<SavingsGoalsResponse> => {
+		const response = await httpClient.get<APIResponse<SavingsGoalsResponse>>("/savings-goals", {
 			params,
 		});
-		return unwrap<SavingsGoal[]>(response);
+		return unwrap<SavingsGoalsResponse>(response);
 	},
 
 	getSavingsGoal: async (id: string): Promise<SavingsGoal> => {
