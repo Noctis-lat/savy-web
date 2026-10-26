@@ -10,11 +10,13 @@ import { FormSelect } from "@/components/design-system/patterns/forms/form-selec
 import { FormTextarea } from "@/components/design-system/patterns/forms/form-textarea";
 import { Button } from "@/components/ui/button";
 import { TRANSACTION_TYPE_OPTIONS } from "@/content/transactions/transactionOptions";
+import { useQueryAccount } from "@/hooks/accounts/useQueryAccount";
 import { useQueryAccounts } from "@/hooks/accounts/useQueryAccounts";
 import { useQueryCategories } from "@/hooks/categories/useQueryCategories";
 import type { CreateTransactionFormValues } from "@/schemas/transactions/createTransactionSchema";
 import { formatAccountOptions } from "@/utils/accounts/formatAccountOptions";
 import { formatCategoryOptions } from "@/utils/categories/formatCategoryOptions";
+import { formatCurrency } from "@/utils/formatters/formatCurrency";
 
 type CreateTransactionFormProps = {
 	preselectedAccountId?: string;
@@ -69,6 +71,8 @@ export const CreateTransactionForm = ({
 			? "Sin categorías"
 			: "Selecciona una categoría";
 
+	const { account: selectedAccount, isLoading } = useQueryAccount(selectedAccountId);
+
 	return (
 		<div className="flex flex-col gap-4 max-h-170 overflow-y-auto">
 			<FormSelect
@@ -80,18 +84,25 @@ export const CreateTransactionForm = ({
 				required
 			/>
 
-			<FormAsyncSelect
-				name="accountId"
-				form={createTransactionForm}
-				label={showDestinationAccount ? "Cuenta origen" : "Cuenta"}
-				options={accountOptions}
-				isLoading={isLoadingAccounts}
-				onSearch={setAccountSearch}
-				placeholder="Selecciona una cuenta"
-				searchPlaceholder="Buscar cuenta..."
-				required
-				disabled={!!preselectedAccountId}
-			/>
+			<div>
+				<FormAsyncSelect
+					name="accountId"
+					form={createTransactionForm}
+					label={showDestinationAccount ? "Cuenta origen" : "Cuenta"}
+					options={accountOptions}
+					isLoading={isLoadingAccounts}
+					onSearch={setAccountSearch}
+					placeholder="Selecciona una cuenta"
+					searchPlaceholder="Buscar cuenta..."
+					required
+					disabled={!!preselectedAccountId}
+					helperText={
+						isLoading
+							? "Cargando informacion..."
+							: `Saldo disponible: ${formatCurrency(selectedAccount?.balance ?? 0)}`
+					}
+				/>
+			</div>
 
 			{showDestinationAccount && (
 				<FormAsyncSelect
