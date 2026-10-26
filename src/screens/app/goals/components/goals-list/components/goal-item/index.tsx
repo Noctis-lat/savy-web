@@ -74,7 +74,7 @@ export const GoalItem = ({ goal }: GoalItemProps): React.ReactElement => {
 				)}
 			</div>
 
-			<div className="flex w-40 shrink-0 flex-col gap-1.5 sm:w-56">
+			<div className="flex w-40 shrink-0 flex-col gap-1.5 sm:w-150">
 				{goal.targetAmount > 0 ? (
 					<div className="flex flex-col gap-2">
 						<div className="flex items-baseline justify-between gap-2">
