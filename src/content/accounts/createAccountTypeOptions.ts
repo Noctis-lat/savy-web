@@ -13,3 +13,11 @@ export const CREATE_ACCOUNT_TYPE_OPTIONS: Array<{
 	...ACCOUNT_TYPE_OPTIONS,
 	{ label: "Ahorro", value: "SAVINGS", description: "Cuenta de ahorro con meta" },
 ];
+
+export const CREATE_ACCOUNT_TRIGGER_LABELS: Record<CreateAccountFormValues["type"], string> = {
+	DEBIT: "Crear cuenta de débito",
+	CASH: "Crear cuenta de efectivo",
+	CREDIT: "Crear tarjeta de crédito",
+	LOAN: "Crear préstamo",
+	SAVINGS: "Crear meta de ahorro",
+};

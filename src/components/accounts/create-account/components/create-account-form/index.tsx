@@ -20,7 +20,11 @@ import { CreditCardFields } from "./components/credit-card-fields";
 import { LoanFields } from "./components/loan-fields";
 import { SavingsFields } from "./components/savings-fields";
 
-export const CreateAccountForm = (): React.ReactElement => {
+export const CreateAccountForm = ({
+	isTypeLocked = false,
+}: {
+	isTypeLocked?: boolean;
+}): React.ReactElement => {
 	const createAccountForm = useFormContext<CreateAccountFormValues>();
 	const { control, setValue, clearErrors } = createAccountForm;
 	const { banks } = useQueryBanks({ isActive: true, sortBy: "name", order: "asc" });
@@ -82,6 +86,7 @@ export const CreateAccountForm = (): React.ReactElement => {
 					}))}
 					placeholder="Selecciona un tipo"
 					required
+					disabled={isTypeLocked}
 					className="min-w-0 flex-1"
 				/>
 

@@ -67,32 +67,36 @@ export const GoalItem = ({ goal }: GoalItemProps): React.ReactElement => {
 						</Badge>
 					)}
 				</div>
-				<div className="flex flex-row items-center gap-2 text-muted-foreground">
-					<span className="text-xs tabular-nums">
-						{formatCurrency(goal.currentAmount)} de {formatCurrency(goal.targetAmount)}
+				{goal.deadline && (
+					<span className="text-xs tabular-nums text-muted-foreground">
+						{formatDate(goal.deadline)}
 					</span>
-					{goal.deadline && (
-						<span className="text-xs tabular-nums">· {formatDate(goal.deadline)}</span>
-					)}
-				</div>
+				)}
 			</div>
 
-			<div className="flex w-32 shrink-0 flex-col gap-1.5 sm:w-40">
-				<div className="flex items-baseline justify-between gap-1">
-					<span
-						className={merge(
-							"text-xs font-medium tabular-nums",
-							isComplete ? "text-primary" : "text-muted-foreground",
-						)}
-					>
-						{percentage}%
-					</span>
-				</div>
-				<Progress
-					value={percentage}
-					aria-label={`${percentage}% de la meta alcanzada`}
-					className={merge("h-2", isComplete && "[&_[data-slot=progress-indicator]]:bg-primary")}
-				/>
+			<div className="flex w-40 shrink-0 flex-col gap-1.5 sm:w-56">
+				{goal.targetAmount > 0 ? (
+					<div className="flex flex-col gap-2">
+						<div className="flex items-baseline justify-between gap-2">
+							<span className="truncate text-xs tabular-nums text-muted-foreground">
+								{formatCurrency(goal.currentAmount)} de {formatCurrency(goal.targetAmount)}
+							</span>
+							<span className={merge("shrink-0 text-xs font-medium tabular-nums text-primary")}>
+								{percentage}%
+							</span>
+						</div>
+						<Progress
+							value={percentage}
+							aria-label={`${percentage}% de la meta alcanzada`}
+							className={merge(
+								"h-2",
+								isComplete && "[&_[data-slot=progress-indicator]]:bg-primary",
+							)}
+						/>
+					</div>
+				) : (
+					<span className="text-right text-xs text-muted-foreground">Sin meta definida</span>
+				)}
 			</div>
 
 			<ChevronRight className="size-4 shrink-0 text-muted-foreground" />

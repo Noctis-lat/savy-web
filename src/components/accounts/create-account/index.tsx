@@ -5,6 +5,7 @@ import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { Modal } from "@/components/design-system/primitives/modal";
 import { Button } from "@/components/ui/button";
+import { CREATE_ACCOUNT_TRIGGER_LABELS } from "@/content/accounts/createAccountTypeOptions";
 import { CREATE_ACCOUNT_DEFAULT_VALUES } from "@/content/accounts/createAccountValues";
 import {
 	type CreateAccountFormValues,
@@ -17,19 +18,25 @@ type CreateAccountProps = {
 	mode?: "button" | "icon" | "card";
 	size?: "default" | "icon" | "xs" | "sm" | "lg" | "icon-xs" | "icon-sm" | "icon-lg";
 	bankId?: string;
+	type?: CreateAccountFormValues["type"];
 };
 
 export const CreateAccount = ({
 	mode = "button",
 	size = "default",
 	bankId,
+	type,
 }: CreateAccountProps): React.ReactElement => {
 	const [open, setOpen] = useState<boolean>(false);
 	const [isSaving, setIsSaving] = useState<boolean>(false);
 
+	const isTypeLocked = type !== undefined;
+	const triggerLabel = type ? CREATE_ACCOUNT_TRIGGER_LABELS[type] : "Crear cuenta";
+
 	const createAccountDefaultValues: CreateAccountFormValues = {
 		...CREATE_ACCOUNT_DEFAULT_VALUES,
 		bankId: bankId || undefined,
+		type: type ?? CREATE_ACCOUNT_DEFAULT_VALUES.type,
 	};
 
 	const createAccountForm = useForm<CreateAccountFormValues>({
@@ -59,11 +66,11 @@ export const CreateAccount = ({
 		<FormProvider {...createAccountForm}>
 			<Modal
 				icon={CreditCardPlus}
-				title="Crear cuenta"
+				title={triggerLabel}
 				description="Crea una nueva cuenta para llevar tus finanzas"
 				openModal={open}
 				setOpenModal={handleOpenChange}
-				content={<CreateAccountForm />}
+				content={<CreateAccountForm isTypeLocked={isTypeLocked} />}
 				actions={
 					<CreateAccountSubmit
 						onSuccess={closeModal}
@@ -78,7 +85,7 @@ export const CreateAccount = ({
 						variant="ghost"
 						size="icon-sm"
 						onClick={() => setOpen(true)}
-						aria-label="Crear cuenta"
+						aria-label={triggerLabel}
 						className="text-primary hover:bg-primary/10"
 					>
 						<Plus className="size-4" />
@@ -98,7 +105,7 @@ export const CreateAccount = ({
 						size={size}
 					>
 						<CreditCardPlus />
-						Crear cuenta
+						{triggerLabel}
 					</Button>
 				)}
 			</Modal>
