@@ -2,12 +2,11 @@ import { ChevronRight, Dot } from "lucide-react";
 import { DynamicIcon, type IconName } from "lucide-react/dynamic";
 import type React from "react";
 import { useNavigate } from "react-router";
-import { ROUTES } from "@/app/router/routes";
 import { Skeleton } from "@/components/ui/skeleton";
+import { getAccountDetailRoute } from "@/content/accounts/accountDetailRoutes";
 import { useQueryBank } from "@/hooks/banks/useQueryBank";
 import { getAccountTypeLabel } from "@/utils/accounts/getAccountTypeLabel";
 import { formatCurrency } from "@/utils/formatters/formatCurrency";
-import { buildRoute } from "@/utils/routing/buildRoute";
 import { merge } from "@/utils/ui/mergeStyles";
 
 type AccountItemProps = {
@@ -20,8 +19,8 @@ export const AccountItem = ({ account }: AccountItemProps): React.ReactElement =
 	const navigate = useNavigate();
 	const accountColor = account.color ?? PRIMARY_FALLBACK;
 
-	const handleClick = () => {
-		navigate(buildRoute(ROUTES.APP.ACCOUNTS.DETAIL, { account_id: account.id }));
+	const handleClick = (): void => {
+		navigate(getAccountDetailRoute(account));
 	};
 
 	const balanceIsNegative = account.balance < 0;
