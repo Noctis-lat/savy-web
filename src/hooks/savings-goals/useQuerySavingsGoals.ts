@@ -12,10 +12,10 @@ type SavingsGoalsReturn = {
 	isLoading: boolean;
 };
 
-export const useQuerySavingsGoals = (): SavingsGoalsReturn => {
+export const useQuerySavingsGoals = (params?: SavingsGoalParams): SavingsGoalsReturn => {
 	const savingGoalsQuery = useQuery({
-		queryKey: [savingsGoalKeys.savingsGoals],
-		queryFn: () => savingsGoalService.getSavingsGoals(),
+		queryKey: [savingsGoalKeys.savingsGoals, params ?? {}],
+		queryFn: () => savingsGoalService.getSavingsGoals(params),
 		staleTime: 1000 * 60 * 15,
 		gcTime: 1000 * 60 * 20,
 	});

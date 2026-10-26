@@ -11,7 +11,16 @@ export const Goals = (): React.ReactElement => {
 	const { info, isLoading } = useQuerySavingsGoals();
 
 	if (isLoading) {
-		return <div>Loading...</div>;
+		return (
+			<Screen
+				backRoute={ROUTES.APP.ROOT}
+				breadcrumbsConfig={[{ label: "Inicio", href: ROUTES.APP.ROOT }, { label: "Metas" }]}
+			>
+				<div className="flex items-center justify-center py-20">
+					<div className="h-6 w-6 animate-pulse rounded-full bg-muted" />
+				</div>
+			</Screen>
+		);
 	}
 
 	if (!info) {
