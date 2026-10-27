@@ -11,7 +11,6 @@ export const updateRecurringExpenseSchema = z
 		frequency: z.enum(["WEEKLY", "BIWEEKLY", "MONTHLY", "YEARLY"]).optional(),
 		billingDay: z.number().int().min(1).max(31).optional(),
 		billingDay2: z.number().int().min(1).max(31).optional(),
-		type: z.enum(["SUBSCRIPTION", "SERVICE", "UNCLASSIFIED"]).optional(),
 		accountId: z.string().optional(),
 		categoryId: z.string().optional(),
 		url: z.string().url("URL inválida").optional().or(z.literal("")),

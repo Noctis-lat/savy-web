@@ -5,10 +5,7 @@ import { FormField } from "@/components/design-system/patterns/forms/form-field"
 import { FormSelect } from "@/components/design-system/patterns/forms/form-select";
 import { ColorPicker } from "@/components/design-system/primitives/color-picker";
 import { IconPicker } from "@/components/design-system/primitives/icon-picker";
-import {
-	RECURRING_EXPENSE_FREQUENCY_OPTIONS,
-	RECURRING_EXPENSE_TYPE_FORM_OPTIONS,
-} from "@/content/recurring-expenses/recurringExpensesOptions";
+import { RECURRING_EXPENSE_FREQUENCY_OPTIONS } from "@/content/recurring-expenses/recurringExpensesOptions";
 import { useQueryAccounts } from "@/hooks/accounts/useQueryAccounts";
 import { useQueryCategories } from "@/hooks/categories/useQueryCategories";
 import type { UpdateRecurringExpenseFormValues } from "@/schemas/recurring-expenses/updateRecurringExpenseSchema";
@@ -65,15 +62,6 @@ export const EditPaymentForm = (): React.ReactElement => {
 				placeholder="0.00"
 				required
 				allowDecimals
-			/>
-
-			<FormSelect
-				name="type"
-				form={editPaymentForm}
-				label="Tipo"
-				options={RECURRING_EXPENSE_TYPE_FORM_OPTIONS}
-				placeholder="Selecciona un tipo"
-				required
 			/>
 
 			<FormSelect

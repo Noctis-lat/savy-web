@@ -3,7 +3,6 @@ import { create } from "zustand";
 type RecurringExpensesController = {
 	recurringExpensesFilters: RecurringExpenseParams;
 
-	setType: (type: RecurringExpenseType | undefined) => void;
 	setSearch: (searchValue: string) => void;
 	setIsActive: (activeOnly: boolean) => void;
 	setSort: (sortBy: RecurringExpenseSortBy) => void;
@@ -14,7 +13,7 @@ type RecurringExpensesController = {
 };
 
 const DEFAULT_FILTERS: RecurringExpenseParams = {
-	type: undefined,
+	type: "UNCLASSIFIED",
 	isActive: true,
 	search: undefined,
 	sortBy: "createdAt",
@@ -25,16 +24,6 @@ const DEFAULT_FILTERS: RecurringExpenseParams = {
 
 export const useRecurringExpensesController = create<RecurringExpensesController>()((set) => ({
 	recurringExpensesFilters: { ...DEFAULT_FILTERS },
-
-	setType: (type) => {
-		set((state) => ({
-			recurringExpensesFilters: {
-				...state.recurringExpensesFilters,
-				type,
-				page: 1,
-			},
-		}));
-	},
 
 	setSearch: (searchValue) => {
 		set((state) => ({

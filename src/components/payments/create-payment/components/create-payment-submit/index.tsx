@@ -34,7 +34,7 @@ export const CreatePaymentSubmit = ({
 				data.frequency === "BIWEEKLY" && data.billingDay2 !== undefined
 					? [data.billingDay, data.billingDay2]
 					: [data.billingDay],
-			type: data.type,
+			type: "UNCLASSIFIED",
 			accountId: data.accountId,
 			categoryId: data.categoryId || undefined,
 			url: data.url || undefined,

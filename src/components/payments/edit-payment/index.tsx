@@ -25,7 +25,6 @@ export const EditPayment = ({ recurringExpense }: EditPaymentProps): React.React
 		frequency: recurringExpense.frequency,
 		billingDay: recurringExpense.billingDays[0],
 		billingDay2: recurringExpense.billingDays[1],
-		type: recurringExpense.type,
 		accountId: recurringExpense.accountId,
 		categoryId: recurringExpense.categoryId,
 		url: recurringExpense.url,

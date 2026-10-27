@@ -7,7 +7,6 @@ export const createRecurringExpenseSchema = z
 		frequency: z.enum(["WEEKLY", "BIWEEKLY", "MONTHLY", "YEARLY"]),
 		billingDay: z.number().int().min(1, "El día de cobro es obligatorio"),
 		billingDay2: z.number().int().min(1).max(31).optional(),
-		type: z.enum(["SUBSCRIPTION", "SERVICE", "UNCLASSIFIED"]).optional(),
 		accountId: z.string().min(1, "La cuenta es obligatoria"),
 		categoryId: z.string().optional(),
 		url: z.string().url("URL inválida").optional().or(z.literal("")),

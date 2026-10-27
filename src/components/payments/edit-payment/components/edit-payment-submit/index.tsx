@@ -32,7 +32,6 @@ export const EditPaymentSubmit = ({
 					: data.billingDay !== undefined
 						? [data.billingDay]
 						: undefined,
-			type: data.type,
 			accountId: data.accountId,
 			categoryId: data.categoryId || undefined,
 			url: data.url || undefined,
