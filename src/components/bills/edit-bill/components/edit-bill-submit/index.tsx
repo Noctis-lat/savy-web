@@ -23,12 +23,7 @@ export const EditBillSubmit = ({ billId, onSuccess }: EditBillSubmitProps): Reac
 			name: data.name,
 			amount: data.amount,
 			frequency: data.frequency,
-			billingDays:
-				data.frequency === "BIWEEKLY"
-					? [data.billingDay, data.billingDay2].filter((day): day is number => day !== undefined)
-					: data.billingDay !== undefined
-						? [data.billingDay]
-						: undefined,
+			billingDays: data.billingDays,
 			accountId: data.accountId,
 			categoryId: data.categoryId || undefined,
 			url: data.url || undefined,

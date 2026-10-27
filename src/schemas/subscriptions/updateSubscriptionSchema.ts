@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { getBillingDaysError } from "@/utils/recurring-expenses/getBillingDaysError";
 
 export const updateSubscriptionSchema = z
 	.object({
@@ -9,8 +10,7 @@ export const updateSubscriptionSchema = z
 			.optional(),
 		amount: z.number().min(1).optional(),
 		frequency: z.enum(["WEEKLY", "BIWEEKLY", "MONTHLY", "YEARLY"]).optional(),
-		billingDay: z.number().int().min(1).max(31).optional(),
-		billingDay2: z.number().int().min(1).max(31).optional(),
+		billingDays: z.array(z.number().int()).optional(),
 		accountId: z.string().optional(),
 		categoryId: z.string().optional(),
 		url: z.string().url("URL inválida").optional().or(z.literal("")),
@@ -18,24 +18,15 @@ export const updateSubscriptionSchema = z
 		icon: z.string().optional(),
 	})
 	.superRefine((data, ctx) => {
-		if (data.frequency === "WEEKLY" && data.billingDay && data.billingDay > 7) {
-			ctx.addIssue({
-				code: z.ZodIssueCode.custom,
-				message: "Día inválido (1-7)",
-				path: ["billingDay"],
-			});
-		}
-		if (
-			data.frequency === "BIWEEKLY" &&
-			data.billingDay &&
-			data.billingDay2 &&
-			data.billingDay === data.billingDay2
-		) {
-			ctx.addIssue({
-				code: z.ZodIssueCode.custom,
-				message: "Los días deben ser diferentes",
-				path: ["billingDay2"],
-			});
+		if (data.frequency && data.billingDays) {
+			const billingDaysError = getBillingDaysError(data.frequency, data.billingDays);
+			if (billingDaysError) {
+				ctx.addIssue({
+					code: z.ZodIssueCode.custom,
+					message: billingDaysError,
+					path: ["billingDays"],
+				});
+			}
 		}
 	});
 
