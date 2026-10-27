@@ -4,19 +4,20 @@ import { useParams } from "react-router";
 import { ROUTES } from "@/app/router/routes";
 import { Empty } from "@/components/design-system/patterns/feedback/empty";
 import { Screen } from "@/components/design-system/primitives/screen";
+import { RecurringExpenseDetailSkeleton } from "@/components/recurring-expenses/recurring-expense-detail-skeleton";
+import { RecurringExpenseHeader } from "@/components/recurring-expenses/recurring-expense-header";
+import { RecurringExpenseSchedule } from "@/components/recurring-expenses/recurring-expense-schedule";
 import { EditSubscription } from "@/components/subscriptions/edit-subscription";
 import { useQuerySubscription } from "@/hooks/subscriptions/useQuerySubscription";
-import { SubscriptionDangerZone } from "./components/subscription-danger-zone";
 import { SubscriptionDetails } from "./components/subscription-details";
-import { SubscriptionHeader } from "./components/subscription-header";
-import { SubscriptionSkeleton } from "./components/subscription-skeleton";
+import { SubscriptionManagement } from "./components/subscription-management";
 
 export const SubscriptionDetail = (): React.ReactElement => {
 	const { subscription_id } = useParams<{ subscription_id: string }>();
 	const { subscription, isLoading } = useQuerySubscription(subscription_id);
 
 	if (isLoading) {
-		return <SubscriptionSkeleton />;
+		return <RecurringExpenseDetailSkeleton />;
 	}
 
 	if (!subscription) {
@@ -39,9 +40,17 @@ export const SubscriptionDetail = (): React.ReactElement => {
 			]}
 			action={<EditSubscription recurringExpense={subscription} />}
 		>
-			<SubscriptionHeader subscription={subscription} />
-			<SubscriptionDetails subscription={subscription} />
-			<SubscriptionDangerZone subscription={subscription} />
+			<RecurringExpenseHeader
+				recurringExpense={subscription}
+				fallbackIcon="repeat"
+			/>
+			<div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+				<div className="lg:col-span-2">
+					<RecurringExpenseSchedule recurringExpense={subscription} />
+				</div>
+				<SubscriptionDetails subscription={subscription} />
+			</div>
+			<SubscriptionManagement subscription={subscription} />
 		</Screen>
 	);
 };

@@ -5,18 +5,19 @@ import { ROUTES } from "@/app/router/routes";
 import { EditBill } from "@/components/bills/edit-bill";
 import { Empty } from "@/components/design-system/patterns/feedback/empty";
 import { Screen } from "@/components/design-system/primitives/screen";
+import { RecurringExpenseDetailSkeleton } from "@/components/recurring-expenses/recurring-expense-detail-skeleton";
+import { RecurringExpenseHeader } from "@/components/recurring-expenses/recurring-expense-header";
+import { RecurringExpenseSchedule } from "@/components/recurring-expenses/recurring-expense-schedule";
 import { useQueryService } from "@/hooks/services/useQueryService";
-import { BillDangerZone } from "./components/bill-danger-zone";
 import { BillDetails } from "./components/bill-details";
-import { BillHeader } from "./components/bill-header";
-import { BillSkeleton } from "./components/bill-skeleton";
+import { BillManagement } from "./components/bill-management";
 
 export const BillDetail = (): React.ReactElement => {
 	const { bill_id } = useParams<{ bill_id: string }>();
 	const { service, isLoading } = useQueryService(bill_id);
 
 	if (isLoading) {
-		return <BillSkeleton />;
+		return <RecurringExpenseDetailSkeleton />;
 	}
 
 	if (!service) {
@@ -39,9 +40,17 @@ export const BillDetail = (): React.ReactElement => {
 			]}
 			action={<EditBill recurringExpense={service} />}
 		>
-			<BillHeader service={service} />
-			<BillDetails service={service} />
-			<BillDangerZone service={service} />
+			<RecurringExpenseHeader
+				recurringExpense={service}
+				fallbackIcon="receipt"
+			/>
+			<div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+				<div className="lg:col-span-2">
+					<RecurringExpenseSchedule recurringExpense={service} />
+				</div>
+				<BillDetails service={service} />
+			</div>
+			<BillManagement service={service} />
 		</Screen>
 	);
 };

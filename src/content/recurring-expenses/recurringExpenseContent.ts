@@ -35,3 +35,20 @@ export const WEEKDAY_OPTIONS: { value: number; label: string }[] = [
 	{ value: 6, label: "Sáb" },
 	{ value: 7, label: "Dom" },
 ];
+
+export const BILLING_AMOUNT_SUFFIX: Record<RecurringExpenseFrequency, string> = {
+	WEEKLY: "/ semana",
+	BIWEEKLY: "/ quincena",
+	MONTHLY: "/ mes",
+	YEARLY: "/ año",
+};
+
+/** How many times a charge happens in a year for each frequency. */
+export const ANNUAL_MULTIPLIER: Record<RecurringExpenseFrequency, number> = {
+	WEEKLY: 52,
+	BIWEEKLY: 24,
+	MONTHLY: 12,
+	YEARLY: 1,
+};
+
+export const UPCOMING_CHARGES_COUNT = 3;

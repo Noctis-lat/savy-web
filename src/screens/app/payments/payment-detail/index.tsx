@@ -5,18 +5,19 @@ import { ROUTES } from "@/app/router/routes";
 import { Empty } from "@/components/design-system/patterns/feedback/empty";
 import { Screen } from "@/components/design-system/primitives/screen";
 import { EditPayment } from "@/components/payments/edit-payment";
+import { RecurringExpenseDetailSkeleton } from "@/components/recurring-expenses/recurring-expense-detail-skeleton";
+import { RecurringExpenseHeader } from "@/components/recurring-expenses/recurring-expense-header";
+import { RecurringExpenseSchedule } from "@/components/recurring-expenses/recurring-expense-schedule";
 import { useQueryRecurringExpense } from "@/hooks/recurring-expenses/useQueryRecurringExpense";
-import { PaymentDangerZone } from "./components/payment-danger-zone";
 import { PaymentDetails } from "./components/payment-details";
-import { PaymentHeader } from "./components/payment-header";
-import { PaymentSkeleton } from "./components/payment-skeleton";
+import { PaymentManagement } from "./components/payment-management";
 
 export const PaymentDetail = (): React.ReactElement => {
 	const { payment_id } = useParams<{ payment_id: string }>();
 	const { recurringExpense, isLoading } = useQueryRecurringExpense(payment_id);
 
 	if (isLoading) {
-		return <PaymentSkeleton />;
+		return <RecurringExpenseDetailSkeleton />;
 	}
 
 	if (!recurringExpense) {
@@ -39,9 +40,17 @@ export const PaymentDetail = (): React.ReactElement => {
 			]}
 			action={<EditPayment recurringExpense={recurringExpense} />}
 		>
-			<PaymentHeader recurringExpense={recurringExpense} />
-			<PaymentDetails recurringExpense={recurringExpense} />
-			<PaymentDangerZone recurringExpense={recurringExpense} />
+			<RecurringExpenseHeader
+				recurringExpense={recurringExpense}
+				fallbackIcon="repeat"
+			/>
+			<div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+				<div className="lg:col-span-2">
+					<RecurringExpenseSchedule recurringExpense={recurringExpense} />
+				</div>
+				<PaymentDetails recurringExpense={recurringExpense} />
+			</div>
+			<PaymentManagement recurringExpense={recurringExpense} />
 		</Screen>
 	);
 };
