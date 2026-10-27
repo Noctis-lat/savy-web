@@ -1,4 +1,6 @@
+import { Plus } from "lucide-react";
 import type React from "react";
+import { useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { CreateCategory } from "@/components/categories/create-category";
 import { FormField } from "@/components/design-system/patterns/forms/form-field";
@@ -6,13 +8,14 @@ import { FormSelect } from "@/components/design-system/patterns/forms/form-selec
 import { ColorPicker } from "@/components/design-system/primitives/color-picker";
 import { IconPicker } from "@/components/design-system/primitives/icon-picker";
 import { BillingScheduleFields } from "@/components/recurring-expenses/billing-schedule-fields";
+import { Button } from "@/components/ui/button";
 import { useQueryAccounts } from "@/hooks/accounts/useQueryAccounts";
 import { useQueryCategories } from "@/hooks/categories/useQueryCategories";
 import type { UpdateRecurringExpenseFormValues } from "@/schemas/recurring-expenses/updateRecurringExpenseSchema";
 
 export const EditPaymentForm = (): React.ReactElement => {
 	const editPaymentForm = useFormContext<UpdateRecurringExpenseFormValues>();
-	const { control } = editPaymentForm;
+	const { control, setValue } = editPaymentForm;
 	const { accounts } = useQueryAccounts({ isActive: true });
 	const { categories } = useQueryCategories("EXPENSE");
 
@@ -25,6 +28,8 @@ export const EditPaymentForm = (): React.ReactElement => {
 		label: category.name,
 		value: category.id,
 	}));
+
+	const [isCreatingCategory, setIsCreatingCategory] = useState<boolean>(false);
 
 	return (
 		<div className="-mx-1 flex max-h-[65vh] flex-col gap-4 overflow-y-auto px-1">
@@ -59,17 +64,39 @@ export const EditPaymentForm = (): React.ReactElement => {
 				searchPlaceholder="Buscar cuenta..."
 			/>
 
-			<FormSelect
-				name="categoryId"
-				form={editPaymentForm}
-				label="Categoría"
-				options={categoryOptions}
-				placeholder="Selecciona una categoría"
-				optional
-				searchable
-				searchPlaceholder="Buscar categoría..."
-				action={<CreateCategory mode="embedded" />}
-			/>
+			{isCreatingCategory ? (
+				<CreateCategory
+					mode="embedded"
+					categoryType="EXPENSE"
+					onCreated={(category) => {
+						setValue("categoryId", category.id);
+						setIsCreatingCategory(false);
+					}}
+					onCancel={() => setIsCreatingCategory(false)}
+				/>
+			) : (
+				<FormSelect
+					name="categoryId"
+					form={editPaymentForm}
+					label="Categoría"
+					options={categoryOptions}
+					placeholder="Selecciona una categoría"
+					optional
+					searchable
+					searchPlaceholder="Buscar categoría..."
+					action={
+						<Button
+							variant="ghost"
+							size="icon-sm"
+							onClick={() => setIsCreatingCategory(true)}
+							aria-label="Crear categoría"
+							className="size-5 text-primary hover:bg-primary/10"
+						>
+							<Plus className="size-3.5" />
+						</Button>
+					}
+				/>
+			)}
 
 			<FormField
 				name="url"

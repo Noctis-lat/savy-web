@@ -1,4 +1,4 @@
-import { PowerOff, Settings2, Trash2 } from "lucide-react";
+import { Power, PowerOff, Settings2, Trash2 } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
 import { GlassCard } from "@/components/design-system/patterns/glass-card";
@@ -11,8 +11,10 @@ type RecurringExpenseManagementProps = {
 	entityLabel: string;
 	isActive: boolean;
 	onDeactivate: () => void;
+	onActivate: () => void;
 	onDelete: () => void;
 	isDeactivating: boolean;
+	isActivating: boolean;
 	isDeleting: boolean;
 };
 
@@ -21,11 +23,14 @@ export const RecurringExpenseManagement = ({
 	entityLabel,
 	isActive,
 	onDeactivate,
+	onActivate,
 	onDelete,
 	isDeactivating,
+	isActivating,
 	isDeleting,
 }: RecurringExpenseManagementProps): React.ReactElement => {
 	const [isDeactivateOpen, setIsDeactivateOpen] = useState<boolean>(false);
+	const [isActivateOpen, setIsActivateOpen] = useState<boolean>(false);
 	const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false);
 
 	return (
@@ -49,7 +54,7 @@ export const RecurringExpenseManagement = ({
 								description="No se generarán nuevos cobros. Podrás consultar su historial cuando quieras."
 								confirmText="Desactivar"
 								cancelText="Volver"
-								variant="default"
+								variant="destructive"
 								confirmIcon={PowerOff}
 								onConfirm={onDeactivate}
 								open={isDeactivateOpen}
@@ -69,8 +74,31 @@ export const RecurringExpenseManagement = ({
 					/>
 				) : (
 					<ManagementRow
-						title="Estado"
-						description="Ya no genera cobros."
+						title={`Reactivar ${entityLabel}`}
+						description="Vuelve a generar cobros según la frecuencia configurada."
+						action={
+							<ConfirmDialog
+								title={`Reactivar ${name}`}
+								description="Se reanudarán los cobros con la frecuencia y los días configurados."
+								confirmText="Reactivar"
+								cancelText="Volver"
+								variant="success"
+								confirmIcon={Power}
+								onConfirm={onActivate}
+								open={isActivateOpen}
+								onOpenChange={setIsActivateOpen}
+								loading={isActivating}
+								disabled={isActivating}
+							>
+								<Button
+									variant="outline"
+									size="sm"
+								>
+									<Power />
+									Reactivar
+								</Button>
+							</ConfirmDialog>
+						}
 					/>
 				)}
 

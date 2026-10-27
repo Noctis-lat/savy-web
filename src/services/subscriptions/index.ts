@@ -36,6 +36,13 @@ export const subscriptionService: SubscriptionService = {
 		await httpClient.delete(`/subscriptions/${id}`);
 	},
 
+	activateSubscription: async (id: string): Promise<RecurringExpense> => {
+		const response = await httpClient.patch<APIResponse<RecurringExpense>>(
+			`/subscriptions/${id}/activate`,
+		);
+		return unwrap<RecurringExpense>(response);
+	},
+
 	deleteSubscriptionPermanent: async (id: string): Promise<void> => {
 		await httpClient.delete(`/subscriptions/${id}/permanent`);
 	},

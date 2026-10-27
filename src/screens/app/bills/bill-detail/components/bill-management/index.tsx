@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import { ROUTES } from "@/app/router/routes";
 import { RecurringExpenseManagement } from "@/components/recurring-expenses/recurring-expense-management";
 import { serviceKeys } from "@/content/services";
+import { useActivateService } from "@/hooks/services/useActivateService";
 import { useCancelService } from "@/hooks/services/useCancelService";
 import { useDeleteServicePermanent } from "@/hooks/services/useDeleteServicePermanent";
 
@@ -15,10 +16,19 @@ export const BillManagement = ({ service }: BillManagementProps): React.ReactEle
 	const queryClient = useQueryClient();
 	const navigate = useNavigate();
 	const { mutate: deactivateBill, isPending: isDeactivating } = useCancelService();
+	const { mutate: activateBill, isPending: isActivating } = useActivateService();
 	const { mutate: deleteBillPermanent, isPending: isDeleting } = useDeleteServicePermanent();
 
 	const handleDeactivate = () => {
 		deactivateBill(service.id, {
+			onSuccess: () => {
+				queryClient.invalidateQueries({ queryKey: [serviceKeys.service, service.id] });
+			},
+		});
+	};
+
+	const handleActivate = () => {
+		activateBill(service.id, {
 			onSuccess: () => {
 				queryClient.invalidateQueries({ queryKey: [serviceKeys.service, service.id] });
 			},
@@ -39,8 +49,10 @@ export const BillManagement = ({ service }: BillManagementProps): React.ReactEle
 			entityLabel="servicio"
 			isActive={service.isActive}
 			onDeactivate={handleDeactivate}
+			onActivate={handleActivate}
 			onDelete={handleDelete}
 			isDeactivating={isDeactivating}
+			isActivating={isActivating}
 			isDeleting={isDeleting}
 		/>
 	);

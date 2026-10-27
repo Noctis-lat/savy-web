@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import { ROUTES } from "@/app/router/routes";
 import { RecurringExpenseManagement } from "@/components/recurring-expenses/recurring-expense-management";
 import { subscriptionKeys } from "@/content/services";
+import { useActivateSubscription } from "@/hooks/subscriptions/useActivateSubscription";
 import { useCancelSubscription } from "@/hooks/subscriptions/useCancelSubscription";
 import { useDeleteSubscriptionPermanent } from "@/hooks/subscriptions/useDeleteSubscriptionPermanent";
 
@@ -17,11 +18,22 @@ export const SubscriptionManagement = ({
 	const queryClient = useQueryClient();
 	const navigate = useNavigate();
 	const { mutate: deactivateSubscription, isPending: isDeactivating } = useCancelSubscription();
+	const { mutate: activateSubscription, isPending: isActivating } = useActivateSubscription();
 	const { mutate: deleteSubscriptionPermanent, isPending: isDeleting } =
 		useDeleteSubscriptionPermanent();
 
 	const handleDeactivate = () => {
 		deactivateSubscription(subscription.id, {
+			onSuccess: () => {
+				queryClient.invalidateQueries({
+					queryKey: [subscriptionKeys.subscription, subscription.id],
+				});
+			},
+		});
+	};
+
+	const handleActivate = () => {
+		activateSubscription(subscription.id, {
 			onSuccess: () => {
 				queryClient.invalidateQueries({
 					queryKey: [subscriptionKeys.subscription, subscription.id],
@@ -44,8 +56,10 @@ export const SubscriptionManagement = ({
 			entityLabel="suscripción"
 			isActive={subscription.isActive}
 			onDeactivate={handleDeactivate}
+			onActivate={handleActivate}
 			onDelete={handleDelete}
 			isDeactivating={isDeactivating}
+			isActivating={isActivating}
 			isDeleting={isDeleting}
 		/>
 	);

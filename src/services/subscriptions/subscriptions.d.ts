@@ -19,6 +19,7 @@ type SubscriptionService = {
 		payload: UpdateSubscriptionPayload,
 	) => Promise<RecurringExpense>;
 	cancelSubscription: (id: string) => Promise<void>;
+	activateSubscription: (id: string) => Promise<RecurringExpense>;
 	deleteSubscriptionPermanent: (id: string) => Promise<void>;
 };
 

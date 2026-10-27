@@ -16,6 +16,7 @@ type ServiceService = {
 	createService: (payload: CreateServicePayload) => Promise<RecurringExpense>;
 	updateService: (id: string, payload: UpdateServicePayload) => Promise<RecurringExpense>;
 	cancelService: (id: string) => Promise<void>;
+	activateService: (id: string) => Promise<RecurringExpense>;
 	deleteServicePermanent: (id: string) => Promise<void>;
 };
 

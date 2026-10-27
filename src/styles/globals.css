@@ -186,3 +186,12 @@
 .tsqd-open-btn-container {
 	display: none !important;
 }
+
+/* Hide scrollbars globally while preserving scroll functionality */
+* {
+	scrollbar-width: none;
+}
+
+*::-webkit-scrollbar {
+	display: none;
+}

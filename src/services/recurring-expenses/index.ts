@@ -43,6 +43,13 @@ export const recurringExpenseService: RecurringExpenseService = {
 		await httpClient.delete(`/recurring-expenses/${id}`);
 	},
 
+	activateRecurringExpense: async (id: string): Promise<RecurringExpense> => {
+		const response = await httpClient.patch<APIResponse<RecurringExpense>>(
+			`/recurring-expenses/${id}/activate`,
+		);
+		return unwrap<RecurringExpense>(response);
+	},
+
 	deleteRecurringExpensePermanent: async (id: string): Promise<void> => {
 		await httpClient.delete(`/recurring-expenses/${id}/permanent`);
 	},

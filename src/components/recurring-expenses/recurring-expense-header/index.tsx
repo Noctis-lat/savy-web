@@ -64,7 +64,7 @@ export const RecurringExpenseHeader = ({
 								<h1 className="text-xl font-semibold tracking-tight text-foreground">
 									{recurringExpense.name}
 								</h1>
-								<Badge variant={recurringExpense.isActive ? "default" : "secondary"}>
+								<Badge variant={recurringExpense.isActive ? "default" : "error"}>
 									{recurringExpense.isActive ? "Activo" : "Inactivo"}
 								</Badge>
 							</div>

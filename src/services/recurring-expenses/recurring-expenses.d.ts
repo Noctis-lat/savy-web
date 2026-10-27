@@ -42,6 +42,7 @@ type RecurringExpenseService = {
 		payload: UpdateRecurringExpensePayload,
 	) => Promise<RecurringExpense>;
 	cancelRecurringExpense: (id: string) => Promise<void>;
+	activateRecurringExpense: (id: string) => Promise<RecurringExpense>;
 	deleteRecurringExpensePermanent: (id: string) => Promise<void>;
 };
 

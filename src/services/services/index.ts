@@ -30,6 +30,13 @@ export const serviceService: ServiceService = {
 		await httpClient.delete(`/services/${id}`);
 	},
 
+	activateService: async (id: string): Promise<RecurringExpense> => {
+		const response = await httpClient.patch<APIResponse<RecurringExpense>>(
+			`/services/${id}/activate`,
+		);
+		return unwrap<RecurringExpense>(response);
+	},
+
 	deleteServicePermanent: async (id: string): Promise<void> => {
 		await httpClient.delete(`/services/${id}/permanent`);
 	},
