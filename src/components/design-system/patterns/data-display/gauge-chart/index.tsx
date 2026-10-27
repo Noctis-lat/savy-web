@@ -49,12 +49,11 @@ export const GaugeChart = ({
 		<div
 			role="img"
 			aria-label={ariaLabel}
-			className={merge("flex flex-col items-center gap-2", className)}
+			className={merge("flex w-full flex-col items-center gap-2", className)}
 		>
-			<div className="relative">
+			<div className="relative w-full max-w-80">
 				<svg
-					width={WIDTH}
-					height={HEIGHT}
+					className="h-auto w-full"
 					viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
 					fill="none"
 					aria-hidden="true"
@@ -62,11 +61,10 @@ export const GaugeChart = ({
 					{/* Track */}
 					<path
 						d={`M ${CENTER_X - RADIUS} ${CENTER_Y} A ${RADIUS} ${RADIUS} 0 0 1 ${CENTER_X + RADIUS} ${CENTER_Y}`}
-						stroke="var(--color-muted)"
+						stroke={`color-mix(in oklch, ${color} 16%, transparent)`}
 						strokeWidth={STROKE_WIDTH}
 						strokeLinecap="round"
 						fill="none"
-						opacity={0.4}
 					/>
 					{/* Value arc */}
 					{max > 0 && (
@@ -79,14 +77,18 @@ export const GaugeChart = ({
 							strokeDasharray={SEMICIRCLE_LENGTH}
 							strokeDashoffset={dashOffset}
 							transform={arcTransform}
-							style={{ transition: "stroke-dashoffset 0.6s ease-out" }}
+							className="transition-[stroke-dashoffset] duration-700 ease-out motion-reduce:transition-none"
 						/>
 					)}
 				</svg>
 
 				<div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-0.5 pb-1">
-					<span className="text-3xl font-bold tabular-nums text-foreground">{displayValue}</span>
-					<span className="text-sm font-medium tabular-nums text-primary">{percentage}%</span>
+					<span className="text-2xl font-bold tabular-nums text-foreground sm:text-3xl">
+						{displayValue}
+					</span>
+					<span className="text-sm font-medium tabular-nums text-muted-foreground">
+						{percentage}%{max > 0 && formatValue ? ` de ${displayMax}` : ""}
+					</span>
 				</div>
 			</div>
 
