@@ -129,13 +129,34 @@ export const router = createBrowserRouter([
 									})),
 							},
 							{
+								path: ROUTES.APP.SUBSCRIPTIONS.DETAIL,
+								lazy: () =>
+									import("@/screens/app/subscriptions/subscription-detail").then((m) => ({
+										Component: m.SubscriptionDetail,
+									})),
+							},
+							{
 								path: ROUTES.APP.BILLS.ROOT,
 								lazy: () => import("@/screens/app/bills").then((m) => ({ Component: m.Bills })),
+							},
+							{
+								path: ROUTES.APP.BILLS.DETAIL,
+								lazy: () =>
+									import("@/screens/app/bills/bill-detail").then((m) => ({
+										Component: m.BillDetail,
+									})),
 							},
 							{
 								path: ROUTES.APP.PAYMENTS.ROOT,
 								lazy: () =>
 									import("@/screens/app/payments").then((m) => ({ Component: m.Payments })),
+							},
+							{
+								path: ROUTES.APP.PAYMENTS.DETAIL,
+								lazy: () =>
+									import("@/screens/app/payments/payment-detail").then((m) => ({
+										Component: m.PaymentDetail,
+									})),
 							},
 							{
 								path: ROUTES.APP.CREDITS.ROOT,
