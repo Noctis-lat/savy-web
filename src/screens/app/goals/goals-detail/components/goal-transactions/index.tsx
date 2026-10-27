@@ -10,12 +10,10 @@ import { FiltersWrapper } from "@/components/design-system/patterns/filters/filt
 import { SearchInput } from "@/components/design-system/patterns/filters/search-input";
 import { TablePagination } from "@/components/design-system/patterns/navigation/table-pagination";
 import { TransactionRow } from "@/components/transactions/transaction-row";
-import { Skeleton } from "@/components/ui/skeleton";
 import { TRANSACTION_SORT_OPTIONS } from "@/content/transactions/transactionOptions";
 import { useQueryAccountTransactions } from "@/hooks/accounts/useQueryAccountTransactions";
 import { useAccountTransactionsController } from "@/storage/transactions/accountTransactionsController";
-
-const SKELETON_ROWS = ["goal-tx-skel-1", "goal-tx-skel-2", "goal-tx-skel-3"] as const;
+import { GoalTransactionsSkeleton } from "./components/goal-transactions-skeleton";
 
 type GoalTransactionsProps = {
 	savingsGoal: SavingsGoal;
@@ -97,21 +95,7 @@ export const GoalTransactions = ({ savingsGoal }: GoalTransactionsProps): React.
 					</div>
 
 					{isLoading ? (
-						<div className="flex flex-col gap-2">
-							{SKELETON_ROWS.map((key) => (
-								<div
-									key={key}
-									className="flex items-center gap-3 py-2"
-								>
-									<Skeleton className="size-8 rounded-full" />
-									<div className="flex flex-1 flex-col gap-1">
-										<Skeleton className="h-4 w-32" />
-										<Skeleton className="h-3 w-20" />
-									</div>
-									<Skeleton className="h-4 w-16" />
-								</div>
-							))}
-						</div>
+						<GoalTransactionsSkeleton />
 					) : !transactions || transactions.length === 0 ? (
 						<Empty
 							title="Sin transacciones"

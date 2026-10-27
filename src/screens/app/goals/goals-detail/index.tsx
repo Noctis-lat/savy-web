@@ -9,6 +9,7 @@ import { useQuerySavingsGoal } from "@/hooks/savings-goals/useQuerySavingsGoal";
 import { GoalDangerZone } from "./components/goal-danger-zone";
 import { GoalHeader } from "./components/goal-header";
 import { GoalProgress } from "./components/goal-progress";
+import { GoalSkeleton } from "./components/goal-skeleton";
 import { GoalTransactions } from "./components/goal-transactions";
 
 export const GoalsDetail = (): React.ReactElement => {
@@ -19,7 +20,7 @@ export const GoalsDetail = (): React.ReactElement => {
 	const { savingsGoal, isLoading } = useQuerySavingsGoal(goal_id ?? "", byAccountId);
 
 	if (isLoading) {
-		return <div>Loading...</div>;
+		return <GoalSkeleton />;
 	}
 
 	if (!savingsGoal) {

@@ -7,21 +7,13 @@ import { useQuerySavingsGoals } from "@/hooks/savings-goals/useQuerySavingsGoals
 import { GoalsActions } from "./components/goals-actions";
 import { GoalsKpis } from "./components/goals-kpis";
 import { GoalsList } from "./components/goals-list";
+import { GoalsSkeleton } from "./components/goals-skeleton";
 
 export const Goals = (): React.ReactElement => {
 	const { info, isLoading } = useQuerySavingsGoals();
 
 	if (isLoading) {
-		return (
-			<Screen
-				backRoute={ROUTES.APP.ROOT}
-				breadcrumbsConfig={[{ label: "Inicio", href: ROUTES.APP.ROOT }, { label: "Metas" }]}
-			>
-				<div className="flex items-center justify-center py-20">
-					<div className="h-6 w-6 animate-pulse rounded-full bg-muted" />
-				</div>
-			</Screen>
-		);
+		return <GoalsSkeleton />;
 	}
 
 	if (!info) {
