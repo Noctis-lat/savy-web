@@ -39,14 +39,20 @@ export const ROUTES = {
 		SUBSCRIPTIONS: {
 			ROOT: "/app/subscriptions",
 			DETAIL: "/app/subscriptions/:subscription_id",
+			NEW: "/app/subscriptions/new",
+			EDIT: "/app/subscriptions/:subscription_id/edit",
 		},
 		BILLS: {
 			ROOT: "/app/bills",
 			DETAIL: "/app/bills/:bill_id",
+			NEW: "/app/bills/new",
+			EDIT: "/app/bills/:bill_id/edit",
 		},
 		PAYMENTS: {
 			ROOT: "/app/payments",
 			DETAIL: "/app/payments/:payment_id",
+			NEW: "/app/payments/new",
+			EDIT: "/app/payments/:payment_id/edit",
 		},
 		CREDITS: {
 			ROOT: "/app/credits",
