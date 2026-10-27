@@ -40,9 +40,9 @@ export const GoalsDetail = (): React.ReactElement => {
 				{ label: savingsGoal.name },
 			]}
 		>
-			<GoalHeader />
+			<GoalHeader savingsGoal={savingsGoal} />
 			<div className="flex flex-row gap-4">
-				<GoalProgress />
+				<GoalProgress savingsGoal={savingsGoal} />
 				<GoalTransactions />
 			</div>
 			<GoalDangerZone savingsGoal={savingsGoal} />

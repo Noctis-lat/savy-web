@@ -1,5 +1,10 @@
 import type React from "react";
+import { GlassCard } from "@/components/design-system/patterns/glass-card";
 
-export const GoalHeader = (): React.ReactElement => {
-	return <div>GoalHeader</div>;
+type GoalHeaderProps = {
+	savingsGoal: SavingsGoal;
+};
+
+export const GoalHeader = ({ savingsGoal }: GoalHeaderProps): React.ReactElement => {
+	return <GlassCard></GlassCard>;
 };
