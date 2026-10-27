@@ -1,6 +1,7 @@
 import { ArrowDownUp, ArrowUpDown } from "lucide-react";
 import type React from "react";
 import { useCallback } from "react";
+import { ScaleFadeIn } from "@/components/design-system/patterns/animations/scale-fade-in";
 import { StaggerContainer } from "@/components/design-system/patterns/animations/stagger-container";
 import { SectionCard } from "@/components/design-system/patterns/data-display/section-card";
 import { Empty } from "@/components/design-system/patterns/feedback/empty";
@@ -67,89 +68,90 @@ export const GoalTransactions = ({ savingsGoal }: GoalTransactionsProps): React.
 	};
 
 	return (
-		<SectionCard
-			title="Transacciones"
-			icon={ArrowDownUp}
-			className="flex-1"
-		>
-			<div className="flex flex-col gap-3">
-				<div className="flex items-center justify-between gap-3">
-					<SearchInput
-						value={transactionsFilters.search || undefined}
-						onCommit={handleSearchCommit}
-						placeholder="Buscar..."
-					/>
-					<FiltersWrapper
-						activeFilterCount={activeFilterCount}
-						hasActiveFilters={hasActiveFilters}
-						clearFilters={resetFilters}
-						direction="left"
-					>
-						<FilterSortSelect
-							options={TRANSACTION_SORT_OPTIONS}
-							sortValue={transactionsFilters.sortBy ?? "date"}
-							order={(transactionsFilters.order as "asc" | "desc") ?? "desc"}
-							onSortChange={handleSortChange}
-							onOrderChange={handleOrderChange}
+		<ScaleFadeIn className="flex-1">
+			<SectionCard
+				title="Transacciones"
+				icon={ArrowDownUp}
+			>
+				<div className="flex flex-col gap-3">
+					<div className="flex items-center justify-between gap-3">
+						<SearchInput
+							value={transactionsFilters.search || undefined}
+							onCommit={handleSearchCommit}
+							placeholder="Buscar..."
 						/>
-					</FiltersWrapper>
-				</div>
-
-				{isLoading ? (
-					<div className="flex flex-col gap-2">
-						{SKELETON_ROWS.map((key) => (
-							<div
-								key={key}
-								className="flex items-center gap-3 py-2"
-							>
-								<Skeleton className="size-8 rounded-full" />
-								<div className="flex flex-1 flex-col gap-1">
-									<Skeleton className="h-4 w-32" />
-									<Skeleton className="h-3 w-20" />
-								</div>
-								<Skeleton className="h-4 w-16" />
-							</div>
-						))}
-					</div>
-				) : !transactions || transactions.length === 0 ? (
-					<Empty
-						title="Sin transacciones"
-						description="No hay movimientos en esta cuenta."
-						icon={ArrowUpDown}
-						className="py-6"
-					/>
-				) : (
-					<>
-						<div className="flex items-center gap-2">
-							<span className="text-xs text-muted-foreground">
-								{total} {total === 1 ? "movimiento" : "movimientos"}
-							</span>
-						</div>
-
-						<StaggerContainer className="flex flex-col">
-							{transactions.map((transaction) => (
-								<TransactionRow
-									key={transaction.id}
-									transaction={transaction}
-									locale="es-MX"
-									editable
-								/>
-							))}
-						</StaggerContainer>
-
-						{totalPages !== undefined && totalPages >= 1 && (
-							<TablePagination
-								page={page ?? 1}
-								totalPages={totalPages}
-								onPageChange={handlePageChange}
-								pageSize={limit}
-								pageSizeOptions={[5, 10, 20]}
-								onPageSizeChange={handlePageSizeChange}
+						<FiltersWrapper
+							activeFilterCount={activeFilterCount}
+							hasActiveFilters={hasActiveFilters}
+							clearFilters={resetFilters}
+							direction="left"
+						>
+							<FilterSortSelect
+								options={TRANSACTION_SORT_OPTIONS}
+								sortValue={transactionsFilters.sortBy ?? "date"}
+								order={(transactionsFilters.order as "asc" | "desc") ?? "desc"}
+								onSortChange={handleSortChange}
+								onOrderChange={handleOrderChange}
 							/>
-						)}
-					</>
-				)}
-			</div>
-		</SectionCard>
+						</FiltersWrapper>
+					</div>
+
+					{isLoading ? (
+						<div className="flex flex-col gap-2">
+							{SKELETON_ROWS.map((key) => (
+								<div
+									key={key}
+									className="flex items-center gap-3 py-2"
+								>
+									<Skeleton className="size-8 rounded-full" />
+									<div className="flex flex-1 flex-col gap-1">
+										<Skeleton className="h-4 w-32" />
+										<Skeleton className="h-3 w-20" />
+									</div>
+									<Skeleton className="h-4 w-16" />
+								</div>
+							))}
+						</div>
+					) : !transactions || transactions.length === 0 ? (
+						<Empty
+							title="Sin transacciones"
+							description="No hay movimientos en esta cuenta."
+							icon={ArrowUpDown}
+							className="py-6"
+						/>
+					) : (
+						<>
+							<div className="flex items-center gap-2">
+								<span className="text-xs text-muted-foreground">
+									{total} {total === 1 ? "movimiento" : "movimientos"}
+								</span>
+							</div>
+
+							<StaggerContainer className="flex flex-col">
+								{transactions.map((transaction) => (
+									<TransactionRow
+										key={transaction.id}
+										transaction={transaction}
+										locale="es-MX"
+										editable
+									/>
+								))}
+							</StaggerContainer>
+
+							{totalPages !== undefined && totalPages >= 1 && (
+								<TablePagination
+									page={page ?? 1}
+									totalPages={totalPages}
+									onPageChange={handlePageChange}
+									pageSize={limit}
+									pageSizeOptions={[5, 10, 20]}
+									onPageSizeChange={handlePageSizeChange}
+								/>
+							)}
+						</>
+					)}
+				</div>
+			</SectionCard>
+		</ScaleFadeIn>
 	);
 };
