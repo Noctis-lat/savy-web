@@ -1,11 +1,14 @@
 import { httpClient, unwrap } from "../http-client";
 
 export const recurringExpenseService: RecurringExpenseService = {
-	getRecurringExpenses: async (params?: RecurringExpenseParams): Promise<RecurringExpense[]> => {
-		const response = await httpClient.get<APIResponse<RecurringExpense[]>>("/recurring-expenses", {
-			params,
-		});
-		return unwrap<RecurringExpense[]>(response);
+	getRecurringExpenses: async (
+		params?: RecurringExpenseParams,
+	): Promise<GetRecurringExpensesResponse> => {
+		const response = await httpClient.get<APIResponse<GetRecurringExpensesResponse>>(
+			"/recurring-expenses",
+			{ params },
+		);
+		return unwrap<GetRecurringExpensesResponse>(response);
 	},
 
 	getRecurringExpense: async (id: string): Promise<RecurringExpense> => {

@@ -4,6 +4,11 @@ import { recurringExpenseService } from "@/services/recurring-expenses";
 
 type useQueryRecurringExpensesReturn = {
 	recurringExpenses: RecurringExpense[] | undefined;
+	recurringExpensesInfo: RecurringByTypeInfo | undefined;
+	page: number | undefined;
+	perPage: number | undefined;
+	total: number | undefined;
+	totalPages: number | undefined;
 	isLoading: boolean;
 };
 
@@ -18,7 +23,12 @@ export const useQueryRecurringExpenses = (
 	});
 
 	return {
-		recurringExpenses: recurringExpensesQuery.data,
+		recurringExpenses: recurringExpensesQuery.data?.data,
+		recurringExpensesInfo: recurringExpensesQuery.data?.info,
+		page: recurringExpensesQuery.data?.page,
+		perPage: recurringExpensesQuery.data?.perPage,
+		total: recurringExpensesQuery.data?.total,
+		totalPages: recurringExpensesQuery.data?.totalPages,
 		isLoading: recurringExpensesQuery.isLoading,
 	};
 };

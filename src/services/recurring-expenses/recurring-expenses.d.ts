@@ -32,7 +32,9 @@ type RecurringByTypeInfo = {
 //* ====================== SERVICE =========================
 
 type RecurringExpenseService = {
-	getRecurringExpenses: (params?: RecurringExpenseParams) => Promise<RecurringExpense[]>;
+	getRecurringExpenses: (
+		params?: RecurringExpenseParams,
+	) => Promise<GetRecurringExpensesResponse>;
 	getRecurringExpense: (id: string) => Promise<RecurringExpense>;
 	createRecurringExpense: (payload: CreateRecurringExpensePayload) => Promise<RecurringExpense>;
 	updateRecurringExpense: (
@@ -50,6 +52,18 @@ type RecurringExpenseParams = {
 	isActive?: boolean;
 	sortBy?: RecurringExpenseSortBy;
 	order?: "asc" | "desc";
+	search?: string;
+	page?: number;
+	perPage?: number;
+};
+
+type GetRecurringExpensesResponse = {
+	data: RecurringExpense[];
+	info: RecurringByTypeInfo;
+	page: number;
+	perPage: number;
+	total: number;
+	totalPages: number;
 };
 
 //* ====================== CREATE RECURRING EXPENSE =========================
