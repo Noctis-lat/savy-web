@@ -1,10 +1,8 @@
-import { Plus } from "lucide-react";
 import type React from "react";
-import { Link } from "react-router";
 import { ROUTES } from "@/app/router/routes";
+import { CreateBill } from "@/components/bills/create-bill";
 import { Empty } from "@/components/design-system/patterns/feedback/empty";
 import { Screen } from "@/components/design-system/primitives/screen";
-import { Button } from "@/components/ui/button";
 import { useQueryServices } from "@/hooks/services/useQueryServices";
 import { BillsFilters } from "./components/bills-filters";
 import { BillsKpis } from "./components/bills-kpis";
@@ -31,14 +29,7 @@ export const Bills = (): React.ReactElement => {
 		<Screen
 			backRoute={ROUTES.APP.DASHBOARD}
 			breadcrumbsConfig={[{ label: "Inicio", href: ROUTES.APP.ROOT }, { label: "Servicios" }]}
-			action={
-				<Button asChild>
-					<Link to={ROUTES.APP.BILLS.NEW}>
-						<Plus />
-						Nuevo servicio
-					</Link>
-				</Button>
-			}
+			action={<CreateBill mode="button" />}
 		>
 			<BillsKpis
 				info={servicesInfo}

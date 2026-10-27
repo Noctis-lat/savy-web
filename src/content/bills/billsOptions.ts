@@ -10,3 +10,10 @@ export const BILL_FREQUENCY_LABELS: Record<RecurringExpenseFrequency, string> = 
 	MONTHLY: "Mensual",
 	YEARLY: "Anual",
 };
+
+export const BILL_FREQUENCY_OPTIONS: Option[] = [
+	{ label: "Semanal", value: "WEEKLY" },
+	{ label: "Quincenal", value: "BIWEEKLY" },
+	{ label: "Mensual", value: "MONTHLY" },
+	{ label: "Anual", value: "YEARLY" },
+];

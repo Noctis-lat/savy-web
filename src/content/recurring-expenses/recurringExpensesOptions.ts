@@ -23,3 +23,16 @@ export const RECURRING_EXPENSE_FREQUENCY_LABELS: Record<RecurringExpenseFrequenc
 	MONTHLY: "Mensual",
 	YEARLY: "Anual",
 };
+
+export const RECURRING_EXPENSE_FREQUENCY_OPTIONS: Option[] = [
+	{ label: "Semanal", value: "WEEKLY" },
+	{ label: "Quincenal", value: "BIWEEKLY" },
+	{ label: "Mensual", value: "MONTHLY" },
+	{ label: "Anual", value: "YEARLY" },
+];
+
+export const RECURRING_EXPENSE_TYPE_FORM_OPTIONS: Option[] = [
+	{ label: "Suscripción", value: "SUBSCRIPTION" },
+	{ label: "Servicio", value: "SERVICE" },
+	{ label: "Sin clasificar", value: "UNCLASSIFIED" },
+];

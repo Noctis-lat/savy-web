@@ -10,3 +10,10 @@ export const SUBSCRIPTION_FREQUENCY_LABELS: Record<RecurringExpenseFrequency, st
 	MONTHLY: "Mensual",
 	YEARLY: "Anual",
 };
+
+export const SUBSCRIPTION_FREQUENCY_OPTIONS: Option[] = [
+	{ label: "Semanal", value: "WEEKLY" },
+	{ label: "Quincenal", value: "BIWEEKLY" },
+	{ label: "Mensual", value: "MONTHLY" },
+	{ label: "Anual", value: "YEARLY" },
+];
