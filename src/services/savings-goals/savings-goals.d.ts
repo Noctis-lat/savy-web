@@ -64,5 +64,6 @@ type UpdateSavingsGoalPayload = {
 	name?: string;
 	targetAmount?: number;
 	deadline?: string;
-	color?: string;
+	color?: string | null;
+	icon?: string | null;
 };

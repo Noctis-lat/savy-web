@@ -4,6 +4,7 @@ import { useParams, useSearchParams } from "react-router";
 import { ROUTES } from "@/app/router/routes";
 import { Empty } from "@/components/design-system/patterns/feedback/empty";
 import { Screen } from "@/components/design-system/primitives/screen";
+import { EditSavingsGoal } from "@/components/savings-goals/edit-savings-goal";
 import { useQuerySavingsGoal } from "@/hooks/savings-goals/useQuerySavingsGoal";
 import { GoalDangerZone } from "./components/goal-danger-zone";
 import { GoalHeader } from "./components/goal-header";
@@ -39,6 +40,7 @@ export const GoalsDetail = (): React.ReactElement => {
 				{ label: "Metas de ahorro", href: ROUTES.APP.GOALS.ROOT },
 				{ label: savingsGoal.name },
 			]}
+			action={<EditSavingsGoal savingsGoal={savingsGoal} />}
 		>
 			<GoalHeader savingsGoal={savingsGoal} />
 			<div className="flex flex-row gap-4">
