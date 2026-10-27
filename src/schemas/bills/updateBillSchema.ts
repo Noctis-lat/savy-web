@@ -14,7 +14,14 @@ export const updateBillSchema = z
 		billingDate: z.string().optional(),
 		accountId: z.string().optional(),
 		categoryId: z.string().optional(),
-		url: z.string().url("URL inválida").optional().or(z.literal("")),
+		url: z
+			.string()
+			.refine(
+				(val) => !val || val === "" || /^https?:\/\/.+/.test(val) || /^[\w-]+(\.[\w-]+)+/.test(val),
+				"URL inválida",
+			)
+			.optional()
+			.or(z.literal("")),
 		color: z.string().optional(),
 		icon: z.string().optional(),
 	})

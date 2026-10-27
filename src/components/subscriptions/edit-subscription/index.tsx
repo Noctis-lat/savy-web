@@ -31,10 +31,10 @@ export const EditSubscription = ({
 				? `${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, "0")}-${String(recurringExpense.billingDays[0]).padStart(2, "0")}`
 				: undefined,
 		accountId: recurringExpense.accountId,
-		categoryId: recurringExpense.categoryId,
-		url: recurringExpense.url,
-		color: recurringExpense.color,
-		icon: recurringExpense.icon,
+		categoryId: recurringExpense.categoryId ?? undefined,
+		url: recurringExpense.url ?? undefined,
+		color: recurringExpense.color ?? undefined,
+		icon: recurringExpense.icon ?? undefined,
 	};
 
 	const editSubscriptionForm = useForm<UpdateSubscriptionFormValues>({

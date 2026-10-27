@@ -1,5 +1,6 @@
 import type React from "react";
 import { Controller, useFormContext } from "react-hook-form";
+import { CreateCategory } from "@/components/categories/create-category";
 import { FormField } from "@/components/design-system/patterns/forms/form-field";
 import { FormSelect } from "@/components/design-system/patterns/forms/form-select";
 import { ColorPicker } from "@/components/design-system/primitives/color-picker";
@@ -67,6 +68,7 @@ export const EditBillForm = (): React.ReactElement => {
 				optional
 				searchable
 				searchPlaceholder="Buscar categoría..."
+				action={<CreateCategory mode="embedded" />}
 			/>
 
 			<FormField
