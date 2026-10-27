@@ -25,6 +25,7 @@ type SavingsGoalsInfo = {
 type SavingsGoalService = {
 	getSavingsGoals: (params?: SavingsGoalParams) => Promise<SavingsGoalsResponse>;
 	getSavingsGoal: (id: string) => Promise<SavingsGoal>;
+	getSavingsGoalByAccountId: (accountId: string) => Promise<SavingsGoal>;
 	createSavingsGoal: (payload: CreateSavingsGoalPayload) => Promise<SavingsGoal>;
 	updateSavingsGoal: (id: string, payload: UpdateSavingsGoalPayload) => Promise<SavingsGoal>;
 	deleteSavingsGoal: (id: string) => Promise<void>;

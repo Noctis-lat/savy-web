@@ -115,9 +115,11 @@ export const router = createBrowserRouter([
 								lazy: () => import("@/screens/app/goals").then((m) => ({ Component: m.Goals })),
 							},
 							{
-								path: ROUTES.APP.GOALS.NEW,
+								path: ROUTES.APP.GOALS.DETAIL,
 								lazy: () =>
-									import("@/screens/app/goals/new").then((m) => ({ Component: m.GoalNew })),
+									import("@/screens/app/goals/goals-detail").then((m) => ({
+										Component: m.GoalsDetail,
+									})),
 							},
 							{
 								path: ROUTES.APP.SUBSCRIPTIONS.ROOT,

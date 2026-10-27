@@ -17,6 +17,7 @@ type Account = {
 	color: string | undefined;
 	icon: string | undefined;
 	isActive: boolean;
+	isSavingGoal: boolean;
 	createdAt: string;
 	updatedAt: string;
 };
@@ -82,6 +83,7 @@ type CreateAccountPayload = {
 	balance?: number;
 	color?: string;
 	icon?: string;
+	isSavingGoal?: boolean;
 };
 
 type UpdateAccountPayload = {
@@ -91,6 +93,7 @@ type UpdateAccountPayload = {
 	balance?: number;
 	color?: string;
 	icon?: string;
+	isSavingGoal?: boolean;
 };
 
 type AccountTransactionsParams = {

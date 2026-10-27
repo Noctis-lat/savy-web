@@ -13,6 +13,13 @@ export const savingsGoalService: SavingsGoalService = {
 		return unwrap<SavingsGoal>(response);
 	},
 
+	getSavingsGoalByAccountId: async (accountId: string): Promise<SavingsGoal> => {
+		const response = await httpClient.get<APIResponse<SavingsGoal>>(
+			`/savings-goals/account/${accountId}`,
+		);
+		return unwrap<SavingsGoal>(response);
+	},
+
 	createSavingsGoal: async (payload: CreateSavingsGoalPayload): Promise<SavingsGoal> => {
 		const response = await httpClient.post<APIResponse<SavingsGoal>>("/savings-goals", payload);
 		return unwrap<SavingsGoal>(response);

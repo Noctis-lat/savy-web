@@ -35,7 +35,6 @@ export const ROUTES = {
 		GOALS: {
 			ROOT: "/app/goals",
 			DETAIL: "/app/goals/:goal_id",
-			NEW: "/app/goals/new",
 		},
 		SUBSCRIPTIONS: {
 			ROOT: "/app/subscriptions",
