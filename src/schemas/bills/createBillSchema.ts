@@ -7,6 +7,7 @@ export const createBillSchema = z
 		amount: z.number().min(1, "El monto es obligatorio"),
 		frequency: z.enum(["WEEKLY", "BIWEEKLY", "MONTHLY", "YEARLY"]),
 		billingDays: z.array(z.number().int()),
+		billingDate: z.string().optional(),
 		accountId: z.string().min(1, "La cuenta es obligatoria"),
 		categoryId: z.string().optional(),
 		url: z.string().url("URL inválida").optional().or(z.literal("")),
@@ -14,13 +15,23 @@ export const createBillSchema = z
 		icon: z.string().optional(),
 	})
 	.superRefine((data, ctx) => {
-		const billingDaysError = getBillingDaysError(data.frequency, data.billingDays);
-		if (billingDaysError) {
-			ctx.addIssue({
-				code: z.ZodIssueCode.custom,
-				message: billingDaysError,
-				path: ["billingDays"],
-			});
+		if (data.frequency === "YEARLY") {
+			if (!data.billingDate) {
+				ctx.addIssue({
+					code: z.ZodIssueCode.custom,
+					message: "Selecciona una fecha de cobro",
+					path: ["billingDate"],
+				});
+			}
+		} else {
+			const billingDaysError = getBillingDaysError(data.frequency, data.billingDays);
+			if (billingDaysError) {
+				ctx.addIssue({
+					code: z.ZodIssueCode.custom,
+					message: billingDaysError,
+					path: ["billingDays"],
+				});
+			}
 		}
 	});
 

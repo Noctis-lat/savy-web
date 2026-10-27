@@ -30,7 +30,10 @@ export const CreateBillSubmit = ({
 			name: data.name,
 			amount: data.amount,
 			frequency: data.frequency,
-			billingDays: data.billingDays,
+			billingDays:
+				data.frequency === "YEARLY" && data.billingDate
+					? [new Date(data.billingDate).getDate()]
+					: data.billingDays,
 			accountId: data.accountId,
 			categoryId: data.categoryId || undefined,
 			url: data.url || undefined,

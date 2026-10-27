@@ -5,6 +5,7 @@ export const CREATE_SUBSCRIPTION_DEFAULT_VALUES: CreateSubscriptionFormValues = 
 	amount: 0,
 	frequency: "MONTHLY",
 	billingDays: [],
+	billingDate: undefined,
 	accountId: "",
 	categoryId: undefined,
 	url: "",

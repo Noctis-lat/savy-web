@@ -24,6 +24,10 @@ export const EditPayment = ({ recurringExpense }: EditPaymentProps): React.React
 		amount: recurringExpense.amount,
 		frequency: recurringExpense.frequency,
 		billingDays: recurringExpense.billingDays,
+		billingDate:
+			recurringExpense.frequency === "YEARLY" && recurringExpense.billingDays[0]
+				? `${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, "0")}-${String(recurringExpense.billingDays[0]).padStart(2, "0")}`
+				: undefined,
 		accountId: recurringExpense.accountId,
 		categoryId: recurringExpense.categoryId,
 		url: recurringExpense.url,

@@ -1,5 +1,6 @@
 import type React from "react";
 import { Controller, useFormContext, useWatch } from "react-hook-form";
+import { FormDatePicker } from "@/components/design-system/patterns/forms/form-date-picker";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import {
@@ -13,6 +14,7 @@ import { toggleBillingDay } from "@/utils/recurring-expenses/toggleBillingDay";
 type BillingScheduleValues = {
 	frequency: RecurringExpenseFrequency;
 	billingDays: number[];
+	billingDate?: string;
 };
 
 const BILLING_DAY_LABELS: Record<RecurringExpenseFrequency, string> = {
@@ -33,6 +35,8 @@ export const BillingScheduleFields = (): React.ReactElement => {
 
 	const frequency = useWatch({ control, name: "frequency" });
 	const billingDays = useWatch({ control, name: "billingDays" });
+
+	const isYearly = frequency === "YEARLY";
 
 	const dayOptions =
 		frequency === "WEEKLY"
@@ -73,6 +77,10 @@ export const BillingScheduleFields = (): React.ReactElement => {
 												shouldDirty: true,
 												shouldValidate: true,
 											});
+											setValue("billingDate", undefined, {
+												shouldDirty: true,
+												shouldValidate: true,
+											});
 										}}
 									>
 										{option.label}
@@ -84,50 +92,60 @@ export const BillingScheduleFields = (): React.ReactElement => {
 				/>
 			</div>
 
-			<div className="flex flex-col gap-2">
-				<Label className="flex items-center gap-2 px-1">
-					{BILLING_DAY_LABELS[frequency]}
-					<span className="text-primary">*</span>
-				</Label>
-				<Controller
-					control={control}
-					name="billingDays"
-					render={({ field }) => (
-						<fieldset
-							aria-label={BILLING_DAY_LABELS[frequency]}
-							className="m-0 grid min-w-0 grid-cols-7 gap-1 border-0 p-0"
-						>
-							{dayOptions.map((option) => {
-								const isSelected = field.value.includes(option.value);
-								return (
-									<Button
-										key={option.value}
-										type="button"
-										aria-pressed={isSelected}
-										variant={isSelected ? "default" : "outline"}
-										size="sm"
-										className="h-8 px-0 text-xs tabular-nums"
-										onClick={() =>
-											field.onChange(toggleBillingDay(field.value, option.value, frequency))
-										}
-									>
-										{option.label}
-									</Button>
-								);
-							})}
-						</fieldset>
-					)}
+			{isYearly ? (
+				<FormDatePicker
+					mode="single"
+					name="billingDate"
+					form={scheduleForm}
+					label="Fecha de cobro"
+					required
 				/>
-				{billingDaysError ? (
-					<span className="text-sm text-red-500">{String(billingDaysError)}</span>
-				) : (
-					billingDays.length > 0 && (
-						<span className="px-1 text-xs text-muted-foreground">
-							{formatBillingDays(frequency, billingDays)}
-						</span>
-					)
-				)}
-			</div>
+			) : (
+				<div className="flex flex-col gap-2">
+					<Label className="flex items-center gap-2 px-1">
+						{BILLING_DAY_LABELS[frequency]}
+						<span className="text-primary">*</span>
+					</Label>
+					<Controller
+						control={control}
+						name="billingDays"
+						render={({ field }) => (
+							<fieldset
+								aria-label={BILLING_DAY_LABELS[frequency]}
+								className="m-0 grid min-w-0 grid-cols-7 gap-1 border-0 p-0"
+							>
+								{dayOptions.map((option) => {
+									const isSelected = field.value.includes(option.value);
+									return (
+										<Button
+											key={option.value}
+											type="button"
+											aria-pressed={isSelected}
+											variant={isSelected ? "default" : "outline"}
+											size="sm"
+											className="h-8 px-0 text-xs tabular-nums"
+											onClick={() =>
+												field.onChange(toggleBillingDay(field.value, option.value, frequency))
+											}
+										>
+											{option.label}
+										</Button>
+									);
+								})}
+							</fieldset>
+						)}
+					/>
+					{billingDaysError ? (
+						<span className="text-sm text-red-500">{String(billingDaysError)}</span>
+					) : (
+						billingDays.length > 0 && (
+							<span className="px-1 text-xs text-muted-foreground">
+								{formatBillingDays(frequency, billingDays)}
+							</span>
+						)
+					)}
+				</div>
+			)}
 		</div>
 	);
 };

@@ -11,6 +11,7 @@ export const updateRecurringExpenseSchema = z
 		amount: z.number().min(1).optional(),
 		frequency: z.enum(["WEEKLY", "BIWEEKLY", "MONTHLY", "YEARLY"]).optional(),
 		billingDays: z.array(z.number().int()).optional(),
+		billingDate: z.string().optional(),
 		accountId: z.string().optional(),
 		categoryId: z.string().optional(),
 		url: z.string().url("URL inválida").optional().or(z.literal("")),
@@ -18,7 +19,15 @@ export const updateRecurringExpenseSchema = z
 		icon: z.string().optional(),
 	})
 	.superRefine((data, ctx) => {
-		if (data.frequency && data.billingDays) {
+		if (data.frequency === "YEARLY") {
+			if (data.billingDate === "") {
+				ctx.addIssue({
+					code: z.ZodIssueCode.custom,
+					message: "Selecciona una fecha de cobro",
+					path: ["billingDate"],
+				});
+			}
+		} else if (data.frequency && data.billingDays && data.billingDays.length > 0) {
 			const billingDaysError = getBillingDaysError(data.frequency, data.billingDays);
 			if (billingDaysError) {
 				ctx.addIssue({

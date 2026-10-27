@@ -5,6 +5,7 @@ export const CREATE_RECURRING_EXPENSE_DEFAULT_VALUES: CreateRecurringExpenseForm
 	amount: 0,
 	frequency: "MONTHLY",
 	billingDays: [],
+	billingDate: undefined,
 	accountId: "",
 	categoryId: undefined,
 	url: "",

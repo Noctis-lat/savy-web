@@ -5,6 +5,7 @@ export const CREATE_BILL_DEFAULT_VALUES: CreateBillFormValues = {
 	amount: 0,
 	frequency: "MONTHLY",
 	billingDays: [],
+	billingDate: undefined,
 	accountId: "",
 	categoryId: undefined,
 	url: "",
