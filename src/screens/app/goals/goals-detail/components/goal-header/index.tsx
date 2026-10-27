@@ -1,8 +1,9 @@
-import { CalendarClock } from "lucide-react";
+import { CalendarClock, Flag, Target } from "lucide-react";
 import { DynamicIcon, type IconName } from "lucide-react/dynamic";
 import type React from "react";
 import { ScaleFadeIn } from "@/components/design-system/patterns/animations/scale-fade-in";
 import { GaugeChart } from "@/components/design-system/patterns/data-display/gauge-chart";
+import { MiniGauge } from "@/components/design-system/patterns/data-display/mini-gauge";
 import { GlassCard } from "@/components/design-system/patterns/glass-card";
 import { Badge } from "@/components/ui/badge";
 import { formatCurrency } from "@/utils/formatters/formatCurrency";
@@ -52,6 +53,10 @@ export const GoalHeader = ({ savingsGoal }: GoalHeaderProps): React.ReactElement
 									<h1 className="text-lg font-semibold text-foreground">{savingsGoal.name}</h1>
 									{savingsGoal.isCompleted && <Badge variant="success">Completada</Badge>}
 								</div>
+								<div className="flex flex-row items-center gap-1.5 text-muted-foreground">
+									<span>Objetivo {formatCurrency(savingsGoal.targetAmount)}</span>
+									<Flag className="size-4" />
+								</div>
 								{savingsGoal.deadline && (
 									<div className="flex flex-row items-center gap-1.5 text-muted-foreground">
 										<CalendarClock className="size-3.5" />
@@ -62,41 +67,13 @@ export const GoalHeader = ({ savingsGoal }: GoalHeaderProps): React.ReactElement
 								)}
 							</div>
 						</div>
-
-						<div className="flex flex-col gap-3 sm:mt-2">
-							<div className="flex flex-row items-baseline gap-2">
-								<span className="text-sm text-muted-foreground">Ahorrado</span>
-								<span className="text-lg font-semibold tabular-nums text-foreground">
-									{formatCurrency(savingsGoal.currentAmount)}
-								</span>
-							</div>
-							<div className="flex flex-row items-baseline gap-2">
-								<span className="text-sm text-muted-foreground">Meta</span>
-								<span className="text-lg font-semibold tabular-nums text-foreground">
-									{formatCurrency(savingsGoal.targetAmount)}
-								</span>
-							</div>
-							<div className="flex flex-row items-baseline gap-2">
-								<span className="text-sm text-muted-foreground">
-									{isComplete ? "Sobrante" : "Restante"}
-								</span>
-								<span
-									className={merge(
-										"text-lg font-semibold tabular-nums",
-										isComplete ? "text-primary" : "text-foreground",
-									)}
-								>
-									{formatCurrency(Math.abs(savingsGoal.targetAmount - savingsGoal.currentAmount))}
-								</span>
-							</div>
-						</div>
 					</div>
 
 					<div className="flex shrink-0 justify-center sm:ml-auto">
-						<GaugeChart
+						<MiniGauge
 							value={savingsGoal.currentAmount}
 							max={savingsGoal.targetAmount}
-							label={isComplete ? "Meta alcanzada" : "Progreso"}
+							label={isComplete ? "Meta alcanzada" : "En progreso"}
 							formatValue={formatCurrency}
 							color={goalColor}
 						/>
