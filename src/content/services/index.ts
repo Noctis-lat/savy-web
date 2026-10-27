@@ -9,5 +9,8 @@ export { dashboardKeys } from "./dashboard";
 export { incomeSourceKeys } from "./income-sources";
 export { loanKeys } from "./loans";
 export { profileKeys } from "./profile";
+export { recurringExpenseKeys } from "./recurring-expenses";
 export { savingsGoalKeys } from "./savings-goals";
+export { serviceKeys } from "./services";
+export { subscriptionKeys } from "./subscriptions";
 export { transactionKeys } from "./transactions";
