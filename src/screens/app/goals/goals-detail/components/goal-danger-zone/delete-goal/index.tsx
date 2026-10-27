@@ -36,7 +36,7 @@ export const DeleteGoal = ({ savingsGoal }: DeleteGoalProps): React.ReactElement
 		>
 			<Button variant={"destructive"}>
 				<Trash2 />
-				Borrar Meta
+				Eliminar
 			</Button>
 		</ConfirmDialog>
 	);
