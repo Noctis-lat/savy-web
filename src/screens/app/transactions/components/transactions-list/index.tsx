@@ -47,33 +47,35 @@ export const TransactionsList = (): React.ReactElement => {
 	}
 
 	return (
-		<GlassCard className=" p-4 flex flex-col gap-4">
-			<div className="flex items-center justify-between">
-				<div className="flex items-center gap-2">
-					<ArrowUpDown className="size-4 text-primary" />
-					<h3 className="text-sm font-semibold text-foreground">Transacciones </h3>
+		<ScaleFadeIn>
+			<GlassCard className=" p-4 flex flex-col gap-4">
+				<div className="flex items-center justify-between">
+					<div className="flex items-center gap-2">
+						<ArrowUpDown className="size-4 text-primary" />
+						<h3 className="text-sm font-semibold text-foreground">Transacciones </h3>
+					</div>
 				</div>
-			</div>
 
-			<StaggerContainer className="flex flex-col">
-				{transactions.map((transaction) => (
-					<TransactionRow
-						key={transaction.id}
-						transaction={transaction}
-						locale="es-MX"
-						editable
-					/>
-				))}
-			</StaggerContainer>
+				<StaggerContainer className="flex flex-col">
+					{transactions.map((transaction) => (
+						<TransactionRow
+							key={transaction.id}
+							transaction={transaction}
+							locale="es-MX"
+							editable
+						/>
+					))}
+				</StaggerContainer>
 
-			<TablePagination
-				page={page ?? 1}
-				totalPages={totalPages ?? 0}
-				onPageChange={handlePageChange}
-				pageSize={limit}
-				pageSizeOptions={[5, 10, 20, 50]}
-				onPageSizeChange={handlePageSizeChange}
-			/>
-		</GlassCard>
+				<TablePagination
+					page={page ?? 1}
+					totalPages={totalPages ?? 0}
+					onPageChange={handlePageChange}
+					pageSize={limit}
+					pageSizeOptions={[5, 10, 20, 50]}
+					onPageSizeChange={handlePageSizeChange}
+				/>
+			</GlassCard>
+		</ScaleFadeIn>
 	);
 };
