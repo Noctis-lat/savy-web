@@ -48,10 +48,7 @@ export const GoalSkeleton = (): React.ReactElement => {
 			</GlassCard>
 
 			<div className="flex flex-row gap-4">
-				<SectionCard
-					title=""
-					icon={() => null}
-				>
+				<SectionCard title="">
 					<div className="flex flex-col gap-4">
 						<Skeleton className="h-6 w-full rounded-full" />
 						<div className="flex flex-col gap-2 border-t border-border/30 pt-3">
@@ -71,10 +68,7 @@ export const GoalSkeleton = (): React.ReactElement => {
 					</div>
 				</SectionCard>
 
-				<SectionCard
-					title=""
-					icon={() => null}
-				>
+				<SectionCard title="">
 					<div className="flex flex-col gap-3">
 						<div className="flex items-center justify-between gap-3">
 							<Skeleton className="h-9 w-full max-w-sm rounded-md" />

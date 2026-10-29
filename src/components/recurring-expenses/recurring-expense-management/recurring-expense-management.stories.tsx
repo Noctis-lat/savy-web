@@ -20,8 +20,10 @@ const meta = {
 		entityLabel: "suscripción",
 		isActive: true,
 		onDeactivate: () => undefined,
+		onActivate: () => undefined,
 		onDelete: () => undefined,
 		isDeactivating: false,
+		isActivating: false,
 		isDeleting: false,
 	},
 	render: (args) => (
