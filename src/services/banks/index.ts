@@ -50,17 +50,28 @@ export const bankService: BankService = {
 		}));
 	},
 
-	getBankCreditCards: async (id: string): Promise<BankCreditCard[]> => {
-		const response = await httpClient.get<APIResponse<BankCreditCard[]>>(
+	getBankCreditCards: async (id: string): Promise<CreditCard[]> => {
+		const response = await httpClient.get<APIResponse<BankCreditCardRaw[]>>(
 			`/banks/${id}/credit-cards`,
 		);
-		const raw = unwrap<BankCreditCard[]>(response);
-		// Normalize Decimal-as-string fields from Prisma
+		const raw = unwrap<BankCreditCardRaw[]>(response);
+		// Map BankCreditCardResponseDto → CreditCard (canonical entity).
+		// TODO: remove this mapping when backend returns CreditCardResponseDto.
 		return raw.map((card) => ({
-			...card,
-			balance: Number(card.balance),
+			id: card.id,
+			accountId: card.accountId,
+			name: card.name,
+			color: card.color,
+			icon: card.icon,
 			creditLimit: Number(card.creditLimit),
+			cutDay: card.cutDay,
+			paymentDueDays: card.paymentDueDays,
+			paymentDay: card.paymentDay,
 			interestRate: Number(card.interestRate),
+			availableCredit: Number(card.availableCredit),
+			currentBalance: Number(card.balance),
+			createdAt: card.createdAt,
+			updatedAt: card.updatedAt,
 		}));
 	},
 

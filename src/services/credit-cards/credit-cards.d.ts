@@ -1,33 +1,65 @@
-// ====================== ENTITY =========================
+//* ====================== ENTITY =========================
 
 type CreditCard = {
 	id: string;
 	accountId: string;
+	name: string;
+	color: string | null;
+	icon: string | null;
 	creditLimit: number;
 	cutDay: number;
-	paymentDay: number;
+	paymentDueDays?: number;
+	paymentDay?: number;
+	overLimitTolerance?: number;
 	interestRate: number;
-	noInterestMonths: number;
+	availableCredit: number;
+	currentBalance: number;
+	nextPaymentDueDate?: string | null;
 	createdAt: string;
 	updatedAt: string;
 };
 
-// ====================== SERVICE =========================
+type CreditCardInfo = {
+	totalAvailableCredit: number;
+	totalNoInterestPayment: number;
+	totalMinPayment: number;
+	totalDebt: number;
+	total: number;
+};
+
+//* ====================== SERVICE =========================
 
 type CreditCardService = {
-	getCreditCards: (params?: CreditCardParams) => Promise<CreditCard[]>;
+	getCreditCards: (params?: CreditCardParams) => Promise<GetCreditCardsResponse>;
 	getCreditCard: (id: string) => Promise<CreditCard>;
 	createCreditCard: (payload: CreateCreditCardPayload) => Promise<CreditCard>;
 	updateCreditCard: (id: string, payload: UpdateCreditCardPayload) => Promise<CreditCard>;
 	deleteCreditCard: (id: string) => Promise<void>;
 };
 
-// ====================== METHOD TYPES =========================
+//* ====================== GET CREDIT CARDS =========================
 
 type CreditCardParams = {
+	search?: string;
+	isActive?: boolean;
+	bankId?: string;
+	hasUnpaidStatement?: boolean;
 	sortBy?: "createdAt" | "creditLimit";
 	order?: "asc" | "desc";
+	page?: number;
+	perPage?: number;
 };
+
+type GetCreditCardsResponse = {
+	data: CreditCard[];
+	info: CreditCardInfo;
+	page: number;
+	perPage: number;
+	total: number;
+	totalPages: number;
+};
+
+//* ====================== CREATE CREDIT CARD =========================
 
 type CreateCreditCardPayload = {
 	accountId: string;
@@ -35,13 +67,16 @@ type CreateCreditCardPayload = {
 	cutDay: number;
 	paymentDay: number;
 	interestRate: number;
-	noInterestMonths?: number;
 };
+
+//* ====================== UPDATE CREDIT CARD =========================
 
 type UpdateCreditCardPayload = {
 	creditLimit?: number;
 	cutDay?: number;
 	paymentDay?: number;
 	interestRate?: number;
-	noInterestMonths?: number;
+	name?: string;
+	color?: string;
+	icon?: string;
 };

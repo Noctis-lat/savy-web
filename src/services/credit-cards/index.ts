@@ -1,11 +1,11 @@
 import { httpClient, unwrap } from "../http-client";
 
 export const creditCardService: CreditCardService = {
-	getCreditCards: async (params?: CreditCardParams): Promise<CreditCard[]> => {
-		const response = await httpClient.get<APIResponse<CreditCard[]>>("/credit-cards", {
+	getCreditCards: async (params?: CreditCardParams): Promise<GetCreditCardsResponse> => {
+		const response = await httpClient.get<APIResponse<GetCreditCardsResponse>>("/credit-cards", {
 			params,
 		});
-		return unwrap<CreditCard[]>(response);
+		return unwrap<GetCreditCardsResponse>(response);
 	},
 
 	getCreditCard: async (id: string): Promise<CreditCard> => {

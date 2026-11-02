@@ -26,16 +26,25 @@ type BankInfo = {
 	}
 };
 
-type BankCreditCard = {
+// The backend's /banks/:id/credit-cards endpoint returns this shape
+// (BankCreditCardResponseDto). It differs from CreditCard: `balance` instead
+// of `currentBalance`, Decimals serialized as strings, and missing
+// `overLimitTolerance`/`nextPaymentDueDate`. Mapped to CreditCard in the service.
+// TODO: remove when backend returns CreditCardResponseDto from this endpoint.
+type BankCreditCardRaw = {
 	id: string;
 	accountId: string;
 	accountName: string;
-	balance: number;
-	creditLimit: number;
+	name: string;
+	color: string | null;
+	icon: string | null;
+	balance: string | number;
+	creditLimit: string | number;
 	cutDay: number;
-	paymentDay: number;
-	interestRate: number;
-	noInterestMonths: number;
+	paymentDueDays: number;
+	paymentDay: number | null;
+	interestRate: string | number;
+	availableCredit: string | number;
 	createdAt: string;
 	updatedAt: string;
 };
@@ -72,7 +81,7 @@ type BankService = {
 	deleteBank: (id: string) => Promise<void>;
 	getBankIncomeVsExpenses: (id: string, period: PeriodType) => Promise<IncomeVsExpenses>;
 	getBankAccounts: (id: string) => Promise<import("../accounts/accounts").Account[]>;
-	getBankCreditCards: (id: string) => Promise<BankCreditCard[]>;
+	getBankCreditCards: (id: string) => Promise<CreditCard[]>;
 	getBankLoans: (id: string) => Promise<BankLoan[]>;
 };
 
