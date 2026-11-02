@@ -8,13 +8,16 @@ type CreditCard = {
 	icon: string | null;
 	creditLimit: number;
 	cutDay: number;
-	paymentDueDays?: number;
+	paymentDueDays: number;
+	/** @deprecated Use `paymentDueDays` or `currentCyclePaymentDueDate` instead. */
 	paymentDay?: number;
 	overLimitTolerance?: number;
 	interestRate: number;
 	availableCredit: number;
 	currentBalance: number;
 	nextPaymentDueDate?: string | null;
+	currentCycleCutDate: string;
+	currentCyclePaymentDueDate: string;
 	createdAt: string;
 	updatedAt: string;
 };
