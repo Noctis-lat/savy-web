@@ -8,12 +8,13 @@ import { useQueryCreditCards } from "@/hooks/credit-cards/useQueryCreditCards";
 import { CreditsFilters } from "./components/credits-filters";
 import { CreditsKpis } from "./components/credits-kpis";
 import { CreditsList } from "./components/credits-list";
+import { CreditsSkeleton } from "./components/credits-skeleton";
 
 export const Credits = (): React.ReactElement => {
 	const { creditCardsInfo, isLoading } = useQueryCreditCards();
 
 	if (isLoading) {
-		return <div>loading...</div>;
+		return <CreditsSkeleton />;
 	}
 
 	if (!creditCardsInfo) {

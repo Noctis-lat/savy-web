@@ -57,6 +57,7 @@ export const ROUTES = {
 		CREDITS: {
 			ROOT: "/app/credits",
 			DETAIL: "/app/credits/:credit_id",
+			CARDSTATEMENT_DETAIL: "/app/credits/:credit_id/card-statement/:card_statement_id",
 		},
 		LOANS: {
 			ROOT: "/app/loans",
