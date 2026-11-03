@@ -10,6 +10,7 @@ export const useDeleteCreditCard = () => {
 		mutationFn: (id: string) => creditCardService.deleteCreditCard(id),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: [creditCardKeys.creditCards] });
+			queryClient.invalidateQueries({ queryKey: [creditCardKeys.creditCard] });
 			queryClient.invalidateQueries({ queryKey: [accountKeys.accounts] });
 			queryClient.invalidateQueries({ queryKey: [bankKeys.bankCreditCards] });
 			queryClient.invalidateQueries({ queryKey: [bankKeys.bankLoans] });

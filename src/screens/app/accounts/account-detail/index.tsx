@@ -1,9 +1,12 @@
 import type React from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { ROUTES } from "@/app/router/routes";
 import { AccountEdit } from "@/components/accounts/account-edit";
+import { DangerZone } from "@/components/design-system/patterns/feedback/danger-zone";
 import { Empty } from "@/components/design-system/patterns/feedback/empty";
 import { Screen } from "@/components/design-system/primitives/screen";
+import { useDeleteAccount } from "@/hooks/accounts/useDeleteAccount";
+import { useDeleteAccountPermanent } from "@/hooks/accounts/useDeleteAccountPermanent";
 import { useQueryAccount } from "@/hooks/accounts/useQueryAccount";
 import { useQueryBank } from "@/hooks/banks/useQueryBank";
 import { buildRoute } from "@/utils/routing/buildRoute";
@@ -15,9 +18,12 @@ import { AccountTransactions } from "./components/account-transactions";
 
 export const AccountDetail = (): React.ReactElement => {
 	const { account_id } = useParams<{ account_id: string }>();
+	const navigate = useNavigate();
 
 	const { account, isLoading } = useQueryAccount(account_id);
 	const { bank } = useQueryBank(account?.bankId);
+	const { mutate: deleteAccount, isPending: isDeactivating } = useDeleteAccount();
+	const { mutate: deleteAccountPermanent, isPending: isDeleting } = useDeleteAccountPermanent();
 
 	const bankRoute = buildRoute(ROUTES.APP.BANKS.DETAIL, { id: account?.bankId as string });
 
@@ -49,6 +55,19 @@ export const AccountDetail = (): React.ReactElement => {
 				<AccountCategories account={account} />
 			</div>
 			<AccountTransactions account={account} />
+			<DangerZone
+				entityName={account.name}
+				entityLabel="la cuenta"
+				isActive={account.isActive}
+				onDeactivate={() => deleteAccount(account.id)}
+				onPermanentDelete={() =>
+					deleteAccountPermanent(account.id, {
+						onSuccess: () => navigate(ROUTES.APP.ACCOUNTS.ROOT),
+					})
+				}
+				isDeactivating={isDeactivating}
+				isDeleting={isDeleting}
+			/>
 		</Screen>
 	);
 };

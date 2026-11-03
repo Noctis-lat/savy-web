@@ -15,6 +15,7 @@ export const useDeleteAccount = ({ showErrorToast = true }: UseDeleteAccountOpti
 		mutationFn: (id: string) => accountService.deleteAccount(id),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: [accountKeys.accounts] });
+			queryClient.invalidateQueries({ queryKey: [accountKeys.account] });
 			queryClient.invalidateQueries({ queryKey: [bankKeys.banks] });
 			queryClient.invalidateQueries({ queryKey: [bankKeys.bankAccounts] });
 			queryClient.invalidateQueries({ queryKey: [dashboardKeys.dashboardSummary] });

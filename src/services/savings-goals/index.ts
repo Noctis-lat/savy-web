@@ -39,4 +39,7 @@ export const savingsGoalService: SavingsGoalService = {
 	deleteSavingsGoal: async (id: string): Promise<void> => {
 		await httpClient.delete(`/savings-goals/${id}`);
 	},
+	deleteSavingsGoalPermanent: async (id: string): Promise<void> => {
+		await httpClient.delete(`/savings-goals/${id}/permanent`);
+	},
 };

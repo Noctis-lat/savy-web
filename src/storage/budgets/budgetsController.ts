@@ -42,7 +42,7 @@ export const useBudgetsController = create<BudgetsController>()((set) => ({
 		set((state) => ({
 			budgetsFilters: {
 				...state.budgetsFilters,
-				isActive: activeOnly ? true : undefined,
+				isActive: activeOnly ? true : false,
 				page: 1,
 			},
 		}));

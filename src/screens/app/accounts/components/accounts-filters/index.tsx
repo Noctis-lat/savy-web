@@ -69,7 +69,7 @@ export const AccountsFilters = (): React.ReactElement => {
 			>
 				<div className="flex flex-col gap-2 sm:flex-row">
 					<FilterToggle
-						label={showingAll ? "Mostrando todas" : "Mostrar solo activas"}
+						label={showingAll ? "Inactivas" : "Activas"}
 						icon={showingAll ? LayoutGrid : CheckCircle2}
 						checked={showingAll}
 						onChange={(checked) => setIsActive(!checked)}

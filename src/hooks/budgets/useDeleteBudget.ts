@@ -10,6 +10,7 @@ export const useDeleteBudget = () => {
 		mutationFn: (id: string) => budgetService.deleteBudget(id),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: [budgetKeys.budgets] });
+			queryClient.invalidateQueries({ queryKey: [budgetKeys.budget] });
 		},
 		onError: (error: unknown) => {
 			apiErrorToast(error, "Error al eliminar el presupuesto");

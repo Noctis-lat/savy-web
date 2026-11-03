@@ -2,9 +2,13 @@ import { Edit3 } from "lucide-react";
 import type React from "react";
 import { useNavigate, useParams } from "react-router";
 import { ROUTES } from "@/app/router/routes";
+import { DangerZone } from "@/components/design-system/patterns/feedback/danger-zone";
 import { Empty } from "@/components/design-system/patterns/feedback/empty";
 import { Screen } from "@/components/design-system/primitives/screen";
 import { Button } from "@/components/ui/button";
+import { useActivateBudget } from "@/hooks/budgets/useActivateBudget";
+import { useDeleteBudget } from "@/hooks/budgets/useDeleteBudget";
+import { useDeleteBudgetPermanent } from "@/hooks/budgets/useDeleteBudgetPermanent";
 import { useQueryBudget } from "@/hooks/budgets/useQueryBudget";
 import { buildRoute } from "@/utils/routing/buildRoute";
 import { BudgetHeader } from "./components/budget-header";
@@ -17,6 +21,9 @@ export const BudgetDetail = (): React.ReactElement => {
 	const { budget_id } = useParams<{ budget_id: string }>();
 	const navigate = useNavigate();
 	const { budget, isLoading } = useQueryBudget(budget_id);
+	const { mutate: deleteBudget, isPending: isDeactivating } = useDeleteBudget();
+	const { mutate: deleteBudgetPermanent, isPending: isDeleting } = useDeleteBudgetPermanent();
+	const { mutate: activateBudget, isPending: isReactivating } = useActivateBudget();
 
 	if (isLoading) {
 		return <BudgetSkeleton />;
@@ -50,6 +57,19 @@ export const BudgetDetail = (): React.ReactElement => {
 				<BudgetHistory budget={budget} />
 			</div>
 			<BudgetTransactions budget={budget} />
+			<DangerZone
+				entityName={budget.name}
+				entityLabel="el presupuesto"
+				isActive={budget.isActive}
+				onDeactivate={() => deleteBudget(budget.id)}
+				onReactivate={() => activateBudget(budget.id)}
+				onPermanentDelete={() =>
+					deleteBudgetPermanent(budget.id, { onSuccess: () => navigate(ROUTES.APP.BUDGETS.ROOT) })
+				}
+				isDeactivating={isDeactivating}
+				isReactivating={isReactivating}
+				isDeleting={isDeleting}
+			/>
 		</Screen>
 	);
 };

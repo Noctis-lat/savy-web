@@ -30,6 +30,9 @@ export const bankService: BankService = {
 	deleteBank: async (id: string): Promise<void> => {
 		await httpClient.delete(`/banks/${id}`);
 	},
+	deleteBankPermanent: async (id: string): Promise<void> => {
+		await httpClient.delete(`/banks/${id}/permanent`);
+	},
 
 	getBankIncomeVsExpenses: async (id: string, period: PeriodType): Promise<IncomeVsExpenses> => {
 		const response = await httpClient.get<APIResponse<IncomeVsExpenses>>(

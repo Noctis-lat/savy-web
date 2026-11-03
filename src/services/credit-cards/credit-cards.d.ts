@@ -41,6 +41,7 @@ type CreditCardService = {
 	createCreditCard: (payload: CreateCreditCardPayload) => Promise<CreditCard>;
 	updateCreditCard: (id: string, payload: UpdateCreditCardPayload) => Promise<CreditCard>;
 	deleteCreditCard: (id: string) => Promise<void>;
+	deleteCreditCardPermanent: (id: string) => Promise<void>;
 };
 
 //* ====================== GET CREDIT CARDS =========================

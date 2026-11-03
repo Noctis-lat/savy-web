@@ -53,7 +53,7 @@ export const BillsFilters = (): React.ReactElement => {
 			>
 				<div className="flex flex-col gap-2 sm:flex-row">
 					<FilterToggle
-						label={showingAll ? "Mostrando todos" : "Mostrar solo activos"}
+						label={showingAll ? "Inactivos" : "Activos"}
 						icon={showingAll ? LayoutGrid : CheckCircle2}
 						checked={showingAll}
 						onChange={(checked) => setIsActive(!checked)}

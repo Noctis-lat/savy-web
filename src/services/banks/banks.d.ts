@@ -91,6 +91,7 @@ type BankService = {
 	createBank: (payload: CreateBankPayload) => Promise<Bank>;
 	updateBank: (id: string, payload: UpdateBankPayload) => Promise<Bank>;
 	deleteBank: (id: string) => Promise<void>;
+	deleteBankPermanent: (id: string) => Promise<void>;
 	getBankIncomeVsExpenses: (id: string, period: PeriodType) => Promise<IncomeVsExpenses>;
 	getBankAccounts: (id: string) => Promise<import("../accounts/accounts").Account[]>;
 	getBankCreditCards: (id: string) => Promise<BankCreditCard[]>;

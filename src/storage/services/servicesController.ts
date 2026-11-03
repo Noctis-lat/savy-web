@@ -38,7 +38,7 @@ export const useServicesController = create<ServicesController>()((set) => ({
 		set((state) => ({
 			servicesFilters: {
 				...state.servicesFilters,
-				isActive: activeOnly ? true : undefined,
+				isActive: activeOnly ? true : false,
 				page: 1,
 			},
 		}));

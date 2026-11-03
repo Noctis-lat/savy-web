@@ -26,6 +26,17 @@ export const budgetService: BudgetService = {
 	deleteBudget: async (id: string): Promise<void> => {
 		await httpClient.delete(`/budgets/${id}`);
 	},
+	deleteBudgetPermanent: async (id: string): Promise<void> => {
+		await httpClient.delete(`/budgets/${id}/permanent`);
+	},
+	activateBudget: async (id: string): Promise<Budget> => {
+		const response = await httpClient.patch<APIResponse<Budget>>(`/budgets/${id}/activate`);
+		return unwrap<Budget>(response);
+	},
+	deactivateBudget: async (id: string): Promise<Budget> => {
+		const response = await httpClient.patch<APIResponse<Budget>>(`/budgets/${id}/deactivate`);
+		return unwrap<Budget>(response);
+	},
 
 	getBudgetProgress: async (id: string): Promise<BudgetProgress> => {
 		const response = await httpClient.get<APIResponse<BudgetProgress>>(`/budgets/${id}/progress`);

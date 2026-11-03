@@ -12,6 +12,7 @@ export const useDeleteSavingsGoal = () => {
 		onSuccess: () => {
 			toast.success(`Meta de ahorro eliminada exitosamente.`);
 			queryClient.invalidateQueries({ queryKey: [savingsGoalKeys.savingsGoals] });
+			queryClient.invalidateQueries({ queryKey: [savingsGoalKeys.savingsGoal] });
 			queryClient.invalidateQueries({ queryKey: [accountKeys.accounts] });
 			queryClient.invalidateQueries({ queryKey: [transactionKeys.transactions] });
 		},

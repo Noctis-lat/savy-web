@@ -37,4 +37,16 @@ export const incomeSourceService: IncomeSourceService = {
 	deleteIncomeSource: async (id: string): Promise<void> => {
 		await httpClient.delete(`/income-sources/${id}`);
 	},
+	activateIncomeSource: async (id: string): Promise<IncomeSource> => {
+		const response = await httpClient.patch<APIResponse<IncomeSource>>(
+			`/income-sources/${id}/activate`,
+		);
+		return unwrap<IncomeSource>(response);
+	},
+	deactivateIncomeSource: async (id: string): Promise<IncomeSource> => {
+		const response = await httpClient.patch<APIResponse<IncomeSource>>(
+			`/income-sources/${id}/deactivate`,
+		);
+		return unwrap<IncomeSource>(response);
+	},
 };

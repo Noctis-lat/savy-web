@@ -7,6 +7,7 @@ import { BankCard } from "@/components/banks/bank-card";
 import { Empty } from "@/components/design-system/patterns/feedback/empty";
 import { GlassCard } from "@/components/design-system/patterns/glass-card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { getAccountDetailRoute } from "@/content/accounts/accountDetailRoutes";
 import { useQueryBank } from "@/hooks/banks/useQueryBank";
 import { useQueryBankAccounts } from "@/hooks/banks/useQueryBankAccounts";
 import { useQueryBankCreditCards } from "@/hooks/banks/useQueryBankCreditCards";
@@ -95,7 +96,7 @@ export const BankDetailAccounts = ({ bankId }: BankDetailAccountsProps): React.R
 							bankName={bankName}
 							bankColor={bankColor}
 							creditCard={matchingCard}
-							onClick={() => navigate(`/app/accounts/${account.id}`)}
+							onClick={() => navigate(getAccountDetailRoute(account))}
 						/>
 					);
 				})}

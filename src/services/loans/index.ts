@@ -26,4 +26,7 @@ export const loanService: LoanService = {
 	deleteLoan: async (id: string): Promise<void> => {
 		await httpClient.delete(`/loans/${id}`);
 	},
+	deleteLoanPermanent: async (id: string): Promise<void> => {
+		await httpClient.delete(`/loans/${id}/permanent`);
+	},
 };

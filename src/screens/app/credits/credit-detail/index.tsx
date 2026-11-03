@@ -1,11 +1,15 @@
 import { CreditCardX } from "lucide-react";
 import type React from "react";
-import { useParams, useSearchParams } from "react-router";
+import { useNavigate, useParams, useSearchParams } from "react-router";
 import { ROUTES } from "@/app/router/routes";
 import { EditCreditCard } from "@/components/credit-cards/edit-credit-card";
 import { PayCreditCard } from "@/components/credit-cards/pay-credit-card";
+import { DangerZone } from "@/components/design-system/patterns/feedback/danger-zone";
 import { Empty } from "@/components/design-system/patterns/feedback/empty";
 import { Screen } from "@/components/design-system/primitives/screen";
+import { useQueryAccount } from "@/hooks/accounts/useQueryAccount";
+import { useDeleteCreditCard } from "@/hooks/credit-cards/useDeleteCreditCard";
+import { useDeleteCreditCardPermanent } from "@/hooks/credit-cards/useDeleteCreditCardPermanent";
 import { useQueryCreditCard } from "@/hooks/credit-cards/useQueryCreditCard";
 import { CreditDetailHeader } from "./components/credit-detail-header";
 import { CreditDetailSkeleton } from "./components/credit-detail-skeleton";
@@ -17,8 +21,13 @@ export const CreditDetail = (): React.ReactElement => {
 	const { credit_id } = useParams<{ credit_id: string }>();
 	const [searchParams] = useSearchParams();
 	const byAccountId = searchParams.get("by") === "account_id";
+	const navigate = useNavigate();
 
 	const { creditCard, isLoading } = useQueryCreditCard(credit_id, byAccountId);
+	const { account } = useQueryAccount(creditCard?.accountId);
+	const { mutate: deleteCreditCard, isPending: isDeactivating } = useDeleteCreditCard();
+	const { mutate: deleteCreditCardPermanent, isPending: isDeleting } =
+		useDeleteCreditCardPermanent();
 
 	if (isLoading) {
 		return <CreditDetailSkeleton />;
@@ -55,6 +64,19 @@ export const CreditDetail = (): React.ReactElement => {
 				<CreditTransactions creditCard={creditCard} />
 				<CreditStatements creditCard={creditCard} />
 			</div>
+			<DangerZone
+				entityName={creditCard.name}
+				entityLabel="la tarjeta"
+				isActive={account?.isActive ?? true}
+				onDeactivate={() => deleteCreditCard(creditCard.id)}
+				onPermanentDelete={() =>
+					deleteCreditCardPermanent(creditCard.id, {
+						onSuccess: () => navigate(ROUTES.APP.CREDITS.ROOT),
+					})
+				}
+				isDeactivating={isDeactivating}
+				isDeleting={isDeleting}
+			/>
 		</Screen>
 	);
 };

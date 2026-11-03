@@ -34,6 +34,8 @@ type IncomeSourceService = {
 	bulkCreateIncomeSources: (payload: { sources: CreateIncomeSourcePayload[] }) => Promise<BulkCreateResponse>;
 	updateIncomeSource: (id: string, payload: UpdateIncomeSourcePayload) => Promise<IncomeSource>;
 	deleteIncomeSource: (id: string) => Promise<void>;
+	activateIncomeSource: (id: string) => Promise<IncomeSource>;
+	deactivateIncomeSource: (id: string) => Promise<IncomeSource>;
 };
 
 // ====================== METHOD TYPES =========================

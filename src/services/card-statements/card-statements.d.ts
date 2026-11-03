@@ -96,6 +96,7 @@ type CardStatementService = {
 	createCardStatement: (payload: CreateCardStatementPayload) => Promise<CardStatement>;
 	updateCardStatement: (id: string, payload: UpdateCardStatementPayload) => Promise<CardStatement>;
 	deleteCardStatement: (id: string) => Promise<void>;
+	deleteCardStatementPermanent: (id: string) => Promise<void>;
 };
 
 // ====================== METHOD TYPES =========================

@@ -52,4 +52,7 @@ export const accountService: AccountService = {
 	deleteAccount: async (id: string): Promise<void> => {
 		await httpClient.delete(`/accounts/${id}`);
 	},
+	deleteAccountPermanent: async (id: string): Promise<void> => {
+		await httpClient.delete(`/accounts/${id}/permanent`);
+	},
 };

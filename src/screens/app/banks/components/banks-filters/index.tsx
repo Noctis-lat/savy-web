@@ -51,7 +51,7 @@ export const BanksFilters = (): React.ReactElement => {
 						onChange={handleSortChange}
 					/>
 					<FilterToggle
-						label={activeOnly ? "Solo activos" : "Todos"}
+						label={activeOnly ? "Activos" : "Inactivos"}
 						icon={activeOnly ? CheckCircle2 : LayoutGrid}
 						checked={activeOnly}
 						onChange={setActiveOnly}

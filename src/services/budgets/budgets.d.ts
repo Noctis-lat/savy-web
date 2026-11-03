@@ -48,6 +48,9 @@ type BudgetService = {
 	createBudget: (payload: CreateBudgetPayload) => Promise<Budget>;
 	updateBudget: (id: string, payload: UpdateBudgetPayload) => Promise<Budget>;
 	deleteBudget: (id: string) => Promise<void>;
+	deleteBudgetPermanent: (id: string) => Promise<void>;
+	activateBudget: (id: string) => Promise<Budget>;
+	deactivateBudget: (id: string) => Promise<Budget>;
 	getBudgetProgress: (id: string) => Promise<BudgetProgress>;
 	getBudgetHistory: (id: string) => Promise<BudgetHistory[]>;
 	getBudgetTransactions: (

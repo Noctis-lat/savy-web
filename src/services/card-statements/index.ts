@@ -39,4 +39,7 @@ export const cardStatementService: CardStatementService = {
 	deleteCardStatement: async (id: string): Promise<void> => {
 		await httpClient.delete(`/card-statements/${id}`);
 	},
+	deleteCardStatementPermanent: async (id: string): Promise<void> => {
+		await httpClient.delete(`/card-statements/${id}/permanent`);
+	},
 };

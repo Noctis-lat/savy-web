@@ -36,4 +36,7 @@ export const creditCardService: CreditCardService = {
 	deleteCreditCard: async (id: string): Promise<void> => {
 		await httpClient.delete(`/credit-cards/${id}`);
 	},
+	deleteCreditCardPermanent: async (id: string): Promise<void> => {
+		await httpClient.delete(`/credit-cards/${id}/permanent`);
+	},
 };
