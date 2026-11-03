@@ -2,6 +2,7 @@ import {
 	ArrowDownLeft,
 	ArrowRightLeft,
 	ArrowUpRight,
+	CalendarClock,
 	CreditCard,
 	type LucideIcon,
 } from "lucide-react";
@@ -14,6 +15,7 @@ export const TRANSACTION_TYPE_ICON: Record<TransactionType, LucideIcon> = {
 	EXPENSE: ArrowUpRight,
 	TRANSFER: ArrowRightLeft,
 	PAYMENT: CreditCard,
+	INSTALLMENT: CalendarClock,
 };
 
 export const TRANSACTION_TYPE_VARIANT: Record<
@@ -24,6 +26,7 @@ export const TRANSACTION_TYPE_VARIANT: Record<
 	EXPENSE: "red",
 	TRANSFER: "blue",
 	PAYMENT: "neutral",
+	INSTALLMENT: "amber",
 };
 
 export const TRANSACTION_TYPE_BADGE_VARIANT: Record<TransactionType, TransactionBadgeVariant> = {
@@ -31,6 +34,7 @@ export const TRANSACTION_TYPE_BADGE_VARIANT: Record<TransactionType, Transaction
 	EXPENSE: "destructive",
 	TRANSFER: "info",
 	PAYMENT: "outline",
+	INSTALLMENT: "warning",
 };
 
 export const TRANSACTION_TYPE_LABEL: Record<TransactionType, string> = {
@@ -38,6 +42,7 @@ export const TRANSACTION_TYPE_LABEL: Record<TransactionType, string> = {
 	EXPENSE: "Gasto",
 	TRANSFER: "Transferencia",
 	PAYMENT: "Pago",
+	INSTALLMENT: "Mensualidad",
 };
 
 export const TRANSACTION_TYPE_ICON_CLASS: Record<TransactionType, string> = {
@@ -45,6 +50,7 @@ export const TRANSACTION_TYPE_ICON_CLASS: Record<TransactionType, string> = {
 	EXPENSE: "bg-destructive/10 text-destructive",
 	TRANSFER: "bg-blue-100 text-blue-500",
 	PAYMENT: "bg-muted text-muted-foreground",
+	INSTALLMENT: "bg-amber-500/15 text-amber-600",
 };
 
 export const TRANSACTION_TYPE_AMOUNT_CLASS: Record<TransactionType, string> = {
@@ -52,6 +58,7 @@ export const TRANSACTION_TYPE_AMOUNT_CLASS: Record<TransactionType, string> = {
 	EXPENSE: "text-destructive",
 	TRANSFER: "text-blue-600",
 	PAYMENT: "text-muted-foreground",
+	INSTALLMENT: "text-amber-600",
 };
 
 export const TRANSACTIONS_PERIOD_OPTIONS: PeriodOption[] = [

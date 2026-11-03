@@ -5,6 +5,7 @@ import { FormProvider, type UseFormReturn, useForm } from "react-hook-form";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { CreateAccountForm } from "@/components/accounts/create-account/components/create-account-form";
 import { CREATE_ACCOUNT_DEFAULT_VALUES } from "@/content/accounts/createAccountValues";
+import { useQueryAccounts } from "@/hooks/accounts/useQueryAccounts";
 import { useQueryBanks } from "@/hooks/banks/useQueryBanks";
 import {
 	type CreateAccountFormValues,
@@ -12,6 +13,7 @@ import {
 } from "@/schemas/accounts/createAccountSchema";
 
 vi.mock("@/hooks/banks/useQueryBanks", () => ({ useQueryBanks: vi.fn() }));
+vi.mock("@/hooks/accounts/useQueryAccounts", () => ({ useQueryAccounts: vi.fn() }));
 
 let harnessForm: UseFormReturn<CreateAccountFormValues> | undefined;
 
@@ -62,6 +64,15 @@ describe("CreateAccountForm", () => {
 		vi.mocked(useQueryBanks).mockReturnValue({
 			banks: [],
 			banksInfo: undefined,
+			page: undefined,
+			perPage: undefined,
+			total: undefined,
+			totalPages: undefined,
+			isLoading: false,
+		});
+		vi.mocked(useQueryAccounts).mockReturnValue({
+			accounts: [],
+			accountsInfo: undefined,
 			page: undefined,
 			perPage: undefined,
 			total: undefined,

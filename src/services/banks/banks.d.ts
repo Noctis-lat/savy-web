@@ -49,6 +49,13 @@ type BankCreditCardRaw = {
 	updatedAt: string;
 };
 
+// CreditCard as returned by /banks/:id/credit-cards: the endpoint does not
+// return billing-cycle dates nor the payment account, so they are excluded instead of faked.
+type BankCreditCard = Omit<
+	CreditCard,
+	"currentCycleCutDate" | "currentCyclePaymentDueDate" | "paymentAccountId"
+>;
+
 type BankLoan = {
 	id: string;
 	accountId: string;
@@ -81,7 +88,7 @@ type BankService = {
 	deleteBank: (id: string) => Promise<void>;
 	getBankIncomeVsExpenses: (id: string, period: PeriodType) => Promise<IncomeVsExpenses>;
 	getBankAccounts: (id: string) => Promise<import("../accounts/accounts").Account[]>;
-	getBankCreditCards: (id: string) => Promise<CreditCard[]>;
+	getBankCreditCards: (id: string) => Promise<BankCreditCard[]>;
 	getBankLoans: (id: string) => Promise<BankLoan[]>;
 };
 

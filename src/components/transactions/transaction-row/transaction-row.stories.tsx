@@ -97,3 +97,24 @@ export const Editable: Story = {
 		</div>
 	),
 };
+
+/** Installments are statement-generated: read-only even when `editable` is set. */
+export const Installment: Story = {
+	args: {
+		transaction: {
+			...baseTransaction,
+			id: "t5",
+			type: "INSTALLMENT",
+			amount: 100000,
+			description: "Laptop (2 de 3)",
+			date: "2026-10-05",
+		},
+		locale: LOCALE,
+		editable: true,
+	},
+	render: (args) => (
+		<div className="w-96 rounded-lg border border-border p-2">
+			<TransactionRow {...args} />
+		</div>
+	),
+};

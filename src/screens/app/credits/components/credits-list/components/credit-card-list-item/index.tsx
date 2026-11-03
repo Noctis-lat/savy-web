@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import { ROUTES } from "@/app/router/routes";
 import { Progress } from "@/components/ui/progress";
 import { PRIMARY_FALLBACK } from "@/content/app/common";
+import { getCreditUtilization } from "@/utils/credit-cards/getCreditUtilization";
 import { formatCurrency } from "@/utils/formatters/formatCurrency";
 import { formatShortDate } from "@/utils/formatters/formatDate";
 import { buildRoute } from "@/utils/routing/buildRoute";
@@ -19,11 +20,7 @@ export const CreditCardListItem = ({ creditCard }: CreditCardListItemProps): Rea
 	const cardColor = creditCard.color || PRIMARY_FALLBACK;
 
 	const hasDebt = creditCard.currentBalance > 0;
-	const utilization =
-		creditCard.creditLimit > 0
-			? Math.round((creditCard.currentBalance / creditCard.creditLimit) * 100)
-			: 0;
-	const usageVariant = utilization > 90 ? "danger" : utilization > 75 ? "warning" : "default";
+	const { percentage: utilization, variant: usageVariant } = getCreditUtilization(creditCard);
 
 	const gradientStyle = {
 		background: `linear-gradient(135deg, color-mix(in oklch, ${cardColor} 12%, transparent) 0%, color-mix(in oklch, ${cardColor} 5%, transparent) 60%, transparent 100%)`,

@@ -163,6 +163,20 @@ export const router = createBrowserRouter([
 								lazy: () => import("@/screens/app/credits").then((m) => ({ Component: m.Credits })),
 							},
 							{
+								path: ROUTES.APP.CREDITS.DETAIL,
+								lazy: () =>
+									import("@/screens/app/credits/credit-detail").then((m) => ({
+										Component: m.CreditDetail,
+									})),
+							},
+							{
+								path: ROUTES.APP.CREDITS.CARDSTATEMENT_DETAIL,
+								lazy: () =>
+									import("@/screens/app/credits/card-statement-detail").then((m) => ({
+										Component: m.CardStatementDetail,
+									})),
+							},
+							{
 								path: ROUTES.APP.LOANS.ROOT,
 								lazy: () => import("@/screens/app/loans").then((m) => ({ Component: m.Loans })),
 							},

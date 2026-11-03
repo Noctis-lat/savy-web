@@ -42,7 +42,6 @@ export const GaugeChart = ({
 	const displayMax =
 		max > 0 && formatValue ? formatValue(max) : max > 0 ? max.toLocaleString() : "N/A";
 
-	const arcTransform = `rotate(-90 ${CENTER_X} ${CENTER_Y})`;
 	const ariaLabel = `${label ? `${label}: ` : ""}${displayValue} de ${displayMax} (${percentage}%)`;
 
 	return (
@@ -76,7 +75,6 @@ export const GaugeChart = ({
 							fill="none"
 							strokeDasharray={SEMICIRCLE_LENGTH}
 							strokeDashoffset={dashOffset}
-							transform={arcTransform}
 							className="transition-[stroke-dashoffset] duration-700 ease-out motion-reduce:transition-none"
 						/>
 					)}

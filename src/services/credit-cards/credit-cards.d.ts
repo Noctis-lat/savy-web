@@ -3,12 +3,14 @@
 type CreditCard = {
 	id: string;
 	accountId: string;
+	/** Default DEBIT/CASH account used to pay this card; the API sends null when unset. */
+	paymentAccountId: string | null;
 	name: string;
 	color: string | null;
 	icon: string | null;
 	creditLimit: number;
 	cutDay: number;
-	paymentDueDays: number;
+	paymentDueDays?: number;
 	/** @deprecated Use `paymentDueDays` or `currentCyclePaymentDueDate` instead. */
 	paymentDay?: number;
 	overLimitTolerance?: number;
@@ -35,6 +37,7 @@ type CreditCardInfo = {
 type CreditCardService = {
 	getCreditCards: (params?: CreditCardParams) => Promise<GetCreditCardsResponse>;
 	getCreditCard: (id: string) => Promise<CreditCard>;
+	getCreditCardByAccountId: (accountId: string) => Promise<CreditCard>;
 	createCreditCard: (payload: CreateCreditCardPayload) => Promise<CreditCard>;
 	updateCreditCard: (id: string, payload: UpdateCreditCardPayload) => Promise<CreditCard>;
 	deleteCreditCard: (id: string) => Promise<void>;
@@ -70,6 +73,7 @@ type CreateCreditCardPayload = {
 	cutDay: number;
 	paymentDay: number;
 	interestRate: number;
+	paymentAccountId?: string;
 };
 
 //* ====================== UPDATE CREDIT CARD =========================
@@ -82,4 +86,6 @@ type UpdateCreditCardPayload = {
 	name?: string;
 	color?: string;
 	icon?: string;
+	/** Send null to clear the default payment account. */
+	paymentAccountId?: string | null;
 };

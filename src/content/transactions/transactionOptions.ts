@@ -8,6 +8,7 @@ export const TRANSACTION_TYPE_OPTIONS: Option[] = [
 export const TRANSACTION_TYPE_FILTER_OPTIONS: Option[] = [
 	{ label: "Todos los tipos", value: "all" },
 	...TRANSACTION_TYPE_OPTIONS,
+	{ label: "Mensualidad", value: "INSTALLMENT" },
 ];
 
 export const TRANSACTION_SORT_OPTIONS: Option[] = [

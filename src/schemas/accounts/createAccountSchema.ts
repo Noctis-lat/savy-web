@@ -19,6 +19,7 @@ export const createAccountSchema = z
 		creditLimit: z.number().optional(),
 		cutDay: z.number().optional(),
 		paymentDay: z.number().optional(),
+		paymentAccountId: z.string().optional(),
 		// LOAN only — money amounts in cents, startDate as yyyy-MM-dd
 		principal: z.number().optional(),
 		termMonths: z.number().optional(),

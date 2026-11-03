@@ -14,4 +14,5 @@ export const buildCreditCardPayload = (
 	cutDay: accountValues.cutDay ?? 1,
 	paymentDay: accountValues.paymentDay ?? 1,
 	interestRate: percentToRate(accountValues.interestRate ?? 0),
+	paymentAccountId: accountValues.paymentAccountId || undefined,
 });

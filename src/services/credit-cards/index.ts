@@ -13,6 +13,13 @@ export const creditCardService: CreditCardService = {
 		return unwrap<CreditCard>(response);
 	},
 
+	getCreditCardByAccountId: async (accountId: string): Promise<CreditCard> => {
+		const response = await httpClient.get<APIResponse<CreditCard>>(
+			`/credit-cards/account/${accountId}`,
+		);
+		return unwrap<CreditCard>(response);
+	},
+
 	createCreditCard: async (payload: CreateCreditCardPayload): Promise<CreditCard> => {
 		const response = await httpClient.post<APIResponse<CreditCard>>("/credit-cards", payload);
 		return unwrap<CreditCard>(response);

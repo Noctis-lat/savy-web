@@ -13,6 +13,13 @@ export const cardStatementService: CardStatementService = {
 		return unwrap<CardStatement>(response);
 	},
 
+	getCardStatementTransactions: async (id: string): Promise<StatementTransaction[]> => {
+		const response = await httpClient.get<APIResponse<StatementTransaction[]>>(
+			`/card-statements/${id}/transactions`,
+		);
+		return unwrap<StatementTransaction[]>(response);
+	},
+
 	createCardStatement: async (payload: CreateCardStatementPayload): Promise<CardStatement> => {
 		const response = await httpClient.post<APIResponse<CardStatement>>("/card-statements", payload);
 		return unwrap<CardStatement>(response);

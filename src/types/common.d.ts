@@ -21,3 +21,13 @@ type BreadcrumbItemConfig =
 	shortLabel: string;
 	value: PeriodType;
 };
+
+/** Semantic tone shared by status callouts and usage blocks. */
+type StatusTone = "success" | "warning" | "danger" | "neutral";
+
+/** Plain data for a StatusCallout: helpers return it, components render it. */
+type StatusCalloutContent = {
+	tone: StatusTone;
+	title: string;
+	description: string;
+};

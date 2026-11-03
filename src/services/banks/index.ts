@@ -50,7 +50,7 @@ export const bankService: BankService = {
 		}));
 	},
 
-	getBankCreditCards: async (id: string): Promise<CreditCard[]> => {
+	getBankCreditCards: async (id: string): Promise<BankCreditCard[]> => {
 		const response = await httpClient.get<APIResponse<BankCreditCardRaw[]>>(
 			`/banks/${id}/credit-cards`,
 		);
@@ -66,7 +66,7 @@ export const bankService: BankService = {
 			creditLimit: Number(card.creditLimit),
 			cutDay: card.cutDay,
 			paymentDueDays: card.paymentDueDays,
-			paymentDay: card.paymentDay,
+			paymentDay: card.paymentDay ?? undefined,
 			interestRate: Number(card.interestRate),
 			availableCredit: Number(card.availableCredit),
 			currentBalance: Number(card.balance),

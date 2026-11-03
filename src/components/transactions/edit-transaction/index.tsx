@@ -13,7 +13,7 @@ import { EditTransactionForm } from "./components/edit-transaction-form";
 import { EditTransactionSubmit } from "./components/edit-transaction-submit";
 
 type EditTransactionProps = {
-	transaction: Transaction;
+	transaction: EditableTransaction;
 	mode?: "button" | "icon";
 	size?: "default" | "icon" | "xs" | "sm" | "lg" | "icon-xs" | "icon-sm" | "icon-lg";
 };
