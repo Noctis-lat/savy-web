@@ -7,7 +7,6 @@ import {
 	CARD_STATEMENT_STATUS_LABELS,
 	CARD_STATEMENT_STATUS_VARIANTS,
 } from "@/content/card-statements/cardStatementLabels";
-import { getCardStatementStatus } from "@/utils/card-statements/getCardStatementStatus";
 import { formatCurrency } from "@/utils/formatters/formatCurrency";
 import { formatShortDate } from "@/utils/formatters/formatDate";
 import { buildRoute } from "@/utils/routing/buildRoute";
@@ -21,7 +20,7 @@ export const CreditStatementRow = ({
 	cardStatement,
 }: CreditStatementRowProps): React.ReactElement => {
 	const navigate = useNavigate();
-	const status = getCardStatementStatus(cardStatement);
+	const status = cardStatement.status;
 	const hasPartialPayment = !cardStatement.isPaid && (cardStatement.paidAmount ?? 0) > 0;
 
 	const periodLabel = `${formatShortDate(cardStatement.periodStart)} - ${formatShortDate(cardStatement.periodEnd)}`;
@@ -45,7 +44,7 @@ export const CreditStatementRow = ({
 					{periodLabel}
 				</span>
 				<div className="flex flex-wrap items-center text-xs text-muted-foreground tabular-nums">
-					<span className={merge(status === "OVERDUE" && "font-medium text-destructive")}>
+					<span className={merge(status === "overdue" && "font-medium text-destructive")}>
 						Fecha límite{" "}
 						{cardStatement.paymentDueDate ? formatShortDate(cardStatement.paymentDueDate) : "-"}
 					</span>

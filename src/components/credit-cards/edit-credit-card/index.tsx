@@ -31,7 +31,7 @@ export const EditCreditCard = ({
 		name: creditCard.name,
 		creditLimit: creditCard.creditLimit,
 		cutDay: creditCard.cutDay,
-		paymentDay: creditCard.paymentDay ?? undefined,
+		paymentDay: undefined, // The API no longer returns paymentDay; the user can re-enter it to change the due day.
 		interestRate: creditCard.interestRate * 100,
 		color: creditCard.color ?? undefined,
 		icon: creditCard.icon ?? undefined,

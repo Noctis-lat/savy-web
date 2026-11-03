@@ -5,19 +5,19 @@ type CreditCard = {
 	accountId: string;
 	/** Default DEBIT/CASH account used to pay this card; the API sends null when unset. */
 	paymentAccountId: string | null;
+	/** The full payment account object, or null if no default payment account is set. */
+	paymentAccount: Account | null;
 	name: string;
 	color: string | null;
 	icon: string | null;
 	creditLimit: number;
 	cutDay: number;
 	paymentDueDays?: number;
-	/** @deprecated Use `paymentDueDays` or `currentCyclePaymentDueDate` instead. */
-	paymentDay?: number;
 	overLimitTolerance?: number;
 	interestRate: number;
 	availableCredit: number;
 	currentBalance: number;
-	nextPaymentDueDate?: string | null;
+	nextPaymentDueDate: string | null;
 	currentCycleCutDate: string;
 	currentCyclePaymentDueDate: string;
 	createdAt: string;

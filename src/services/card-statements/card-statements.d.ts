@@ -1,5 +1,8 @@
 // ====================== ENUMS =========================
 
+/** Computed by the API. Use this as the source of truth for display, not interestAmount. */
+type StatementStatus = "pending" | "overdue" | "partial" | "paid";
+
 /** Statement movements can be installments, which the general TransactionType does not model. */
 type StatementTransactionType = "INCOME" | "EXPENSE" | "TRANSFER" | "PAYMENT" | "INSTALLMENT";
 
@@ -26,6 +29,8 @@ type CardStatement = {
 	remainingBalance?: number;
 	isPaid: boolean;
 	isGenerated?: boolean;
+	/** Computed by the API. Source of truth for display. */
+	status: StatementStatus;
 	createdAt: string;
 	updatedAt?: string;
 };

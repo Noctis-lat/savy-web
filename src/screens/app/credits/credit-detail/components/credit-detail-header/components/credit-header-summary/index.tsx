@@ -2,7 +2,6 @@ import type React from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { CREDIT_HEADER_FIGURE_SPACING } from "@/content/credit-cards/creditCardDetailContent";
 import { useQueryPendingCardStatement } from "@/hooks/card-statements/useQueryPendingCardStatement";
-import { getCardStatementStatus } from "@/utils/card-statements/getCardStatementStatus";
 import { formatCurrency } from "@/utils/formatters/formatCurrency";
 import { formatShortDate } from "@/utils/formatters/formatDate";
 import { merge } from "@/utils/ui/mergeStyles";
@@ -18,8 +17,7 @@ export const CreditHeaderSummary = ({
 	const { pendingStatement, isLoading, isError } = useQueryPendingCardStatement(creditCard.id);
 	const isOverLimit = creditCard.availableCredit < 0;
 
-	const isOverdue =
-		pendingStatement !== undefined && getCardStatementStatus(pendingStatement) === "OVERDUE";
+	const isOverdue = pendingStatement?.status === "overdue";
 	const dueDate = pendingStatement?.paymentDueDate
 		? formatShortDate(pendingStatement.paymentDueDate)
 		: undefined;

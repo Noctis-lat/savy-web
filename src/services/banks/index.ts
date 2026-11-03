@@ -66,7 +66,6 @@ export const bankService: BankService = {
 			creditLimit: Number(card.creditLimit),
 			cutDay: card.cutDay,
 			paymentDueDays: card.paymentDueDays,
-			paymentDay: card.paymentDay ?? undefined,
 			interestRate: Number(card.interestRate),
 			availableCredit: Number(card.availableCredit),
 			currentBalance: Number(card.balance),

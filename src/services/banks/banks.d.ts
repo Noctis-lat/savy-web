@@ -50,10 +50,15 @@ type BankCreditCardRaw = {
 };
 
 // CreditCard as returned by /banks/:id/credit-cards: the endpoint does not
-// return billing-cycle dates nor the payment account, so they are excluded instead of faked.
+// return billing-cycle dates, the payment account, nor the computed paymentAccount
+// object, so they are excluded instead of faked.
 type BankCreditCard = Omit<
 	CreditCard,
-	"currentCycleCutDate" | "currentCyclePaymentDueDate" | "paymentAccountId"
+	| "currentCycleCutDate"
+	| "currentCyclePaymentDueDate"
+	| "paymentAccountId"
+	| "paymentAccount"
+	| "nextPaymentDueDate"
 >;
 
 type BankLoan = {

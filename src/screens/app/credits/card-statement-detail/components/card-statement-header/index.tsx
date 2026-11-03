@@ -10,7 +10,6 @@ import {
 	CARD_STATEMENT_STATUS_VARIANTS,
 } from "@/content/card-statements/cardStatementLabels";
 import { getCardStatementHeaderStatus } from "@/utils/card-statements/getCardStatementHeaderStatus";
-import { getCardStatementStatus } from "@/utils/card-statements/getCardStatementStatus";
 import { formatDate } from "@/utils/formatters/formatDate";
 import { CardStatementSummary } from "./components/card-statement-summary";
 
@@ -24,7 +23,7 @@ export const CardStatementHeader = ({
 	creditCard,
 }: CardStatementHeaderProps): React.ReactElement => {
 	const cardColor = creditCard?.color ?? PRIMARY_FALLBACK;
-	const status = getCardStatementStatus(cardStatement);
+	const status = cardStatement.status;
 	const headerStatus = getCardStatementHeaderStatus(cardStatement);
 
 	const gradientStyle = {

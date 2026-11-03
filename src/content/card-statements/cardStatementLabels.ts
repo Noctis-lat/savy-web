@@ -1,16 +1,18 @@
 import type { BadgeVariants } from "@/components/ui/badge";
 
-export const CARD_STATEMENT_STATUS_LABELS: Record<CardStatementStatus, string> = {
-	PAID: "Pagado",
-	OVERDUE: "Vencido",
-	PENDING: "Pendiente",
+export const CARD_STATEMENT_STATUS_LABELS: Record<StatementStatus, string> = {
+	paid: "Pagado",
+	overdue: "Vencido",
+	partial: "Pago parcial",
+	pending: "Pendiente",
 };
 
 export const CARD_STATEMENT_STATUS_VARIANTS: Record<
-	CardStatementStatus,
+	StatementStatus,
 	NonNullable<BadgeVariants["variant"]>
 > = {
-	PAID: "success",
-	OVERDUE: "error",
-	PENDING: "warning",
+	paid: "success",
+	overdue: "error",
+	partial: "warning",
+	pending: "outline",
 };

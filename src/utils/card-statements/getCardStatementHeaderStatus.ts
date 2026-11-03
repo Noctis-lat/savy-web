@@ -1,19 +1,17 @@
 import { CARD_STATEMENT_HEADER_STATUS_COPY } from "@/content/card-statements/cardStatementStatusCopy";
 import { formatCurrency } from "@/utils/formatters/formatCurrency";
 import { formatShortDate } from "@/utils/formatters/formatDate";
-import { getCardStatementStatus } from "./getCardStatementStatus";
 
 /** Header callout for a card statement. A partial payment appends the remaining amount. */
 export const getCardStatementHeaderStatus = (
 	cardStatement: Pick<
 		CardStatement,
-		"isPaid" | "paymentDueDate" | "noInterestPayment" | "paidAmount" | "remainingBalance"
+		"status" | "paymentDueDate" | "noInterestPayment" | "paidAmount" | "remainingBalance"
 	>,
-	today: Date = new Date(),
 ): StatusCalloutContent => {
-	const status = getCardStatementStatus(cardStatement, today);
+	const status = cardStatement.status;
 
-	if (status === "PAID") {
+	if (status === "paid") {
 		return {
 			tone: "success",
 			title: CARD_STATEMENT_HEADER_STATUS_COPY.paid.title,
@@ -31,11 +29,19 @@ export const getCardStatementHeaderStatus = (
 			? ` ${CARD_STATEMENT_HEADER_STATUS_COPY.remaining(formatCurrency(remainingAmount))}`
 			: "";
 
-	if (status === "OVERDUE") {
+	if (status === "overdue") {
 		return {
 			tone: "danger",
 			title: CARD_STATEMENT_HEADER_STATUS_COPY.overdue.title,
 			description: `${CARD_STATEMENT_HEADER_STATUS_COPY.overdue.description(amount, dueDate)}${remainingSentence}`,
+		};
+	}
+
+	if (status === "partial") {
+		return {
+			tone: "warning",
+			title: CARD_STATEMENT_HEADER_STATUS_COPY.partial.title,
+			description: `${CARD_STATEMENT_HEADER_STATUS_COPY.partial.description(dueDate)}${remainingSentence}`,
 		};
 	}
 
