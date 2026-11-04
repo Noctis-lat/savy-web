@@ -8,14 +8,18 @@ type useQueryCreditCardReturn = {
 	isError: boolean;
 };
 
-export const useQueryCreditCard = (id?: string, byAccountId = false): useQueryCreditCardReturn => {
+export const useQueryCreditCard = (
+	id?: string,
+	byAccountId = false,
+	enabled = true,
+): useQueryCreditCardReturn => {
 	const creditCardQuery = useQuery({
 		queryKey: [creditCardKeys.creditCard, id, byAccountId ? { by: "account_id" } : {}],
 		queryFn: () =>
 			byAccountId
 				? creditCardService.getCreditCardByAccountId(id as string)
 				: creditCardService.getCreditCard(id as string),
-		enabled: id !== undefined,
+		enabled: id !== undefined && enabled,
 		staleTime: 1000 * 60 * 15,
 		gcTime: 1000 * 60 * 20,
 	});

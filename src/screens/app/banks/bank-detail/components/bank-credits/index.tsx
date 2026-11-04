@@ -50,6 +50,7 @@ export const BankCredits = ({ bank }: BankCreditsProps): React.ReactElement => {
 							account={account}
 							bankName={bank.name}
 							bankColor={bank.color}
+							isCreditCard={true}
 							onClick={() => navigate(getAccountDetailRoute(account))}
 						/>
 					);

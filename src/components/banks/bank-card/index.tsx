@@ -1,5 +1,6 @@
 import { DynamicIcon, type IconName } from "lucide-react/dynamic";
 import type React from "react";
+import { useQueryCreditCard } from "@/hooks/credit-cards/useQueryCreditCard";
 import { formatCurrency } from "@/utils/formatters/formatCurrency";
 import { merge } from "@/utils/ui/mergeStyles";
 
@@ -7,7 +8,7 @@ type BankCardProps = {
 	account: Account;
 	bankName: string;
 	bankColor: string | null;
-	creditCard?: { creditLimit: number };
+	isCreditCard?: boolean;
 	onClick?: () => void;
 	className?: string;
 };
@@ -16,12 +17,14 @@ export const BankCard = ({
 	account,
 	bankName,
 	bankColor,
-	creditCard,
+	isCreditCard = false,
 	onClick,
 	className,
 }: BankCardProps): React.ReactElement => {
 	const Icon = account.icon ?? "wallet";
 	const lastFour = account.id.slice(-4);
+
+	const { creditCard } = useQueryCreditCard(account.id, true, isCreditCard);
 
 	const gradientStyle = bankColor
 		? { background: `linear-gradient(135deg, ${account.color}, ${account.color}88)` }
