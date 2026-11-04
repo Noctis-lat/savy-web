@@ -13,7 +13,6 @@ import { useDeleteBankPermanent } from "@/hooks/banks/useDeleteBankPermanent";
 import { useQueryBank } from "@/hooks/banks/useQueryBank";
 import { BankCredits } from "./components/bank-credits";
 import { BankDebits } from "./components/bank-debits";
-import { BankDetailAccounts } from "./components/bank-detail-accounts";
 import { BankDetailHeader } from "./components/bank-detail-header";
 import { BankDetailHero } from "./components/bank-detail-hero";
 import { BankDetailLoans } from "./components/bank-detail-loans";
@@ -58,10 +57,10 @@ export const BankDetail = (): React.ReactElement => {
 			<BankDetailHeader bank={bank} />
 			<BankDetailHero bank={bank} />
 			<BankDetailTopCategories bankId={bankId} />
-			<BankDebits />
-			<BankCredits />
-			<BankSavings />
-			<BankDetailAccounts bankId={bankId} />
+			<BankDebits bank={bank} />
+			<BankCredits bank={bank} />
+			<BankSavings bank={bank} />
+
 			<BankDetailLoans bankId={bankId} />
 			<DangerZone
 				entityName={bank.name}

@@ -49,6 +49,7 @@ type AccountParams = {
 	perPage?: number;
 	info?: boolean;
 	groupedBy?: AccountGrouped;
+	excludeSavings?: boolean;
 };
 
 type getAccountsResponse = {
