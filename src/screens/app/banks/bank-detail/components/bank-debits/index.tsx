@@ -1,7 +1,10 @@
+import { CreditCardX } from "lucide-react";
 import type React from "react";
 import { useNavigate } from "react-router";
 import { CreateAccount } from "@/components/accounts/create-account";
 import { BankCard } from "@/components/banks/bank-card";
+import { Empty } from "@/components/design-system/patterns/feedback/empty";
+import { GlassCard } from "@/components/design-system/patterns/glass-card";
 import { getAccountDetailRoute } from "@/content/accounts/accountDetailRoutes";
 import { useQueryAccounts } from "@/hooks/accounts/useQueryAccounts";
 
@@ -22,7 +25,22 @@ export const BankDebits = ({ bank }: BankDebitsProps): React.ReactElement => {
 	}
 
 	if (!accounts || accounts.length === 0) {
-		return <div>no accounts</div>;
+		return (
+			<GlassCard>
+				<Empty
+					title="No hay cuentas de debito"
+					description="No se han encontrado cuentas de debito asociadas a este banco."
+					icon={CreditCardX}
+					action={
+						<CreateAccount
+							size="sm"
+							type="DEBIT"
+							bankId={bank?.id}
+						/>
+					}
+				/>
+			</GlassCard>
+		);
 	}
 
 	return (

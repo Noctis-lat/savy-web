@@ -1,7 +1,10 @@
+import { CreditCardX } from "lucide-react";
 import type React from "react";
 import { useNavigate } from "react-router";
 import { CreateAccount } from "@/components/accounts/create-account";
 import { BankCard } from "@/components/banks/bank-card";
+import { Empty } from "@/components/design-system/patterns/feedback/empty";
+import { GlassCard } from "@/components/design-system/patterns/glass-card";
 import { getAccountDetailRoute } from "@/content/accounts/accountDetailRoutes";
 import { useQueryAccounts } from "@/hooks/accounts/useQueryAccounts";
 
@@ -18,7 +21,22 @@ export const BankSavings = ({ bank }: BankSavingsProps): React.ReactElement => {
 	}
 
 	if (!accounts || accounts.length === 0) {
-		return <div>no accounts</div>;
+		return (
+			<GlassCard>
+				<Empty
+					title="No hay cuentas de ahorro"
+					description="No se han encontrado cuentas de ahorro asociadas a este banco."
+					icon={CreditCardX}
+					action={
+						<CreateAccount
+							size="sm"
+							type="SAVINGS"
+							bankId={bank?.id}
+						/>
+					}
+				/>
+			</GlassCard>
+		);
 	}
 
 	return (
