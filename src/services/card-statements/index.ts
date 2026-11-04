@@ -42,4 +42,11 @@ export const cardStatementService: CardStatementService = {
 	deleteCardStatementPermanent: async (id: string): Promise<void> => {
 		await httpClient.delete(`/card-statements/${id}/permanent`);
 	},
+
+	activateCardStatement: async (id: string): Promise<CardStatement> => {
+		const response = await httpClient.patch<APIResponse<CardStatement>>(
+			`/card-statements/${id}/activate`,
+		);
+		return unwrap<CardStatement>(response);
+	},
 };

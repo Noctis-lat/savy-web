@@ -55,4 +55,9 @@ export const accountService: AccountService = {
 	deleteAccountPermanent: async (id: string): Promise<void> => {
 		await httpClient.delete(`/accounts/${id}/permanent`);
 	},
+
+	activateAccount: async (id: string): Promise<Account> => {
+		const response = await httpClient.patch<APIResponse<Account>>(`/accounts/${id}/activate`);
+		return unwrap<Account>(response);
+	},
 };

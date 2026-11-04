@@ -1,8 +1,9 @@
-import { Power, PowerOff, Trash2, TriangleAlert } from "lucide-react";
+import { Info, Power, PowerOff, Settings2, Trash2 } from "lucide-react";
 import type React from "react";
 import { ScaleFadeIn } from "@/components/design-system/patterns/animations/scale-fade-in";
 import { GlassCard } from "@/components/design-system/patterns/glass-card";
 import { ConfirmDialog } from "@/components/design-system/primitives/confirm-dialog";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { DangerZoneRow } from "./components/danger-zone-row";
 
@@ -16,6 +17,8 @@ type DangerZoneProps = {
 	isDeactivating?: boolean;
 	isReactivating?: boolean;
 	isDeleting?: boolean;
+	/** Cascade consequences of the permanent delete, shown in the row and the confirm dialog. */
+	permanentDeleteDescription?: string;
 };
 
 export const DangerZone = ({
@@ -28,32 +31,66 @@ export const DangerZone = ({
 	isDeactivating = false,
 	isReactivating = false,
 	isDeleting = false,
+	permanentDeleteDescription,
 }: DangerZoneProps): React.ReactElement => {
+	const canReactivate = onReactivate !== undefined;
+	// Entities without a visibility lifecycle (e.g. card statements) get no status badge.
+	const hasVisibilityState = onDeactivate !== undefined || canReactivate;
+
+	const deactivateDescription = canReactivate
+		? "Se oculta de la app y su historial se conserva. Puedes revertirlo cuando quieras."
+		: "Se oculta de la app y su historial se conserva. Desde la app no se puede revertir.";
+	const deleteRowDescription =
+		permanentDeleteDescription ?? "Se elimina el registro con todo su historial.";
+	const deleteDialogDescription = `${permanentDeleteDescription ?? "Se eliminará el registro con todo su historial."} Esta acción no se puede deshacer.`;
+
 	return (
 		<ScaleFadeIn>
-			<GlassCard className="p-0">
-				<div className="flex items-center gap-2 px-4 pt-4 pb-2">
-					<TriangleAlert
-						className="size-4 text-muted-foreground"
-						aria-hidden="true"
-					/>
-					<h3 className="text-sm font-semibold text-foreground">Administración</h3>
+			<GlassCard className="overflow-hidden p-0 gap-0">
+				<div className="flex items-center justify-between gap-2 px-4 pt-4 pb-3">
+					<div className="flex items-center gap-2">
+						<Settings2
+							className="size-4 text-muted-foreground"
+							aria-hidden="true"
+						/>
+						<h3 className="text-sm font-semibold text-foreground">Administración</h3>
+					</div>
+					{hasVisibilityState &&
+						(isActive ? (
+							<Badge
+								variant="success"
+								className="px-2 text-xs"
+							>
+								Visible
+							</Badge>
+						) : (
+							<Badge
+								variant="outline"
+								className="px-2 text-xs text-muted-foreground"
+							>
+								No visible
+							</Badge>
+						))}
 				</div>
 
-				<div className="divide-y divide-border/40">
-					{isActive ? (
+				{isActive ? (
+					<>
 						<DangerZoneRow
+							icon={PowerOff}
+							tone="neutral"
 							title={`Desactivar ${entityLabel}`}
-							description="Deja de estar visible en la app. El historial se conserva."
+							description={deactivateDescription}
 							action={
 								<ConfirmDialog
 									title={`Desactivar ${entityName}`}
-									description={`Esta acción desactiva ${entityLabel} y lo oculta de la app. Puedes eliminarlo permanentemente después.`}
+									description={deactivateDescription}
 									confirmText="Desactivar"
 									cancelText="Volver"
+									variant="destructive"
 									confirmIcon={PowerOff}
 									onConfirm={onDeactivate ?? (() => undefined)}
 									loading={isDeactivating}
+									disabled={onDeactivate === undefined}
 								>
 									<Button
 										variant="outline"
@@ -65,61 +102,72 @@ export const DangerZone = ({
 								</ConfirmDialog>
 							}
 						/>
-					) : (
-						<>
-							{onReactivate && (
-								<DangerZoneRow
-									title={`Reactivar ${entityLabel}`}
-									description="Vuelve a estar visible en la app con todos sus datos."
-									action={
-										<ConfirmDialog
-											title={`Reactivar ${entityName}`}
-											description={`Esta acción reactiva ${entityLabel} y lo vuelve visible en la app.`}
-											confirmText="Reactivar"
-											cancelText="Volver"
-											variant="success"
-											confirmIcon={Power}
-											onConfirm={onReactivate}
-											loading={isReactivating}
-										>
-											<Button
-												variant="outline"
-												size="sm"
-											>
-												<Power className="size-4" />
-												Reactivar
-											</Button>
-										</ConfirmDialog>
-									}
-								/>
-							)}
+						<p className="flex items-center gap-2 border-t border-border/40 px-4 py-3 text-xs text-muted-foreground">
+							<Info
+								className="size-3.5 shrink-0"
+								aria-hidden="true"
+							/>
+							El borrado permanente se habilita después de desactivar.
+						</p>
+					</>
+				) : (
+					<>
+						{canReactivate && (
 							<DangerZoneRow
-								title="Eliminar permanentemente"
-								titleClassName="text-destructive"
-								description="Borra el registro y su historial. No se puede deshacer."
+								icon={Power}
+								tone="primary"
+								title={`Reactivar ${entityLabel}`}
+								description="Vuelve a mostrarse en la app con todos sus datos."
 								action={
 									<ConfirmDialog
-										title={`Eliminar ${entityName}`}
-										description={`Esta acción elimina ${entityLabel} por completo y no se puede deshacer.`}
-										confirmText="Eliminar"
+										title={`Reactivar ${entityName}`}
+										description="Volverá a mostrarse en la app con todos sus datos."
+										confirmText="Reactivar"
 										cancelText="Volver"
-										confirmIcon={Trash2}
-										onConfirm={onPermanentDelete}
-										loading={isDeleting}
+										variant="success"
+										confirmIcon={Power}
+										onConfirm={onReactivate}
+										loading={isReactivating}
 									>
 										<Button
-											variant="destructive"
+											variant="outline"
 											size="sm"
 										>
-											<Trash2 className="size-4" />
-											Eliminar
+											<Power className="size-4" />
+											Reactivar
 										</Button>
 									</ConfirmDialog>
 								}
 							/>
-						</>
-					)}
-				</div>
+						)}
+						<DangerZoneRow
+							icon={Trash2}
+							tone="destructive"
+							title="Eliminar permanentemente"
+							description={deleteRowDescription}
+							action={
+								<ConfirmDialog
+									title={`Eliminar ${entityName}`}
+									description={deleteDialogDescription}
+									confirmText="Eliminar"
+									cancelText="Volver"
+									variant="destructive"
+									confirmIcon={Trash2}
+									onConfirm={onPermanentDelete}
+									loading={isDeleting}
+								>
+									<Button
+										variant="destructive"
+										size="sm"
+									>
+										<Trash2 className="size-4" />
+										Eliminar
+									</Button>
+								</ConfirmDialog>
+							}
+						/>
+					</>
+				)}
 			</GlassCard>
 		</ScaleFadeIn>
 	);

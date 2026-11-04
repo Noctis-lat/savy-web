@@ -55,7 +55,7 @@ export const useBanksController = create<BanksController>()((set) => ({
 		set((state) => ({
 			banksFilters: {
 				...state.banksFilters,
-				isActive: activeOnly ? true : false,
+				isActive: activeOnly,
 			},
 		}));
 	},

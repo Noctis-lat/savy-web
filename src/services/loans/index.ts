@@ -29,4 +29,9 @@ export const loanService: LoanService = {
 	deleteLoanPermanent: async (id: string): Promise<void> => {
 		await httpClient.delete(`/loans/${id}/permanent`);
 	},
+
+	activateLoan: async (id: string): Promise<Loan> => {
+		const response = await httpClient.patch<APIResponse<Loan>>(`/loans/${id}/activate`);
+		return unwrap<Loan>(response);
+	},
 };

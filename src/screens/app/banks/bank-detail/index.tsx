@@ -6,6 +6,8 @@ import { ROUTES } from "@/app/router/routes";
 import { DangerZone } from "@/components/design-system/patterns/feedback/danger-zone";
 import { Empty } from "@/components/design-system/patterns/feedback/empty";
 import { bankKeys } from "@/content/services";
+import { PERMANENT_DELETE_CONSEQUENCES } from "@/content/ui/permanentDeleteConsequences";
+import { useActivateBank } from "@/hooks/banks/useActivateBank";
 import { useDeleteBank } from "@/hooks/banks/useDeleteBank";
 import { useDeleteBankPermanent } from "@/hooks/banks/useDeleteBankPermanent";
 import { useQueryBank } from "@/hooks/banks/useQueryBank";
@@ -24,6 +26,7 @@ export const BankDetail = (): React.ReactElement => {
 	const { bank, isLoading } = useQueryBank(bankId, true);
 	const queryClient = useQueryClient();
 	const { mutate: deleteBank, isPending: isDeactivating } = useDeleteBank();
+	const { mutate: activateBank, isPending: isReactivating } = useActivateBank();
 	const { mutate: deleteBankPermanent, isPending: isDeleting } = useDeleteBankPermanent();
 
 	if (isLoading) {
@@ -59,11 +62,14 @@ export const BankDetail = (): React.ReactElement => {
 				entityLabel="el banco"
 				isActive={bank.isActive}
 				onDeactivate={() => deleteBank(bankId)}
+				onReactivate={() => activateBank(bankId)}
 				onPermanentDelete={() =>
 					deleteBankPermanent(bankId, { onSuccess: () => navigate(ROUTES.APP.BANKS.ROOT) })
 				}
 				isDeactivating={isDeactivating}
+				isReactivating={isReactivating}
 				isDeleting={isDeleting}
+				permanentDeleteDescription={PERMANENT_DELETE_CONSEQUENCES.bank}
 			/>
 		</div>
 	);

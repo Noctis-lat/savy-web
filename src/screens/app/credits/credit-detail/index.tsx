@@ -7,7 +7,9 @@ import { PayCreditCard } from "@/components/credit-cards/pay-credit-card";
 import { DangerZone } from "@/components/design-system/patterns/feedback/danger-zone";
 import { Empty } from "@/components/design-system/patterns/feedback/empty";
 import { Screen } from "@/components/design-system/primitives/screen";
+import { PERMANENT_DELETE_CONSEQUENCES } from "@/content/ui/permanentDeleteConsequences";
 import { useQueryAccount } from "@/hooks/accounts/useQueryAccount";
+import { useActivateCreditCard } from "@/hooks/credit-cards/useActivateCreditCard";
 import { useDeleteCreditCard } from "@/hooks/credit-cards/useDeleteCreditCard";
 import { useDeleteCreditCardPermanent } from "@/hooks/credit-cards/useDeleteCreditCardPermanent";
 import { useQueryCreditCard } from "@/hooks/credit-cards/useQueryCreditCard";
@@ -26,6 +28,7 @@ export const CreditDetail = (): React.ReactElement => {
 	const { creditCard, isLoading } = useQueryCreditCard(credit_id, byAccountId);
 	const { account } = useQueryAccount(creditCard?.accountId);
 	const { mutate: deleteCreditCard, isPending: isDeactivating } = useDeleteCreditCard();
+	const { mutate: activateCreditCard, isPending: isReactivating } = useActivateCreditCard();
 	const { mutate: deleteCreditCardPermanent, isPending: isDeleting } =
 		useDeleteCreditCardPermanent();
 
@@ -69,13 +72,16 @@ export const CreditDetail = (): React.ReactElement => {
 				entityLabel="la tarjeta"
 				isActive={account?.isActive ?? true}
 				onDeactivate={() => deleteCreditCard(creditCard.id)}
+				onReactivate={() => activateCreditCard(creditCard.id)}
 				onPermanentDelete={() =>
 					deleteCreditCardPermanent(creditCard.id, {
 						onSuccess: () => navigate(ROUTES.APP.CREDITS.ROOT),
 					})
 				}
 				isDeactivating={isDeactivating}
+				isReactivating={isReactivating}
 				isDeleting={isDeleting}
+				permanentDeleteDescription={PERMANENT_DELETE_CONSEQUENCES.creditCard}
 			/>
 		</Screen>
 	);

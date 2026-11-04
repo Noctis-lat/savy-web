@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 import { budgetKeys } from "@/content/services";
 import { budgetService } from "@/services/budgets";
 import { apiErrorToast } from "@/utils/errors/apiErrorToast";
@@ -9,6 +10,7 @@ export const useActivateBudget = () => {
 	return useMutation({
 		mutationFn: (id: string) => budgetService.activateBudget(id),
 		onSuccess: () => {
+			toast.success("Presupuesto reactivado.");
 			queryClient.invalidateQueries({ queryKey: [budgetKeys.budgets] });
 			queryClient.invalidateQueries({ queryKey: [budgetKeys.budget] });
 		},

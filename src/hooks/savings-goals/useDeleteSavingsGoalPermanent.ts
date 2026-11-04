@@ -13,6 +13,7 @@ export const useDeleteSavingsGoalPermanent = () => {
 			toast.success("Meta de ahorro eliminada permanentemente.");
 			queryClient.invalidateQueries({ queryKey: [savingsGoalKeys.savingsGoals] });
 			queryClient.invalidateQueries({ queryKey: [accountKeys.accounts] });
+			queryClient.invalidateQueries({ queryKey: [accountKeys.account] });
 			queryClient.invalidateQueries({ queryKey: [transactionKeys.transactions] });
 		},
 		onError: (error: unknown) => {

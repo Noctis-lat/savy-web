@@ -1,28 +1,29 @@
 import { Plus } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
-import { Controller, useFormContext } from "react-hook-form";
+import { Controller, useFormContext, useWatch } from "react-hook-form";
 import { CreateCategory } from "@/components/categories/create-category";
+import { FormAsyncSelect } from "@/components/design-system/patterns/forms/form-async-select";
 import { FormField } from "@/components/design-system/patterns/forms/form-field";
 import { FormSelect } from "@/components/design-system/patterns/forms/form-select";
 import { ColorPicker } from "@/components/design-system/primitives/color-picker";
 import { IconPicker } from "@/components/design-system/primitives/icon-picker";
 import { BillingScheduleFields } from "@/components/recurring-expenses/billing-schedule-fields";
 import { Button } from "@/components/ui/button";
-import { useQueryAccounts } from "@/hooks/accounts/useQueryAccounts";
+import { useAccountSearchOptions } from "@/hooks/accounts/useAccountSearchOptions";
 import { useQueryCategories } from "@/hooks/categories/useQueryCategories";
 import type { CreateRecurringExpenseFormValues } from "@/schemas/recurring-expenses/createRecurringExpenseSchema";
 
 export const CreatePaymentForm = (): React.ReactElement => {
 	const createPaymentForm = useFormContext<CreateRecurringExpenseFormValues>();
 	const { control, setValue } = createPaymentForm;
-	const { accounts } = useQueryAccounts({ isActive: true });
+	const selectedAccountId = useWatch({ control, name: "accountId" });
+	const {
+		accountOptions,
+		isLoading: isLoadingAccounts,
+		setAccountSearch,
+	} = useAccountSearchOptions(selectedAccountId);
 	const { categories } = useQueryCategories("EXPENSE");
-
-	const accountOptions: Option[] = (accounts ?? []).map((account) => ({
-		label: account.name,
-		value: account.id,
-	}));
 
 	const categoryOptions: Option[] = (categories ?? []).map((category) => ({
 		label: category.name,
@@ -53,15 +54,16 @@ export const CreatePaymentForm = (): React.ReactElement => {
 
 			<BillingScheduleFields />
 
-			<FormSelect
+			<FormAsyncSelect
 				name="accountId"
 				form={createPaymentForm}
 				label="Cuenta"
 				options={accountOptions}
+				isLoading={isLoadingAccounts}
+				onSearch={setAccountSearch}
 				placeholder="Selecciona una cuenta"
-				required
-				searchable
 				searchPlaceholder="Buscar cuenta..."
+				required
 			/>
 
 			{isCreatingCategory ? (

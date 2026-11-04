@@ -42,7 +42,7 @@ export const useCreditCardsController = create<CreditCardsController>()((set) =>
 		set((state) => ({
 			creditCardsFilters: {
 				...state.creditCardsFilters,
-				isActive: activeOnly ? true : false,
+				isActive: activeOnly,
 				page: 1,
 			},
 		}));

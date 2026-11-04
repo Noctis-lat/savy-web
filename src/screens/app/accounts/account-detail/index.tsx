@@ -5,6 +5,8 @@ import { AccountEdit } from "@/components/accounts/account-edit";
 import { DangerZone } from "@/components/design-system/patterns/feedback/danger-zone";
 import { Empty } from "@/components/design-system/patterns/feedback/empty";
 import { Screen } from "@/components/design-system/primitives/screen";
+import { PERMANENT_DELETE_CONSEQUENCES } from "@/content/ui/permanentDeleteConsequences";
+import { useActivateAccount } from "@/hooks/accounts/useActivateAccount";
 import { useDeleteAccount } from "@/hooks/accounts/useDeleteAccount";
 import { useDeleteAccountPermanent } from "@/hooks/accounts/useDeleteAccountPermanent";
 import { useQueryAccount } from "@/hooks/accounts/useQueryAccount";
@@ -23,6 +25,7 @@ export const AccountDetail = (): React.ReactElement => {
 	const { account, isLoading } = useQueryAccount(account_id);
 	const { bank } = useQueryBank(account?.bankId);
 	const { mutate: deleteAccount, isPending: isDeactivating } = useDeleteAccount();
+	const { mutate: activateAccount, isPending: isReactivating } = useActivateAccount();
 	const { mutate: deleteAccountPermanent, isPending: isDeleting } = useDeleteAccountPermanent();
 
 	const bankRoute = buildRoute(ROUTES.APP.BANKS.DETAIL, { id: account?.bankId as string });
@@ -60,13 +63,16 @@ export const AccountDetail = (): React.ReactElement => {
 				entityLabel="la cuenta"
 				isActive={account.isActive}
 				onDeactivate={() => deleteAccount(account.id)}
+				onReactivate={() => activateAccount(account.id)}
 				onPermanentDelete={() =>
 					deleteAccountPermanent(account.id, {
 						onSuccess: () => navigate(ROUTES.APP.ACCOUNTS.ROOT),
 					})
 				}
 				isDeactivating={isDeactivating}
+				isReactivating={isReactivating}
 				isDeleting={isDeleting}
+				permanentDeleteDescription={PERMANENT_DELETE_CONSEQUENCES.account}
 			/>
 		</Screen>
 	);

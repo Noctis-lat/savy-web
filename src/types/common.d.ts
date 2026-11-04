@@ -31,3 +31,6 @@ type StatusCalloutContent = {
 	title: string;
 	description: string;
 };
+
+/** Visual tone of a DangerZone row. */
+type DangerZoneTone = "neutral" | "primary" | "destructive";

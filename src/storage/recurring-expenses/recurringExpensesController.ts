@@ -39,7 +39,7 @@ export const useRecurringExpensesController = create<RecurringExpensesController
 		set((state) => ({
 			recurringExpensesFilters: {
 				...state.recurringExpensesFilters,
-				isActive: activeOnly ? true : false,
+				isActive: activeOnly,
 				page: 1,
 			},
 		}));

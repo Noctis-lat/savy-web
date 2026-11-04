@@ -14,6 +14,7 @@ export const useDeleteSavingsGoal = () => {
 			queryClient.invalidateQueries({ queryKey: [savingsGoalKeys.savingsGoals] });
 			queryClient.invalidateQueries({ queryKey: [savingsGoalKeys.savingsGoal] });
 			queryClient.invalidateQueries({ queryKey: [accountKeys.accounts] });
+			queryClient.invalidateQueries({ queryKey: [accountKeys.account] });
 			queryClient.invalidateQueries({ queryKey: [transactionKeys.transactions] });
 		},
 		onError: (error: unknown) => {

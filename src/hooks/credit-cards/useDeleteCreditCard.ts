@@ -12,6 +12,7 @@ export const useDeleteCreditCard = () => {
 			queryClient.invalidateQueries({ queryKey: [creditCardKeys.creditCards] });
 			queryClient.invalidateQueries({ queryKey: [creditCardKeys.creditCard] });
 			queryClient.invalidateQueries({ queryKey: [accountKeys.accounts] });
+			queryClient.invalidateQueries({ queryKey: [accountKeys.account] });
 			queryClient.invalidateQueries({ queryKey: [bankKeys.bankCreditCards] });
 			queryClient.invalidateQueries({ queryKey: [bankKeys.bankLoans] });
 			queryClient.invalidateQueries({ queryKey: [dashboardKeys.dashboardSummary] });

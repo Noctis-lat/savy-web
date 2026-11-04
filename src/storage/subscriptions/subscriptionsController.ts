@@ -38,7 +38,7 @@ export const useSubscriptionsController = create<SubscriptionsController>()((set
 		set((state) => ({
 			subscriptionsFilters: {
 				...state.subscriptionsFilters,
-				isActive: activeOnly ? true : false,
+				isActive: activeOnly,
 				page: 1,
 			},
 		}));

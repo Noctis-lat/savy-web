@@ -30,6 +30,7 @@ type SavingsGoalService = {
 	updateSavingsGoal: (id: string, payload: UpdateSavingsGoalPayload) => Promise<SavingsGoal>;
 	deleteSavingsGoal: (id: string) => Promise<void>;
 	deleteSavingsGoalPermanent: (id: string) => Promise<void>;
+	activateSavingsGoal: (id: string) => Promise<SavingsGoal>;
 };
 
 // ====================== METHOD TYPES =========================

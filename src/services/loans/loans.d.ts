@@ -22,6 +22,7 @@ type LoanService = {
 	updateLoan: (id: string, payload: UpdateLoanPayload) => Promise<Loan>;
 	deleteLoan: (id: string) => Promise<void>;
 	deleteLoanPermanent: (id: string) => Promise<void>;
+	activateLoan: (id: string) => Promise<Loan>;
 };
 
 // ====================== METHOD TYPES =========================

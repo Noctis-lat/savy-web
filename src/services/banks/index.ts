@@ -34,6 +34,11 @@ export const bankService: BankService = {
 		await httpClient.delete(`/banks/${id}/permanent`);
 	},
 
+	activateBank: async (id: string): Promise<Bank> => {
+		const response = await httpClient.patch<APIResponse<Bank>>(`/banks/${id}/activate`);
+		return unwrap<Bank>(response);
+	},
+
 	getBankIncomeVsExpenses: async (id: string, period: PeriodType): Promise<IncomeVsExpenses> => {
 		const response = await httpClient.get<APIResponse<IncomeVsExpenses>>(
 			`/banks/${id}/income-vs-expenses`,

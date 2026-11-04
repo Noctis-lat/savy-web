@@ -42,4 +42,11 @@ export const savingsGoalService: SavingsGoalService = {
 	deleteSavingsGoalPermanent: async (id: string): Promise<void> => {
 		await httpClient.delete(`/savings-goals/${id}/permanent`);
 	},
+
+	activateSavingsGoal: async (id: string): Promise<SavingsGoal> => {
+		const response = await httpClient.patch<APIResponse<SavingsGoal>>(
+			`/savings-goals/${id}/activate`,
+		);
+		return unwrap<SavingsGoal>(response);
+	},
 };

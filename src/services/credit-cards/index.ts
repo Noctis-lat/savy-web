@@ -39,4 +39,11 @@ export const creditCardService: CreditCardService = {
 	deleteCreditCardPermanent: async (id: string): Promise<void> => {
 		await httpClient.delete(`/credit-cards/${id}/permanent`);
 	},
+
+	activateCreditCard: async (id: string): Promise<CreditCard> => {
+		const response = await httpClient.patch<APIResponse<CreditCard>>(
+			`/credit-cards/${id}/activate`,
+		);
+		return unwrap<CreditCard>(response);
+	},
 };

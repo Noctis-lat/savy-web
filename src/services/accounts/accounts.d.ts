@@ -33,6 +33,7 @@ type AccountService = {
 	updateAccount: (id: string, payload: UpdateAccountPayload) => Promise<Account>;
 	deleteAccount: (id: string) => Promise<void>;
 	deleteAccountPermanent: (id: string) => Promise<void>;
+	activateAccount: (id: string) => Promise<Account>;
 };
 
 // ====================== METHOD TYPES =========================

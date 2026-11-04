@@ -65,7 +65,7 @@ export const useAccountsController = create<AccountsController>()((set) => ({
 		set((state) => ({
 			accountsFilters: {
 				...state.accountsFilters,
-				isActive: activeOnly ? true : false,
+				isActive: activeOnly,
 				page: 1,
 			},
 		}));

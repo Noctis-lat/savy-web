@@ -6,7 +6,9 @@ import { DangerZone } from "@/components/design-system/patterns/feedback/danger-
 import { Empty } from "@/components/design-system/patterns/feedback/empty";
 import { Screen } from "@/components/design-system/primitives/screen";
 import { EditSavingsGoal } from "@/components/savings-goals/edit-savings-goal";
+import { PERMANENT_DELETE_CONSEQUENCES } from "@/content/ui/permanentDeleteConsequences";
 import { useQueryAccount } from "@/hooks/accounts/useQueryAccount";
+import { useActivateSavingsGoal } from "@/hooks/savings-goals/useActivateSavingsGoal";
 import { useDeleteSavingsGoal } from "@/hooks/savings-goals/useDeleteSavingsGoal";
 import { useDeleteSavingsGoalPermanent } from "@/hooks/savings-goals/useDeleteSavingsGoalPermanent";
 import { useQuerySavingsGoal } from "@/hooks/savings-goals/useQuerySavingsGoal";
@@ -24,6 +26,7 @@ export const GoalsDetail = (): React.ReactElement => {
 	const { savingsGoal, isLoading } = useQuerySavingsGoal(goal_id ?? "", byAccountId);
 	const { account } = useQueryAccount(savingsGoal?.accountId);
 	const { mutate: deleteSavingsGoal, isPending: isDeactivating } = useDeleteSavingsGoal();
+	const { mutate: activateSavingsGoal, isPending: isReactivating } = useActivateSavingsGoal();
 	const { mutate: deleteSavingsGoalPermanent, isPending: isDeleting } =
 		useDeleteSavingsGoalPermanent();
 
@@ -59,15 +62,20 @@ export const GoalsDetail = (): React.ReactElement => {
 			<DangerZone
 				entityName={savingsGoal.name}
 				entityLabel="la meta"
-				isActive={account?.isActive ?? true}
+				// Soft delete keeps the backing account active and only clears isSavingGoal;
+				// activate restores the flag, so it is the real active signal for a goal.
+				isActive={account?.isSavingGoal ?? true}
 				onDeactivate={() => deleteSavingsGoal(savingsGoal.id)}
+				onReactivate={() => activateSavingsGoal(savingsGoal.id)}
 				onPermanentDelete={() =>
 					deleteSavingsGoalPermanent(savingsGoal.id, {
 						onSuccess: () => navigate(ROUTES.APP.GOALS.ROOT),
 					})
 				}
 				isDeactivating={isDeactivating}
+				isReactivating={isReactivating}
 				isDeleting={isDeleting}
+				permanentDeleteDescription={PERMANENT_DELETE_CONSEQUENCES.savingsGoal}
 			/>
 		</Screen>
 	);
