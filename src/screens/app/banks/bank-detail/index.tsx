@@ -11,12 +11,15 @@ import { useActivateBank } from "@/hooks/banks/useActivateBank";
 import { useDeleteBank } from "@/hooks/banks/useDeleteBank";
 import { useDeleteBankPermanent } from "@/hooks/banks/useDeleteBankPermanent";
 import { useQueryBank } from "@/hooks/banks/useQueryBank";
+import { BankCredits } from "./components/bank-credits";
+import { BankDebits } from "./components/bank-debits";
 import { BankDetailAccounts } from "./components/bank-detail-accounts";
 import { BankDetailHeader } from "./components/bank-detail-header";
 import { BankDetailHero } from "./components/bank-detail-hero";
 import { BankDetailLoans } from "./components/bank-detail-loans";
 import { BankDetailSkeleton } from "./components/bank-detail-skeleton";
 import { BankDetailTopCategories } from "./components/bank-detail-top-categories";
+import { BankSavings } from "./components/bank-savings";
 
 export const BankDetail = (): React.ReactElement => {
 	const { id } = useParams<{ id: string }>();
@@ -55,6 +58,9 @@ export const BankDetail = (): React.ReactElement => {
 			<BankDetailHeader bank={bank} />
 			<BankDetailHero bank={bank} />
 			<BankDetailTopCategories bankId={bankId} />
+			<BankDebits />
+			<BankCredits />
+			<BankSavings />
 			<BankDetailAccounts bankId={bankId} />
 			<BankDetailLoans bankId={bankId} />
 			<DangerZone

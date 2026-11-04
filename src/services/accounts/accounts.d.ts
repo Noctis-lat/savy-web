@@ -40,7 +40,7 @@ type AccountService = {
 
 type AccountParams = {
 	search?: string;
-	type?: AccountType;
+	type?: AccountType | "SAVINGS";
 	bankId?: string;
 	isActive?: boolean;
 	sortBy?: "balance" | "name" | "createdAt";
