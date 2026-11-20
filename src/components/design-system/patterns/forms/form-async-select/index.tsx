@@ -94,6 +94,8 @@ export const FormAsyncSelect = <T extends FieldValues>({
 
 					return (
 						<Popover
+							// Modal mode owns the scroll lock, so the list scrolls inside dialogs.
+							modal
 							open={open}
 							onOpenChange={(isOpen) => {
 								setOpen(isOpen);
@@ -117,7 +119,7 @@ export const FormAsyncSelect = <T extends FieldValues>({
 							</PopoverTrigger>
 
 							<PopoverContent
-								className="p-0 gap-0 min-w-32 overflow-x-hidden overflow-y-auto"
+								className="w-(--radix-popover-trigger-width) min-w-48 overflow-hidden p-0"
 								align="start"
 								side="bottom"
 								sideOffset={4}

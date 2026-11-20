@@ -139,7 +139,7 @@ export const FormAsyncMultiSelect = <T extends FieldValues>({
 								align="start"
 								sideOffset={4}
 								className="p-0 overflow-visible"
-								style={{ width: "var(--popover-anchor-width)" }}
+								style={{ width: "var(--radix-popover-trigger-width)" }}
 								onWheel={(e) => e.stopPropagation()}
 							>
 								<Command
